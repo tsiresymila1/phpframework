@@ -2,6 +2,8 @@
 
 namespace Core\Http;
 
+use Core\Utils\Logger;
+
 class Request{
 
     private static ?Request $_instance = null;
@@ -24,8 +26,9 @@ class Request{
         $this->files = $_FILES;
     }
 
-    public static function init(){
+    public static function init($path="/"){
         $ins = self::getInstance();
+        Logger::infos($ins ->method." ".$path,"REQUEST");
         return $ins;
     }
 
@@ -50,6 +53,21 @@ class Request{
             return $ins->post[$key];
         }
         return null;
+    }
+
+    /** 
+    * @return Boolean
+    */
+    public static function isGet(){
+        $ins = self::getInstance();
+        return $ins->method === "GET";
+    }
+    /** 
+    * @return Boolean
+    */
+    public static function isPost(){
+        $ins = self::getInstance();
+        return $ins->method === "POST";
     }
 
     /** 

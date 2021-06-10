@@ -5,9 +5,9 @@ namespace Core\Http;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class Response {
+class Response{
 
-    private $twig;
+    public Environment $twig;
     private static ?Response $_instance = null;
 
     public function __construct(){
@@ -33,17 +33,23 @@ class Response {
     }
 
     public static function json(array $data=[]){
+        header('Content-type:application/json;charset=utf-8');
         echo json_encode($data);
     }
 
+
     public static function send(String $data=""){
+        header('Content-type:text/plain;charset=utf-8');
         echo $data;
     }
 
-    public static function render(String $template, array $mixed = []){
+    public static function render($template,$context=[]){
         $ins = self::getInstance();
-        echo  $ins->twig->render($template,$mixed);
+        header('Content-type: text/html');
+        echo $ins->twig->render($template,$context);
     }
+
+
 
 }
 ?>

@@ -87,8 +87,9 @@
         public static function isMatch(String $method,String $pattern){
             $ins = self::getInstance();
             $matches = Array();
+            $methods = explode('|',$method);
             $route_method = Request::getMethod();
-            if($method == $route_method && preg_match($pattern, $ins->route , $matches)) {
+            if(in_array($route_method,$methods) && preg_match($pattern, $ins->route , $matches)) {
                 return true;
             }
             return false;

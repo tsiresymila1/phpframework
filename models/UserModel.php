@@ -4,7 +4,7 @@
     use Core\Database\Model;
 
     class UserModel extends Model {
-        
+
     }
 
 ?>

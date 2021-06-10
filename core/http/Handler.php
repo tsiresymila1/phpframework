@@ -29,7 +29,7 @@ class Handler {
         include DIR.'config/routes.php';
         $this->routes = $routes;
         //init router
-        Request::init();
+        Request::init($this->path);
         Response::init();
         Router::config($this->path);
     }
@@ -47,7 +47,6 @@ class Handler {
             $controller = Router::route($url,$route);
         }
         if(!Router::$isFound){
-            var_dump( Router::$isFound);
             return $controller->errorUrlNotFound();
         }
     }

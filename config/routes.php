@@ -3,18 +3,19 @@
             "/" => [
                 "method" =>"GET",
                 "controller" => "DefaultController@index",
-                "middlewares" => [
-                    "SecurityMiddleware",
-                ]
+                
             ],
             "/admin" => [
                 "method" =>"GET",
                 "controller" => "DefaultController@admin",
+                "middlewares" => [
+                    "AuthMiddleware",
+                ]
                 
             ],
-            "/json" => [
+            "/login" => [
                 "method" =>"GET",
-                "controller" => "DefaultController@json",
+                "controller" => "LoginController@login",
                 
             ]
         ];

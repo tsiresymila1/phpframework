@@ -26,5 +26,3 @@
             file_put_contents(DIR."storage/server.log",$datestring."::".$flag.":: ".$log.PHP_EOL, FILE_APPEND | LOCK_EX);
         }
     }
-
-?>
