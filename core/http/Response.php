@@ -11,7 +11,7 @@ class Response{
     private static ?Response $_instance = null;
 
     public function __construct(){
-        $loader = new FilesystemLoader(DIR.'templates');
+        $loader = new FilesystemLoader(APP_PATH.'templates');
         $this->twig = new Environment($loader);
     }
 
@@ -45,7 +45,7 @@ class Response{
 
     public static function render($template,$context=[]){
         $ins = self::getInstance();
-        header('Content-type: text/html');
+        // header('Content-type: text/html');
         echo $ins->twig->render($template,$context);
     }
 

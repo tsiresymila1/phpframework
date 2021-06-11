@@ -2,14 +2,9 @@
 
     namespace Core\Http\CoreMiddlewares;
 
-    class AuthMiddleware extends Middleware {
+    class AuthMiddleware implements Middleware {
         
-        public function before()
-        {
-            
-        }
-
-        public function after()
+        public function handle()
         {
             
         }

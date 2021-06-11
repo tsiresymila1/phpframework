@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    volumes:
+      - ./:/var/www/html
+      - ./etc/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf.example
+      - ./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+    depends_on:
+      - mysqldb
+    command: >
+      /bin/sh -c "envsubst '$${HOST}' < /etc/apache2/sites-available/000-default.conf.example > /etc/apache2/sites-available/000-default.conf
+      && a2enmod rewrite && apache2-foreground"
+    environment:
+      - DEVELOPMENT=true
+      - HOST=${HOST}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
+  mysqldb:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    command: mysqld --sql_mode=""
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./_bdd:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST=mysqldb
+      - PMA_PORT=3306
+
+volumes:
+  data_db:

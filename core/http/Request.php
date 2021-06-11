@@ -32,27 +32,27 @@ class Request{
         return $ins;
     }
 
-    public static function get(String $key){
+    public static function get(String $key=null){
         $ins = self::getInstance();
-        if(isset($ins->get[$key])){
+        if(!is_null($key)){
             return $ins->get[$key];
         }
-        return null;
+        return $ins->get;
     }
-    public static function post(String $key){
+    public static function post(String $key=null){
         $ins = self::getInstance();
-        if(isset($ins->post[$key])){
+        if(!is_null($key)){
             return $ins->post[$key];
         }
-        return null;
+        return $ins->post;
     }
 
-    public static function file(String $key){
+    public static function file(String $key=null){
         $ins = self::getInstance();
-        if(isset($ins->files[$key])){
-            return $ins->post[$key];
+        if(!is_null($key)){
+            return $ins->file[$key];
         }
-        return null;
+        return $ins->file;
     }
 
     /** 
@@ -76,6 +76,11 @@ class Request{
     public static  function getMethod(){
         $ins = self::getInstance();
         return $ins->method;
+    }
+
+    public static function redirect($route="/"){
+        header('Location: '.$route);
+        die();
     }
 
 }

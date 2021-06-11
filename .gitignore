@@ -1,0 +1,9 @@
+data
+_bdd/*
+!_bdd/.gitkeep
+.env
+node_modules
+package-lock.json
+storage/session/*
+.idea
+.vscode

@@ -1,10 +1,10 @@
 <?php
 
     $config = [
-        "HOST" => "localhost",
+        "HOST" => "mysqldb",
         "PORT" => 3306,
-        "USER" =>"root",
-        "PASSWORD" => "",
+        "USER" =>"phpframework",
+        "PASSWORD" => "phpframework",
         "DATABASE" => "phpframework"
     ]
 

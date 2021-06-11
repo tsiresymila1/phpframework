@@ -1,8 +1,6 @@
 <?php
 
 namespace Core\Database;
-
-use Core\Utils\Logger;
 use Exception;
 use PDO;
 use PDOException;

@@ -10,9 +10,12 @@ class Autoloader {
         $file = $class. '.php';
         $filepath =str_replace("\\",'/', DIR.$file);
         if(!file_exists( $filepath)){
-            $file = "libs\\".$file ;
+            $filepath = str_replace("\\",'/',DIR."app\\".$file);
+            if(!file_exists( $filepath)){
+                $filepath = str_replace("\\",'/',DIR."libs\\".$file); ;
+            }
         }
-        include  $file;
+        include  $filepath;
     }
 
 }

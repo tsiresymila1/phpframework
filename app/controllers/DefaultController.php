@@ -12,6 +12,7 @@ class DefaultController extends Controller {
     {
         parent::__construct();
     }
+    
     public  function index(){
         $user = new UserModel();
         $result = $user->findAll()->orWhere(array('email'=>"tsiresymila@gmail.com",'soft_deleted'=>0))->where(array('id'=>1))->orWhere(array('email'=>"tsiresymila@gmail.com",'soft_deleted'=>0))->get();

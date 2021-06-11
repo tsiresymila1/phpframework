@@ -53,7 +53,7 @@
             foreach($middlewares as $middleware){
                 $MiddlewareClass = "Middlewares\\".$middleware;
                 $middleins = new $MiddlewareClass;
-                $middleins->before();
+                $middleins->handle();
             }
             $ctrlins = self::applyController($controller);
             foreach($middlewares as $middleware){
