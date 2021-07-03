@@ -2,8 +2,11 @@ data
 _bdd/*
 !_bdd/.gitkeep
 .env
+.vscode
+.idea
 node_modules
 package-lock.json
 storage/session/*
 .idea
 .vscode
+www/libs

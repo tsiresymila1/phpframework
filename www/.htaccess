@@ -1,0 +1,9 @@
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !^public
+RewriteRule ^(.*)$ public/$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/assets
+RewriteRule ([^/]*).(css|js|png|jpe?g)$ assets/$1.$2 [L]
+
+

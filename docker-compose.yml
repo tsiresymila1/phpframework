@@ -4,7 +4,7 @@ services:
   web:
     build: .
     volumes:
-      - ./:/var/www/html
+      - ./www:/var/www/html
       - ./etc/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf.example
       - ./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini
     depends_on:
