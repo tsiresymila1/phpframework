@@ -15,26 +15,28 @@
         public function __construct()
         {
             ini_set('session.save_path',realpath(DIR.'/storage/session/'));
-            session_start(
-                [
-                    'cookie_lifetime' => 86400,
-                    'read_and_close'  => true
-                ]
-            );
+            ini_set('session.cookie_domain', $_SERVER['HTTP_HOST']);
+            session_start();
         }
 
-        public static function  set($key,$value){
-            $_SESSION[ $key] = $value;
+        public static function  Set($key,$value){
+            if (isset($_SESSION[$key])) unset($_SESSION[$key]);
+            $_SESSION[$key] = $value;
         }
-        public static function  get($key){
-            return isset($_SESSION[$key]) ?  $_SESSION[$key] : null;
+        public static function  Get($key,$default=null){
+            return isset($_SESSION[$key]) ?  $_SESSION[$key] : $default;
         }
-        public static function reset(){
+        public static function Reset(){
             session_destroy();
         }
+        public static function Remove($key=null){
+            if($key != null && in_array($key,$_SESSION)){
+                unset($_SESSION[$key]);
+            }
+        }
 
-        public static function init(){
-            // return self::getInstance();
+        public static function Init(){
+            return self::getInstance();
         }
 
         

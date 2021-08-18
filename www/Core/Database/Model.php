@@ -72,6 +72,21 @@ class Model {
         $this->query = "SELECT * FROM ".self::$tablename ." WHERE ".$conditionsString;
         return $this->get();
     }
+
+    public function findOneBy($key,$value=null,$comparator="="){
+        if(gettype($key)=='array'){
+            $conditionsString = implode(" AND ",array_map(function ($k, $v) {
+                return $k.'=\''.$v.'\'';
+            }, array_keys($key), $key));
+        }
+        else{
+            $conditionsString = $key.$comparator.$value; 
+        }
+        $this->conditions = [];
+        $this->query = "SELECT * FROM ".self::$tablename ." WHERE ".$conditionsString;
+        return $this->getOne();
+    }
+
     public function findBy($key,$value,$comparator="="){
         $this->conditions = [];
         $this->query = "SELECT * FROM ".self::$tablename ." WHERE ".$key.$comparator.$value;
@@ -92,10 +107,10 @@ class Model {
         $this->query .= implode(',',$stringValue);
 
         if(!array_key_exists('createdAt',$data)){
-            $this->query .= ","."created_at='".$date;
+            $this->query .= ","."created_at='".$date.'\'';
         }
         if(!array_key_exists('updatedAt',$data)){
-            $this->query .= ","."updatedAt='".$date;
+            $this->query .= ","."updated_at='".$date.'\'';
         }
         return $this->execWithoutResult();
     }
@@ -208,9 +223,28 @@ class Model {
         }
     }
 
+    protected function execWithOneResult(){
+        $qr = $this->db->getPDO()->prepare($this->query);
+        Logger::log($this->query,"DATABASE QUERY");
+        try{
+            $qr->execute();
+            $data = $qr->fetchObject(get_class($this));
+            return $data;
+        }
+        catch(PDOException  $e){
+            Logger::error($e->getMessage(),"DATABASE ERROR");
+            return false;
+        }
+    }
+
     public  function get(){
         $this->groupedCondition();
         return $this->execWithResult();
+    }
+
+    public  function getOne(){
+        $this->groupedCondition();
+        return $this->execWithOneResult();
     }
 
     public function count(){

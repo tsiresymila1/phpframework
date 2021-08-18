@@ -16,7 +16,8 @@
             if(!file_exists($filepath)){
                 foreach($psr as $key=>$value){
                     $filepath = str_replace($key,$value,DIR.$file);
-                    if(!file_exists( $filepath)){
+                    $filepath = str_replace("\\",DIRECTORY_SEPARATOR, $filepath);
+                    if(file_exists( $filepath)){
                         break;
                     }
                 }

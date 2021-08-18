@@ -8,11 +8,13 @@ class Request{
 
     protected static $_instance = null;
     protected  $method;
+    protected  $path;
     protected  $get;
     protected  $post;
     protected  $files;
     protected  $params;
     protected  $headers;
+    protected $auth = false;
 
     public static function getInstance() {
         if(is_null(self::$_instance)) {
@@ -49,18 +51,19 @@ class Request{
 
     public static function init($path="/"){
         $ins = self::getInstance();
+        $ins->set('path',$path);
         Logger::infos($ins ->method." ".$path,"REQUEST");
         return $ins;
     }
 
-    public static function get($key=null){
+    public static function Get($key=null,$default=null){
         $ins = self::getInstance();
         if(!is_null($key)){
             return $ins->get[$key];
         }
         return $ins->get;
     }
-    public static function post($key=null){
+    public static function Post($key=null){
         $ins = self::getInstance();
         if(!is_null($key)){
             return $ins->post[$key];
@@ -68,7 +71,7 @@ class Request{
         return $ins->post;
     }
 
-    public static function file($key=null){
+    public static function File($key=null){
         $ins = self::getInstance();
         if(!is_null($key)){
             return $ins->file[$key];
@@ -82,7 +85,7 @@ class Request{
         return $ins;
     }
 
-    public static function headers( $key=null){
+    public static function Headers( $key=null){
         $ins = self::getInstance();
         if(!is_null($key)){
             return $ins->headers[$key];
@@ -90,7 +93,7 @@ class Request{
         return $ins->headers;
     }
 
-    public static function resources( $key=null){
+    public static function Resources( $key=null){
         $ins = self::getInstance();
         if(!is_null($key)){
             return $ins->params[$key];
@@ -120,6 +123,13 @@ class Request{
         $ins = self::getInstance();
         return $ins->method === "POST";
     }
+    /** 
+    * @return Boolean
+    */
+    public static function isAuth(){
+        $ins = self::getInstance();
+        return $ins->auth;
+    }
 
     /** 
     * @return String
@@ -127,6 +137,14 @@ class Request{
     public static  function getMethod(){
         $ins = self::getInstance();
         return $ins->method;
+    }
+
+    /** 
+    * @return String
+    */
+    public static  function getPath(){
+        $ins = self::getInstance();
+        return $ins->path;
     }
 
     public static function redirect($route="/"){

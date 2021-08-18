@@ -3,8 +3,9 @@
     namespace Core\Http;
     use App\Controller;
     use App\Middleware;
-use Exception;
-use ReflectionMethod;
+    use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
+    use Exception;
+    use ReflectionMethod;
     use ReflectionParameter;
 
     class Route {
@@ -69,10 +70,19 @@ use ReflectionMethod;
             return $arguments;
         }
 
-        public function executeAction(){
+        public function invokeSucess(){
             $params = explode("@",$this->action);
             $ControllerClass = "App\Controller\\".$params[0];
             $method = $params[1];
+            $arguments = $this->getArguments($ControllerClass,$method);
+            $ctrlins = new $ControllerClass();
+            $ctrlins->$method(...$arguments);
+            return  $ctrlins ;
+        }
+
+        public function invokeFail($method){
+            $params = explode("@",$this->action);
+            $ControllerClass = "App\Controller\\".$params[0];
             $arguments = $this->getArguments($ControllerClass,$method);
             $ctrlins = new $ControllerClass();
             $ctrlins->$method(...$arguments);
@@ -83,29 +93,16 @@ use ReflectionMethod;
             foreach($this->middlewares as $middleware){
                 if(!is_null($middleware)){ 
                     $MiddlewareClass = "App\Middleware\\".$middleware;
-                    $middleins = new $MiddlewareClass;
-                    $middleins->handle();
-                }
-            }
-            $ctrlins = $this->executeAction();
-            foreach($this->middlewares as $middleware){
-                if(!is_null($middleware)){ 
-                    $MiddlewareClass = "App\Middleware\\".$middleware;
                     $middleins = new $MiddlewareClass();
-                    $middleins->after();
+                    if($middleins instanceof BaseAuthMiddleware){
+                        $middleins->handle();
+                    }
+                    
                 }
             }
-            foreach($this->middlewares as $middleware){
-                if(!is_null($middleware)){ 
-                    $MiddlewareClass = "APP\Middleware\\".$middleware;
-                    $middleins = new $MiddlewareClass();
-                    $middleins->finish();
-                }
-            }
+            $ctrlins = $this->invokeSucess();
             return $ctrlins;
         }
-
-
     }
 
 

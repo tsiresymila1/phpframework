@@ -31,9 +31,20 @@ class Handler {
 
     public static function handle(){
         $ins = self::getInstance();
-        $ins->doRouting();
+        $ins->auth();
     }
 
+    public function auth(){
+        if(file_exists(APP_PATH.'config/security.php')){
+            $security = require APP_PATH.'config/security.php';
+            $Athenticator = $security['authenticator'];
+            $autheticator = new $Athenticator();
+            $autheticator->authenticate();
+        }
+        else{
+            $this->doRouting();
+        }
+    }
 
     public function doRouting(){
         Router::$isFound = false;

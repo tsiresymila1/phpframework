@@ -1,7 +1,7 @@
 <?php
 
 $config = [
-    "UPLOADED_FOLDER" => DIR."storage",
+    "UPLOADED_FOLDER" => DIR."public/uploads",
     "psr"=> array(
         "App\\" => "src/"
     )

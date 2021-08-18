@@ -29,25 +29,25 @@ class Response{
         return $ins;
     }
 
-    public static function redirect($route="/"){
+    public static function Redirect($route="/"){
         ob_start();
         header('Location: '.$route);
         ob_end_flush();
         die();
     }
 
-    public static function json(array $data=[]){
+    public static function Json(array $data=[]){
         header('Content-type:application/json;charset=utf-8');
         echo json_encode($data);
     }
 
 
-    public static function send(String $data=""){
+    public static function Send(String $data=""){
         // header('Content-type:text/plain;charset=utf-8');
         echo $data;
     }
 
-    public static function render($template,$context=[]){
+    public static function Render($template,$context=[]){
         header('Content-type: text/html');
         $ins = self::getInstance();
         $ins->renderer->view($template,$context);

@@ -9,13 +9,14 @@
 
     class Bootstrap {
         public static function boot(){
+            Session::Init();
+            DB::init();
+            Handler::handle();
             set_error_handler(function($errno, $errstr, $errfile, $errline ){
                 Logger::error($errstr);
                 exit();
             },E_ALL | E_STRICT | E_ERROR | E_WARNING);
-            DB::init();
-            Session::init();
-            Handler::handle();
+            
         }
     }
 ?>

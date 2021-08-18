@@ -2,7 +2,6 @@
 
 namespace Core\Http\CoreControllers;
 
-use Core\Http\Request;
 use Core\Http\Response;
 
 class Controller {

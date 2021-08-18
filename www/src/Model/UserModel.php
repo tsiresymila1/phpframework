@@ -2,8 +2,9 @@
 
     namespace App\Model;
     use Core\Database\Model;
+    use Core\Http\Security\AuthenticatorModelInterface;
 
-    class UserModel extends Model {
+    class UserModel extends Model  implements AuthenticatorModelInterface{
 
         /**
          * @type varchar(250)
@@ -31,6 +32,10 @@
          * @type int(11)
          */
         public  $nb_connextion ;
+
+        public function getRoles(){
+            return explode(',',$this->roles);
+        }
     }
 
 ?>

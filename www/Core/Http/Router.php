@@ -22,25 +22,25 @@
             return $this->routes;
         }
 
-        public static function config(String $route){
+        public static function Config(String $route){
             $ins = self::getInstance();
             $ins->route = $route;
             return $ins;
         }
 
-        public static function get($url,$action,$middlewares=null){
+        public static function Get($url,$action,$middlewares=null){
             $ins = self::getInstance();
             $route = new Route($url,$action,$middlewares);
             $ins->routes['GET'][] = $route ;
         }
 
-        public static function post($url,$action,$middlewares=null){
+        public static function Post($url,$action,$middlewares=null){
             $ins = self::getInstance();
             $route = new Route($url,$action,$middlewares);
             $ins->routes['POST'][] = $route ;
         }
 
-        public static function all($url,$action,$middlewares=null){
+        public static function All($url,$action,$middlewares=null){
             $ins = self::getInstance();
             $route = new Route($url,$action,$middlewares);
             $ins->routes['POST'][] = $route;
