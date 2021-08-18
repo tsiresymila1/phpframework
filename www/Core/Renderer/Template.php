@@ -11,10 +11,10 @@
         protected $cache_enabled;
         protected $ENV;
         protected  $functions = [];
-        
+
         public function __construct($template,$cache_enabled=FALSE){
-            $this->ENV = $template; 
-            $this->cache_enabled = $cache_enabled; 
+            $this->ENV = $template;
+            $this->cache_enabled = $cache_enabled;
         }
 
         public function view($file, $data = array()) {
@@ -22,18 +22,20 @@
             $data = array_merge($data,$this->functions);
             extract($data, EXTR_SKIP);
             require $cached_file;
+            if(!$this->cache_enabled){
+                register_shutdown_function('unlink',$cached_file);
+            }
         }
 
         public function addFunction($name,$function){
             $this->functions[$name] = $function;
         }
-        
 
         protected function cache($file) {
             if (!file_exists($this->cache_path)) {
                 mkdir($this->cache_path, 0744);
             }
-            $cached_file = $this->cache_path .str_replace('/','_',$file).'.php';
+            $cached_file = $this->cache_path .str_replace('/','_',uniqid().uniqid()).'.php';
             if (!$this->cache_enabled || !file_exists($cached_file) || filemtime($cached_file) < filemtime($file)) {
                 $filepath = str_replace('.',DIRECTORY_SEPARATOR,$file).'.php';
                 $code = $this->includeFiles($filepath);

@@ -34,7 +34,7 @@
         }
 
         public static function init(){
-            return self::getInstance();
+            // return self::getInstance();
         }
 
         

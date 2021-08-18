@@ -108,6 +108,14 @@ class Request{
     /** 
     * @return Boolean
     */
+    public static function isAjax(){
+        $ins = self::getInstance();
+        return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+    }
+
+    /** 
+    * @return Boolean
+    */
     public static function isPost(){
         $ins = self::getInstance();
         return $ins->method === "POST";

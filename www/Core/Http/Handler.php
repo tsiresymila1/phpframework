@@ -11,9 +11,8 @@ class Handler {
     public static function getInstance() {
 
         if(is_null(self::$_instance)) {
-          self::$_instance = new Handler();  
+          self::$_instance = new Handler();
         }
-    
         return self::$_instance;
     }
 

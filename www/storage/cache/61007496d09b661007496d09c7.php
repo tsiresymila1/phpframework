@@ -29,7 +29,7 @@
 						<a class="nav-link" href="#"><?php echo $name ?></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#"><?php echo $  ?></a>
+						<a class="nav-link" href="#"></a>
 					</li>
 				</ul>
 				<span class="navbar-text">
