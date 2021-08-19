@@ -10,6 +10,10 @@
         public function onAuthenticateFail(){
             Response::redirect("/login");
         }
+        public function onAuthenticateSuccess(){
+            Response::Redirect('/admin');
+        }
+        
         
     }
 

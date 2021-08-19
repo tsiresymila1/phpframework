@@ -112,10 +112,9 @@ class Model {
         if(!array_key_exists('updatedAt',$data)){
             $this->query .= ","."updated_at='".$date.'\'';
         }
-        return $this->execWithoutResult();
+        return $this->execSilent();
     }
     
-
     public  function update($id=null){
        
         if(!is_null($id)){
@@ -125,7 +124,7 @@ class Model {
         else{
             $this->groupedCondition();
         }
-        return $this->execWithoutResult();   
+        return $this->execSilent();   
     }
 
     public function set($key,$value=null){
@@ -143,7 +142,6 @@ class Model {
         $this->query.=" SET ".implode(',',$stringValue);
         return $this;
     }
-
 
     public  function innerJoin(int $id = null){
         
@@ -198,7 +196,7 @@ class Model {
         return  $this;
     }
 
-    protected function execWithoutResult(){
+    protected function execSilent(){
         $qr = $this->db->getPDO()->prepare($this->query);
         Logger::log($this->query,"DATABASE QUERY");
         try{
@@ -210,7 +208,7 @@ class Model {
         return false;
     }
 
-    protected function execWithResult(){
+    protected function exec(){
         $qr = $this->db->getPDO()->prepare($this->query);
         Logger::log($this->query,"DATABASE QUERY");
         try{
@@ -223,7 +221,7 @@ class Model {
         }
     }
 
-    protected function execWithOneResult(){
+    protected function execOne(){
         $qr = $this->db->getPDO()->prepare($this->query);
         Logger::log($this->query,"DATABASE QUERY");
         try{
@@ -239,17 +237,17 @@ class Model {
 
     public  function get(){
         $this->groupedCondition();
-        return $this->execWithResult();
+        return $this->exec();
     }
 
     public  function getOne(){
         $this->groupedCondition();
-        return $this->execWithOneResult();
+        return $this->execOne();
     }
 
     public function count(){
         $this->groupedCondition();
-        return count($this->execWithResult());
+        return count($this->exec());
     }
 
     protected function groupedCondition($withClause = true){

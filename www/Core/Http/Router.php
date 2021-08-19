@@ -32,12 +32,14 @@
             $ins = self::getInstance();
             $route = new Route($url,$action,$middlewares);
             $ins->routes['GET'][] = $route ;
+            return $ins;
         }
 
         public static function Post($url,$action,$middlewares=null){
             $ins = self::getInstance();
             $route = new Route($url,$action,$middlewares);
             $ins->routes['POST'][] = $route ;
+            return $ins;
         }
 
         public static function All($url,$action,$middlewares=null){
@@ -45,6 +47,7 @@
             $route = new Route($url,$action,$middlewares);
             $ins->routes['POST'][] = $route;
             $ins->routes['GET'][] = $route;
+            return $ins;
         }
 
         /**

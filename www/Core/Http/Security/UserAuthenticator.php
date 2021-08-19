@@ -21,6 +21,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
     protected $roles = [];
     protected $rememberme = true;
     public $login = "/login";
+    public $logout = "/logout";
 
     public function __construct()
     {
@@ -94,7 +95,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
     public function onAuthenticateSuccess()
     {
         
-        $this->pass();
+        Response::Render('Hello');
     }
 
     public function onAuthenticateFail()
@@ -115,7 +116,11 @@ class UserAuthenticator implements UserAuthenticatorInterface
     {
         $path = rtrim(Request::getPath(), '/') . '/';
         if (isset($this->url) && isset($this->authenticator) && isset($this->model) && isset($this->config)) {
-            if(preg_match("#^" . $this->login.'/$#', $path)){
+            if(preg_match("#^" . $this->logout.'/$#', $path)){
+                $this->eraseCredentials();
+                $this->onAuthenticateFail();
+            }
+            else if(preg_match("#^" . $this->login.'/$#', $path)){
                 if (Request::isPost()) {
                     if ($this->isverifyPost()) {
                         $ins = Request::getInstance();
@@ -126,7 +131,8 @@ class UserAuthenticator implements UserAuthenticatorInterface
                     }
                 }
                 else{
-                    $this->onAuthenticateSuccess();
+                    $this->eraseCredentials();
+                    $this->pass();
                 }
             }
             else{
@@ -135,28 +141,24 @@ class UserAuthenticator implements UserAuthenticatorInterface
                     if ($this->IsverifySession()) {
                         $ins = Request::getInstance();
                         $ins->Set('auth',true);
-                        $this->onAuthenticateSuccess();
+                        $this->pass();
                     } else {
                         $this->onAuthenticateFail();
                     }
                 } else {
-                    $this->onAuthenticateSuccess();
+                    $this->pass();
                 }
             }
            
         } else {
-            $this->onAuthenticateSuccess();
+            $this->pass();
         }
     }
 
     public function eraseCredentials()
     {
-        Session::remove($this->username);
-        Session::remove($this->password);
+        Session::Remove($this->username);
+        Session::Remove($this->password);
     }
 
-    public function notAuthentificated()
-    {
-        Response::Send("Not authentificated");
-    }
 }

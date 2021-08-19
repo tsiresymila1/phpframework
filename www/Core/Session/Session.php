@@ -30,7 +30,7 @@
             session_destroy();
         }
         public static function Remove($key=null){
-            if($key != null && in_array($key,$_SESSION)){
+            if($key != null && isset($_SESSION[$key])){
                 unset($_SESSION[$key]);
             }
         }

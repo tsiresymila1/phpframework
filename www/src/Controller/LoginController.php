@@ -8,13 +8,6 @@
     class LoginController extends Controller{
 
         public function login(){
-
-            if(Request::isAuth()){
-                Response::Redirect('/admin');
-            }
-            else{
-                
-            }
             Response::render("login",[]);
         }
 
