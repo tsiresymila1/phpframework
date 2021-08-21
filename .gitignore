@@ -6,7 +6,9 @@ _bdd/*
 .idea
 node_modules
 package-lock.json
-storage/session/*
+www/storage/session/*
+www/storage/logs/*
+/test
 .idea
 .vscode
 www/libs
