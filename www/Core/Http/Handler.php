@@ -1,7 +1,6 @@
 <?php
 
 namespace Core\Http;
-
 use Exception;
 
 class Handler {
@@ -20,9 +19,13 @@ class Handler {
     {
         $route =  $this->request_path();
         $this->path = "/".$route;
-        Request::init($this->path);
-        Response::init();
-        Router::config($this->path);
+        Request::Init($this->path);
+        Response::Init();
+        Router::Config($this->path);
+        if(!file_exists(APP_PATH.'config/config.php')){
+            throw new Exception('routes.php file not found');
+        }
+        require APP_PATH.'config/config.php';
         if(!file_exists(APP_PATH.'config/routes.php')){
             throw new Exception('routes.php file not found');
         }
@@ -37,6 +40,7 @@ class Handler {
     public function auth(){
         if(file_exists(APP_PATH.'config/security.php')){
             $security = require APP_PATH.'config/security.php';
+            define('SECRET',in_array('secret',$security) ? $security['secret'] : '7c32d31dbdd39f2111da0b1dea59e94f3ed715fd8cdf0ca3ecf354ca1a2e3e30');
             $Athenticator = $security['authenticator'];
             $autheticator = new $Athenticator();
             $autheticator->authenticate();
@@ -50,7 +54,7 @@ class Handler {
         Router::$isFound = false;
         $controller = Router::find();
         if(!Router::$isFound){
-            return $controller->errorUrlNotFound();
+            return $controller->url404NotFound();
         }
     }
 

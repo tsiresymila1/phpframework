@@ -14,7 +14,7 @@ class Controller {
     public function index(){
         Response::send( static::class." was called ");
     }
-    public function errorUrlNotFound(){
+    public function url404NotFound(){
         Response::send(" URL not found");
     }
 

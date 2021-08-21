@@ -32,6 +32,7 @@ class DefaultController extends Controller {
     }
 
     public  function admin(Response $response){
+        $response::Json(['data'=>"okey"]);
         $response::render('admin',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
     }
     public  function webpack(Response $response){

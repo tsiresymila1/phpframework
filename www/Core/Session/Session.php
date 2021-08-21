@@ -14,9 +14,13 @@
 
         public function __construct()
         {
-            ini_set('session.save_path',realpath(DIR.'/storage/session/'));
-            ini_set('session.cookie_domain', $_SERVER['HTTP_HOST']);
+            $sessionPath = DIR.'/storage/session/';
+            if(!file_exists($sessionPath)){
+                @mkdir($sessionPath);
+            }
+            ini_set('session.save_path',realpath($sessionPath));
             session_start();
+            
         }
 
         public static function  Set($key,$value){

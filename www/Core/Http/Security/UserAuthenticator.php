@@ -8,6 +8,7 @@ use Core\Http\Router;
 use Core\Http\Security\UserAuthenticatorInterface;
 use Core\Session\Session;
 use Core\Utils\Encryption;
+use Core\Utils\JWT;
 
 class UserAuthenticator implements UserAuthenticatorInterface
 {
@@ -15,7 +16,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
     protected  $model;
     protected $username;
     protected $password;
-    protected $url;
+    protected $urls;
     protected $authenticator;
     protected $config;
     protected $roles = [];
@@ -30,7 +31,12 @@ class UserAuthenticator implements UserAuthenticatorInterface
         $this->username = $security['config']['username'];
         $this->password = $security['config']['password'];
         $this->model = new $security['model']();
-        $this->url = $security['url'];
+        if(gettype($security['url']) !== "array"){      
+            $this->urls = [$security['url']];
+        } 
+        else{
+            $this->urls = $security['url'];
+        }
         $this->config = $security['config'];
         $roles =  $this->config['roles'];
         if (gettype($roles) == "array") {
@@ -52,7 +58,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
                 Session::set($this->username, $username);
                 Session::set($this->password, $passwordcrypted);
             }
-            return true;
+            return $user ;
         } else {
             return false;
         }
@@ -75,7 +81,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
 
     public function isVerifyPost()
     {
-        $data = Request::post();
+        $data = Request::Post();
         if (isset($data[$this->username], $data[$this->password])) {
             $usernamep = $data[$this->username];
             $passwordp = $data[$this->password];
@@ -92,15 +98,10 @@ class UserAuthenticator implements UserAuthenticatorInterface
         return $this->isAuthSessionUser($usernamep, $passwordp);
     }
 
-    public function onAuthenticateSuccess()
-    {
-        
-        Response::Render('Hello');
-    }
-
-    public function onAuthenticateFail()
-    {
-        return Response::Send('Not authentified');
+    public function IsverifyToken(){
+        $jwt = new JWT(SECRET);
+        $token = Request::GetToken();
+        return $jwt->verify($token);
     }
 
     public function pass()
@@ -108,44 +109,84 @@ class UserAuthenticator implements UserAuthenticatorInterface
         Router::$isFound = false;
         $controller = Router::find();
         if (!Router::$isFound) {
-            return $controller->errorUrlNotFound();
+            return $controller->url404NotFound();
+        }
+    }
+
+    public function verifyPost($successcallback,$errorcalback){
+        if (Request::isPost()) {
+            $data = $this->isverifyPost();
+            if ($data) {
+                $ins = Request::getInstance();
+                $ins->Set('auth',true);
+                $successcallback($data);
+            } else {
+                $errorcalback();
+            }
+        }
+        else{
+            $this->pass();
         }
     }
 
     public function authenticate()
     {
         $path = rtrim(Request::getPath(), '/') . '/';
-        if (isset($this->url) && isset($this->authenticator) && isset($this->model) && isset($this->config)) {
+        if (isset($this->urls) && isset($this->authenticator) && isset($this->model) && isset($this->config)) {
+            //verify if logout
             if(preg_match("#^" . $this->logout.'/$#', $path)){
                 $this->eraseCredentials();
                 $this->onAuthenticateFail();
             }
+            // verify if login 
             else if(preg_match("#^" . $this->login.'/$#', $path)){
-                if (Request::isPost()) {
-                    if ($this->isverifyPost()) {
-                        $ins = Request::getInstance();
-                        $ins->Set('auth',true);
-                        $this->onAuthenticateSuccess();
-                    } else {
-                        $this->onAuthenticateFail();
-                    }
-                }
-                else{
-                    $this->eraseCredentials();
-                    $this->pass();
-                }
+                $this->eraseCredentials();
+                $this->verifyPost(function($user){
+                    $this->onAuthenticateSuccess($user);
+                },function(){
+                    $this->onAuthenticateFail();
+                });
+            }
+            // verifyy if api login
+            else if(preg_match("#^" .API_PREFIX. $this->login.'/$#', $path)){
+                $this->verifyPost(function($user){
+                    $jwt = new JWT(SECRET);
+                    $token = $jwt->generate($user->id,$user->getRoles());
+                    Response::AddHeader('token',$token);
+                    $this->onApiAuthenticateSuccess($user);
+                },function(){
+                    $this->onApiAuthenticateFail();
+                });
             }
             else{
-                if (preg_match("#^" . $this->url . "/#", $path) === 1) {
-                    // $_SESSION['token'] = "hello";
-                    if ($this->IsverifySession()) {
-                        $ins = Request::getInstance();
-                        $ins->Set('auth',true);
-                        $this->pass();
-                    } else {
-                        $this->onAuthenticateFail();
+                // veirfy if current path like  url 
+                $found = false;
+                foreach($this->urls as $url){
+                    if (preg_match("#^" . $url . "/#", $path) === 1) {
+                        $found = true;
+                        if ($this->IsverifySession()) {
+                            $ins = Request::getInstance();
+                            $ins->Set('auth',true);
+                            $this->pass();
+                        } else {
+                            $this->onAuthenticateFail();
+                        }
+                        break;
                     }
-                } else {
+                    //verify if current path like api 
+                    else if (preg_match("#^" . API_PREFIX.$url . "/#", $path) === 1) {
+                        $found = true;
+                        if ($this->IsverifyToken()) {
+                            $ins = Request::getInstance();
+                            $ins->Set('auth',true);
+                            $this->pass();
+                        } else {
+                            $this->onApiAuthenticateFail();
+                        }
+                        break;
+                    }
+                }
+                if(!$found){
                     $this->pass();
                 }
             }
@@ -159,6 +200,26 @@ class UserAuthenticator implements UserAuthenticatorInterface
     {
         Session::Remove($this->username);
         Session::Remove($this->password);
+    }
+
+    
+    public function onAuthenticateSuccess($data)
+    {
+        
+        Response::RedirectToRoute('/'.$_SERVER['HTTP_REFERER']??'');
+    }
+
+    public function onAuthenticateFail()
+    {
+        return Response::Json(['Not authentified']);
+    }
+
+
+    public function  onApiAuthenticateSuccess($data){
+        Response::Json(['data'=>(array)$data]);
+    }
+    public function  onApiAuthenticateFail(){
+        Response::Json(['message' => 'Not authentified']);
     }
 
 }

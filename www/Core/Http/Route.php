@@ -1,109 +1,93 @@
 <?php
 
     namespace Core\Http;
-    use App\Controller;
-    use App\Middleware;
-    use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
-    use Exception;
-    use ReflectionMethod;
-    use ReflectionParameter;
-
+    use Core\Http\CoreControllers\Controller;
     class Route {
 
         public $path;
+        public $name;
         public $action ;
-        public $matches ;
+        public $method ;
         public $middlewares = [];
-        public $params = [];
-        public $variables = [];
 
-        public function __construct($path,$action,$middleware=null)
+        public function __construct()
         {
-            $this->path = trim($path,'/');
-            $this->action = $action;
-            if(gettype($middleware) == "array"){
-                $this->middlewares = $middleware;
+            $this->name = uniqid();
+        }
+        private static function getInstance(){
+            return new Route();
+        }
+
+        public static function Get($url,$action,$middlewares=null){
+            $ins = self::getInstance();
+            $ins->path = trim($url,'/');
+            $ins->action = $action;
+            if(gettype($middlewares) == "array" ){
+                $ins->middlewares = $middlewares;
             }
             else{
-                $this->middlewares = [$middleware];
+                $ins->middlewares = [$middlewares];
             }
+            $ins->method = 'GET';
+            $ins->register();
+            return $ins;
         }
 
-        public function matches(string $url){
-            $url = trim($url,'/');
-            $pathrepalced = preg_replace_callback('/\\\\{([^}]*)\}+/', function($match){
-                $this->variables[] = str_replace('\\','',$match[1]);
-                return '([a-zA-Z0-9\-\_]+)';
-            },  preg_quote($this->path));
+        public function register(){
+            Router::Add($this,$this->name);
+        }
 
-            $pathToMatch = "@^" . $pathrepalced . "$@D";
-            if(preg_match($pathToMatch,$url,$matches)){
-                $this->matches = $matches;
-                array_shift($matches);
-                $this->params = array_combine($this->variables,$matches);
-                Request::setParams($this->params);
-                return true;
+        public static function Post($url,$action,$middlewares=null){
+            $ins = self::getInstance();
+            $ins->path = trim($url,'/');
+            $ins->action = $action;
+            $middlewares ??= [];
+            if(gettype($middlewares) == "array" ){
+                $ins->middlewares = $middlewares;
             }
             else{
-                return false;
+                $ins->middlewares = [$middlewares];
             }
+            $ins->method = 'POST';
+            $ins->register();
+            return $ins;
         }
 
-        public function getArguments($class,$method){
-            $arguments = [];
-            $r = new ReflectionMethod($class, $method);
-            $paramsmethod = $r->getParameters();
-            foreach($paramsmethod as $p){
-                $name = $p->name;
-                if(isset($this->params[$name])){
-                    $arguments[] = $this->params[$name];
-                }
-                else{   
-                    $type = $p->getType();
-                    if(!is_null($type) && method_exists($type->getName(),'getInstance')){
-                        $className = $type->getName();
-                        $arguments[] = $className::getInstance();
-                    }
-                    else throw new Exception('Error params not found ');
-                } 
+        public static function Any($url,$action,$middlewares=null){
+            $ins = self::getInstance();
+            $ins->path = trim($url,'/');
+            $ins->action = $action;
+            $middlewares ??= [];
+            if(gettype($middlewares) == "array" ){
+                $ins->middlewares = $middlewares;
             }
-            return $arguments;
+            else{
+                $ins->middlewares = [$middlewares];
+            }
+            $ins->method = 'POST|GET';
+            $ins->register();
+            return $ins;
         }
 
-        public function invokeSucess(){
-            $params = explode("@",$this->action);
-            $ControllerClass = "App\Controller\\".$params[0];
-            $method = $params[1];
-            $arguments = $this->getArguments($ControllerClass,$method);
-            $ctrlins = new $ControllerClass();
-            $ctrlins->$method(...$arguments);
-            return  $ctrlins ;
-        }
-
-        public function invokeFail($method){
-            $params = explode("@",$this->action);
-            $ControllerClass = "App\Controller\\".$params[0];
-            $arguments = $this->getArguments($ControllerClass,$method);
-            $ctrlins = new $ControllerClass();
-            $ctrlins->$method(...$arguments);
-            return  $ctrlins ;
-        }
-
-        public function execute(){
-            foreach($this->middlewares as $middleware){
-                if(!is_null($middleware)){ 
-                    $MiddlewareClass = "App\Middleware\\".$middleware;
-                    $middleins = new $MiddlewareClass();
-                    if($middleins instanceof BaseAuthMiddleware){
-                        $middleins->handle();
+        public static function Group($url,$middlewares=null,$callback){
+            $routes = call_user_func($callback);
+            if($routes){      
+                foreach($routes as $route){
+                    $route->path = $url.'/'.$route->path;
+                    $middlewares ??= [];
+                    if(gettype($middlewares) !== "array" ){
+                        $middlewares = [$middlewares];
                     }
-                    
+                    $route->middlewares = array_merge($route->middlewares,$middlewares);
+                    $route->register();
                 }
             }
-            $ctrlins = $this->invokeSucess();
-            return $ctrlins;
         }
+
+        public function name($name){
+            Router::Named( $this->name,$name);
+        }
+
+        
     }
-
-
 ?>

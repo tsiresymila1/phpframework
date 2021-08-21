@@ -8,10 +8,10 @@
     class LoginAuthenticator extends UserAuthenticator {
 
         public function onAuthenticateFail(){
-            Response::redirect("/login");
+            Response::Redirect("app_login");
         }
-        public function onAuthenticateSuccess(){
-            Response::Redirect('/admin');
+        public function onAuthenticateSuccess($user){
+            Response::Redirect('admin');
         }
         
         

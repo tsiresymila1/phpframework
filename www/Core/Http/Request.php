@@ -14,6 +14,7 @@ class Request{
     protected  $files;
     protected  $params;
     protected  $headers;
+    public static  $AJAX_HEADERS = [];
     protected $auth = false;
 
     public static function getInstance() {
@@ -41,7 +42,7 @@ class Request{
         $headers = [];
         foreach ($_SERVER as $name => $value)
         {
-            if (substr($name, 0, 5) == 'HTTP_')
+            if (substr($name, 0, 5) == 'HTTP_' )
             {
                 $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
             }
@@ -49,7 +50,7 @@ class Request{
         return $headers;
     }
 
-    public static function init($path="/"){
+    public static function Init($path="/"){
         $ins = self::getInstance();
         $ins->set('path',$path);
         Logger::infos($ins ->method." ".$path,"REQUEST");
@@ -91,6 +92,14 @@ class Request{
             return $ins->headers[$key];
         }
         return $ins->headers;
+    }
+
+    public static function GetToken($key="Authorization"){
+        $ins = self::getInstance();
+        if(isset($ins->headers[$key])){
+            return str_replace('Bearer ','',$ins->headers[$key]);
+        }
+        return '';
     }
 
     public static function Resources( $key=null){

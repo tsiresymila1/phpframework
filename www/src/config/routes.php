@@ -1,10 +1,16 @@
 <?php
-
-       use Core\Http\Router;
-       Router::All("/admin/hello","DefaultController@admin");
-       Router::Get("/","DefaultController@index");
-       Router::Get("/admin","DefaultController@admin",["AuthMiddleware"]);
-       Router::All("/login","LoginController@login");
-       Router::Get("/teste","DefaultController@webpack");
+       
+       use Core\Http\Route;
+       Route::Get("/","DefaultController@index")->name('home');
+       Route::Any("/admin/hello","DefaultController@hello")->name('admin_hello');
+       Route::Get("/admin","DefaultController@admin")->name('admin');
+       Route::Any("/login","LoginController@login")->name('app_login');;
+       Route::Get("/teste","DefaultController@webpack");
+       Route::Group('/api',null,function(){
+              return [
+                     Route::Get('/login',"LoginController@login"),
+                     Route::Get('/admin',"DefaultController@admin")
+              ];
+       })
 
 ?>
