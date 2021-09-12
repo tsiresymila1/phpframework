@@ -1,6 +1,6 @@
 {% extends 'base.php' %}
 {% block content %}
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow p-3 mb-5 rounded-0">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow  mb-5 rounded-0">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">Navbar w/ text</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
 					</li>
 				</ul>
 				<span class="navbar-text">
-					Navbar text with an inline element
+					{{lower('Navbar text with an inline element')}}
 				</span>
 			</div>
 		</div>

@@ -11,35 +11,42 @@ class DefaultController extends Controller {
 
     public function __construct()
     {
+       
+        Response::$renderer->addFunction('lower',function($data){
+            return strtolower($data);
+        });
         parent::__construct();
     }
     
     public  function index(){
         $user = new UserModel();
         $result = $user->findAll()->orWhere(array('email'=>"tsiresymila@gmail.com",'soft_deleted'=>0))->where(array('id'=>1))->get();
-        // $user->find([1,2,3]);
-        // $user->findBy('id',1);
-        // $user->findAll()->get();
-        // $encrypt = new Encryption(); 
-        // $user->insert(array(
-        //     "name"=>"Tsiresy",
-        //     "email" =>"tsiresymila@gmail.com",
-        //     "password" => $encrypt->encode("tsiresy")
-        // ));
-        // $user->set(array('password'=>$encrypt->encode("mila")))->where('id',2)->update();
-        $this->response::json($result);
+        $encrypt = new Encryption(); 
+        $userm = $user->findOneBy(["email" =>"tsiresy@gmail.com"]);
+        if(!$userm){
+            $user->insert(array(
+                "name"=>"Tsiresy",
+                "email" =>"tsiresy@gmail.com",
+                "password" => $encrypt->encode("Tsiresy_wp1"),
+                "roles" => "ROLE_ADMIN"
+            ));
+        }
+        $user->set(array('password'=>$encrypt->encode("Tsiresy_wp1")))->where(['email'=>'tsiresymila@gmail.com'])->update();
+        Response::Json($result);
     }
 
-    public  function admin(Response $response){
-        $response::render('admin',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
+    public  function admin(){
+        // $response::Json(['data'=>"okey"]);
+        Response::Render('admin',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
     }
     public  function webpack(){
-        $this->response::render('test.html.twig',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
+        Response::Render('test.html.twig',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
     }
 
     public  function json(){
-        $this->response::json(['key'=> "valuen"]);
+        Response::Json(['key'=> "valuen"]);
     }
+
 }
 
 ?>

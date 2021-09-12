@@ -4,9 +4,11 @@ _bdd/*
 .env
 .vscode
 .idea
-node_modules
-package-lock.json
-storage/session/*
+www/node_modules
+www/package-lock.json
+www/storage/session/*
+www/storage/logs/*
+/test
 .idea
 .vscode
 www/libs

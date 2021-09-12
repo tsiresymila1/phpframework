@@ -1,11 +1,18 @@
 <?php
+       
+       use Core\Http\Route;
+       // Route::Get("/","DefaultController@index")->name('home');
+       // Route::Any("/admin/hello","DefaultController@hello")->name('admin_hello');
+       // Route::Get("/admin","DefaultController@admin")->name('admin');
+       // Route::Any("/login","LoginController@login")->name('app_login');;
+       // Route::Get("/teste","DefaultController@webpack");
+       // Route::Group('/api',null,function(){
+       //        return [
+       //               Route::Get('/login',"LoginController@login"),
+       //               Route::Get('/admin',"DefaultController@admin")
+       //        ];
+       // })
 
-       use Core\Http\Router;
-
-       Router::all("/admin","DefaultController@admin");
-       Router::get("/","DefaultController@index");
-      //Router::get("/admin","DefaultController@admin",["AuthMiddleware"]);
-       Router::all("/login","LoginController@login");
-       Router::get("/teste","DefaultController@webpack");
+       Route::Get("/{routeReact}","HomeController@index")->name('home');
 
 ?>

@@ -11,7 +11,7 @@ services:
       - mysqldb
     command: >
       /bin/sh -c "envsubst '$${HOST}' < /etc/apache2/sites-available/000-default.conf.example > /etc/apache2/sites-available/000-default.conf
-      && a2enmod rewrite && apache2-foreground"
+      && a2enmod rewrite && service apache2 restart && chown -R www-data:www-data /var/www/html && apache2-foreground "
     environment:
       - DEVELOPMENT=true
       - HOST=${HOST}
@@ -29,7 +29,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     command: mysqld --sql_mode=""
     volumes:
-      - ./data:/var/lib/mysql
+      - data_db:/var/lib/mysql
       - ./_bdd:/docker-entrypoint-initdb.d
 
   phpmyadmin:

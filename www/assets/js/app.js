@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
+import App from './componets/App';
+import store from './store';
+import { Provider } from 'react-redux';
+import * as serviceWorker from './serviceWorker';
 
-import "../css/app.css";
-const HelloWorld = () => {
-    return (
-        <h1 className="red">
-            Hello Mila
-        </h1>
-    );
-}
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
 
-ReactDOM.render(<HelloWorld />, document.getElementById("root"));
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
