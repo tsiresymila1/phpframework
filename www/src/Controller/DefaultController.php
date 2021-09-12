@@ -11,6 +11,10 @@ class DefaultController extends Controller {
 
     public function __construct()
     {
+       
+        Response::$renderer->addFunction('lower',function($data){
+            return strtolower($data);
+        });
         parent::__construct();
     }
     
@@ -31,16 +35,16 @@ class DefaultController extends Controller {
         Response::Json($result);
     }
 
-    public  function admin(Response $response){
-        $response::Json(['data'=>"okey"]);
-        $response::render('admin',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
+    public  function admin(){
+        // $response::Json(['data'=>"okey"]);
+        Response::Render('admin',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
     }
-    public  function webpack(Response $response){
-        $response::Render('test.html.twig',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
+    public  function webpack(){
+        Response::Render('test.html.twig',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
     }
 
-    public  function json(Response $response){
-        $response::Json(['key'=> "valuen"]);
+    public  function json(){
+        Response::Json(['key'=> "valuen"]);
     }
 
 }

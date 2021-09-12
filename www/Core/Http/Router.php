@@ -111,11 +111,11 @@ use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
             $paramsmethod = $r->getParameters();
             foreach($paramsmethod as $p){
                 $name = $p->name;
-                if(isset($this->params[$name])){
+                $type = $p->getType();
+                if(is_null($type) && isset($this->params[$name])){
                     $arguments[] = $this->params[$name];
                 }
                 else{   
-                    $type = $p->getType();
                     if(!is_null($type) && method_exists($type->getName(),'getInstance')){
                         $className = $type->getName();
                         $arguments[] = $className::getInstance();

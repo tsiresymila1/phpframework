@@ -23,7 +23,7 @@ module.exports = {
         ignored: /node_modules/,
     },
     devServer: {
-        contentBase: path.join(__dirname, "public")
+        static: path.join(__dirname, "public")
     },
     module: {
         rules: [{

@@ -23,7 +23,7 @@ class Handler {
         Response::Init();
         Router::Config($this->path);
         if(!file_exists(APP_PATH.'config/config.php')){
-            throw new Exception('routes.php file not found');
+            throw new Exception('config.php file not found');
         }
         require APP_PATH.'config/config.php';
         if(!file_exists(APP_PATH.'config/routes.php')){

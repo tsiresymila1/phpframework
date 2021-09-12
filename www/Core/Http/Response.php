@@ -10,11 +10,11 @@ class Response{
     public  $twig;
     private static $HEADER ;
     private static  $_instance = null;
-    protected $renderer ;
+    public static $renderer ;
 
     public function __construct(){
-        $this->renderer = new Template(APP_PATH."templates".DIRECTORY_SEPARATOR);
-        $this->renderer->addFunction("uppercase",function($data){
+        self::$renderer = new Template(APP_PATH."templates".DIRECTORY_SEPARATOR);
+        self::$renderer->addFunction("uppercase",function($data){
             return strtolower($data);
         });
     }
@@ -72,8 +72,6 @@ class Response{
                 header($key.': '.$header);
         }
     }
-    
-
 
     public static function Send(String $data=""){
         ob_start();
@@ -88,13 +86,9 @@ class Response{
         ob_start();
         header('Content-type: text/html');
         self::setHeader();
-        $ins = self::getInstance();
-        $ins->renderer->view($template,$context);  
+        self::$renderer->view($template,$context);  
         ob_end_flush();
         exit(200);
     }
-
-
-
 }
 ?>

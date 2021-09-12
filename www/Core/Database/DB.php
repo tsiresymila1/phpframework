@@ -1,6 +1,8 @@
 <?php
 
 namespace Core\Database;
+
+use Core\Utils\Logger;
 use Exception;
 use PDO;
 use PDOException;
@@ -18,8 +20,7 @@ class DB {
             if(!file_exists(APP_PATH.'config/database.php')){
                 throw new Exception('File not found');
             }
-            require APP_PATH.'config/database.php';
-            $this->config = $config;
+            $this->config = require APP_PATH.'config/database.php';
         }
 
         public static function getInstance() {
@@ -33,13 +34,13 @@ class DB {
         public  static function init(){
             $ins = self::getInstance();
             try{
-                $ins->pdo = new PDO('mysql:host='. $ins->config['HOST'].';dbname='. $ins->config['DATABASE'],  $ins->config['USER'],  $ins->config['PASSWORD'], array(
+                $ins->pdo = new PDO($ins->config['DRIVER'].':host='. $ins->config['HOST'].';dbname='. $ins->config['DATABASE'],  $ins->config['USER'],  $ins->config['PASSWORD'], array(
                     PDO::ATTR_PERSISTENT => true,
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
                 ));
             }
             catch  (PDOException $e) {
-                    echo "Erreur !: " . $e->getMessage() . "<br/>";
+                    Logger::error("Erreur : " . $e->getMessage() . "");
                     die();
             }
         }

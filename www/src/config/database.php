@@ -1,6 +1,7 @@
 <?php
 
-    $config = [
+    return [
+        "DRIVER" =>"mysql",
         "HOST" => "mysqldb",
         "PORT" => 3306,
         "USER" =>"phpframework",
