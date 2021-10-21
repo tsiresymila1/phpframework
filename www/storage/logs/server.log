@@ -268,3 +268,12 @@
 2021-08-22 11:09:15::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
 2021-08-22 11:09:15::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
 2021-08-22 11:09:15::DATABASE QUERY:: UPDATE users SET password='azgxS3BSRDIvT1BYQ3hCWi9STmt1Zz09' WHERE email='tsiresymila@gmail.com'
+2021-09-15 18:39:21::REQUEST:: GET /api/admin
+2021-09-15 18:41:50::REQUEST:: GET /api/admin
+2021-09-15 18:42:15::REQUEST:: GET /api/admin
+2021-09-15 18:55:25::REQUEST:: GET /api/admin
+2021-09-15 18:59:09::REQUEST:: POST /api/login
+2021-09-15 18:59:09::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresymila@gmail.com' AND password='azgxS3BSRDIvT1BYQ3hCWi9STmt1Zz09'
+2021-09-15 18:59:48::REQUEST:: GET /api/admin
+2021-09-15 19:02:14::REQUEST:: GET /api/admin
+2021-09-15 19:05:37::REQUEST:: GET /api/admin

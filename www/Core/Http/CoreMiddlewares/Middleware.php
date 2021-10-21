@@ -2,10 +2,8 @@
 
 namespace Core\Http\CoreMiddlewares;
 
-interface Middleware {
-   
-    public function handle();
+interface Middleware
+{
 
-    
+    public function handle();
 }
-?>

@@ -3,8 +3,8 @@ version: '3'
 services:
   web:
     ports:
-      - 9999:80
-      - 2443:443
+      - 4444:80
+      - 4443:443
 
   mysqldb:
     ports:
@@ -12,4 +12,4 @@ services:
 
   phpmyadmin:
     ports:
-      - 29999:80
+      - 20000:80

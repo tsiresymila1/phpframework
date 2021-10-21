@@ -88,6 +88,5 @@
             Router::Named( $this->name,$name);
         }
 
-        
     }
 ?>

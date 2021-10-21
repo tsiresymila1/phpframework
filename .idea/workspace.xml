@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="efc6c114-f506-4740-aac1-7b9ae3242361" name="Default Changelist" comment="" />
+    <list default="true" id="efc6c114-f506-4740-aac1-7b9ae3242361" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.override.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Database/DB.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Database/DB.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Database/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Database/Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Http/CoreControllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Http/CoreControllers/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Http/Response.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Http/Response.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Http/Route.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Http/Route.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Http/Security/UserAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Http/Security/UserAuthenticator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/src/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/Controller/DefaultController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/src/Security/LoginAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/Security/LoginAuthenticator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/src/config/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/config/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/storage/logs/server.log" beforeDir="false" afterPath="$PROJECT_DIR$/www/storage/logs/server.log" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,6 +24,9 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1tBAHhExdnLNeqcLeXLPFr0IS7m" />
   <component name="ProjectViewState">
@@ -18,6 +36,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -29,10 +49,17 @@
       <option name="presentableId" value="Default" />
       <updated>1622232026347</updated>
       <workItem from="1622232027749" duration="462000" />
+      <workItem from="1633283580007" duration="1546000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="351" y="98" key="SettingsEditor" timestamp="1633283657592">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="351" y="98" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1633283657592" />
   </component>
 </project>

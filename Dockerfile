@@ -21,6 +21,6 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd
 RUN docker-php-ext-enable xdebug
 RUN docker-php-ext-install zip
-
-WORKDIR /var/www/html
+RUN a2enmod rewrite
 RUN chown -R www-data:www-data /var/www/html
+WORKDIR /var/www/html

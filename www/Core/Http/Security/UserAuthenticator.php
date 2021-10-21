@@ -147,7 +147,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
                     $this->onAuthenticateFail();
                 });
             }
-            // verifyy if api login
+            // verify if api login
             else if(preg_match("#^" .API_PREFIX. $this->login.'/$#', $path)){
                 $this->verifyPost(function($user){
                     $jwt = new JWT(SECRET);
@@ -205,7 +205,6 @@ class UserAuthenticator implements UserAuthenticatorInterface
     
     public function onAuthenticateSuccess($data)
     {
-        
         Response::RedirectToRoute('/'.$_SERVER['HTTP_REFERER']??'');
     }
 

@@ -8,6 +8,7 @@ www/node_modules
 www/package-lock.json
 www/storage/session/*
 www/storage/logs/*
+www/vendor
 /test
 .idea
 .vscode

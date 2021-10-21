@@ -1,15 +1,16 @@
 <?php
 
-    namespace App\Controller;
-    use Core\Http\CoreControllers\Controller;
-    use Core\Http\Request;
-    use Core\Http\Response;
+namespace App\Controller;
 
-    class LoginController extends Controller{
+use Core\Http\CoreControllers\Controller;
+use Core\Http\Request;
+use Core\Http\Response;
 
-        public function login(){
-            Response::render("login",[]);
-        }
+class LoginController extends Controller
+{
 
+    public function login()
+    {
+        Response::render("login", []);
     }
-?>
+}

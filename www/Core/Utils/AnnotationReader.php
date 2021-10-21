@@ -1,9 +1,7 @@
 <?php
-    namespace Core\Utils;
-    
-    class AnnotationReader {
 
-    }
+namespace Core\Utils;
 
-
-?>
+class AnnotationReader
+{
+}

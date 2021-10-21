@@ -1,41 +1,42 @@
 <?php
 
-    namespace App\Model;
-    use Core\Database\Model;
-    use Core\Http\Security\AuthenticatorModelInterface;
+namespace App\Model;
 
-    class UserModel extends Model  implements AuthenticatorModelInterface{
+use Core\Database\Model;
+use Core\Http\Security\AuthenticatorModelInterface;
 
-        /**
-         * @type varchar(250)
-         * @default tsiresymila@gmail.com
-         * @notnull true
-         */
-        public  $email;
-        /**
-         * @type varchar(250)
-         * @notnull true
-         */
-        public  $password;
-        /**
-         * @type tinyint(1)
-         * @notnull true
-         * 
-         */
-        public  $isAdmin;
-        /**
-         * @type json
-         * @notnull true
-         */
-        public   $roles;
-        /**
-         * @type int(11)
-         */
-        public  $nb_connextion ;
+class UserModel extends Model  implements AuthenticatorModelInterface
+{
 
-        public function getRoles(){
-            return explode(',',$this->roles);
-        }
+    /**
+     * @type varchar(250)
+     * @default tsiresymila@gmail.com
+     * @notnull true
+     */
+    public  $email;
+    /**
+     * @type varchar(250)
+     * @notnull true
+     */
+    public  $password;
+    /**
+     * @type tinyint(1)
+     * @notnull true
+     * 
+     */
+    public  $isAdmin;
+    /**
+     * @type json
+     * @notnull true
+     */
+    public   $roles;
+    /**
+     * @type int(11)
+     */
+    public  $nb_connextion;
+
+    public function getRoles()
+    {
+        return explode(',', $this->roles);
     }
-
-?>
+}

@@ -1,15 +1,16 @@
 <?php
 
-    namespace App\Controller;
-    use Core\Http\CoreControllers\Controller;
-    use Core\Http\Request;
-    use Core\Http\Response;
+namespace App\Controller;
 
-    class HomeController extends Controller{
+use Core\Http\CoreControllers\Controller;
+use Core\Http\Request;
+use Core\Http\Response;
 
-        public function index(){
-            Response::render("index",[]);
-        }
+class HomeController extends Controller
+{
 
+    public function index()
+    {
+        Response::render("index", []);
     }
-?>
+}

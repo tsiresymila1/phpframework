@@ -1,11 +1,11 @@
 <?php
-    namespace Core\Http\Security;
 
-    interface AuthenticatorModelInterface {
+namespace Core\Http\Security;
 
-        public function getRoles();
+interface AuthenticatorModelInterface
+{
 
-        // public function setRoles($roles);
-    }
+    public function getRoles();
 
-?>
+    // public function setRoles($roles);
+}
