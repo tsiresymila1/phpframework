@@ -13,7 +13,7 @@ class Bootstrap
     public static function boot()
     {
         Session::Init();
-        DB::init();
+        DB::Init();
         Handler::handle();
         set_error_handler(function ($errno, $errstr, $errfile, $errline) {
             Logger::error($errno);

@@ -277,3 +277,98 @@
 2021-09-15 18:59:48::REQUEST:: GET /api/admin
 2021-09-15 19:02:14::REQUEST:: GET /api/admin
 2021-09-15 19:05:37::REQUEST:: GET /api/admin
+2021-10-25 14:55:09::REQUEST::  /
+2021-10-25 15:03:04::REQUEST:: GET /
+2021-10-25 15:03:04::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2021-10-25 15:03:04::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2021-10-25 15:03:04::DATABASE QUERY:: INSERT INTO users SET name='Tsiresy',email='tsiresy@gmail.com',password='azgxS3BSRDIvT1BYQ3hCWi9STmt1Zz09',roles='ROLE_ADMIN',created_at='2021-10-25 15:03:04',updated_at='2021-10-25 15:03:04'
+2021-10-25 15:03:05::DATABASE QUERY:: UPDATE users SET password='azgxS3BSRDIvT1BYQ3hCWi9STmt1Zz09' WHERE email='tsiresymila@gmail.com'
+2021-10-25 15:03:30::REQUEST:: GET /
+2021-10-25 15:03:30::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2021-10-25 15:03:30::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2021-10-25 15:03:30::DATABASE QUERY:: UPDATE users SET password='azgxS3BSRDIvT1BYQ3hCWi9STmt1Zz09' WHERE email='tsiresymila@gmail.com'
+2021-10-25 15:49:59::REQUEST:: GET /
+2021-10-25 15:49:59::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2021-10-25 15:49:59::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2021-10-25 15:49:59::DATABASE QUERY:: UPDATE users SET password='azgxS3BSRDIvT1BYQ3hCWi9STmt1Zz09' WHERE email='tsiresymila@gmail.com'
+2021-10-25 19:00:38::REQUEST:: GET /
+2021-10-25 19:00:39::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2021-10-25 19:00:39::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2021-10-25 19:00:39::DATABASE QUERY:: UPDATE users SET password='azgxS3BSRDIvT1BYQ3hCWi9STmt1Zz09' WHERE email='tsiresymila@gmail.com'
+2021-10-25 19:01:30::REQUEST:: GET /json
+2021-10-25 19:02:00::REQUEST:: GET /json
+2021-10-25 19:02:38::REQUEST:: GET /json
+2021-10-25 19:03:25::REQUEST:: GET /json
+2021-10-25 19:03:47::REQUEST:: GET /json
+2021-10-25 19:07:02::REQUEST:: GET /json
+2021-10-25 19:07:49::REQUEST:: GET /hello
+2021-10-25 19:07:49::DATABASE QUERY:: SELECT * FROM users WHERE email='' AND password=''
+2021-10-25 19:07:53::REQUEST:: GET /login
+2021-10-25 19:09:50::REQUEST:: GET /hello
+2021-10-25 19:09:50::DATABASE QUERY:: SELECT * FROM users WHERE email='' AND password=''
+2021-10-25 19:09:50::REQUEST:: GET /login
+2021-10-25 19:28:46::REQUEST:: GET /hello
+2021-10-25 19:28:46::DATABASE QUERY:: SELECT * FROM users WHERE email='' AND password=''
+2021-10-25 19:30:05::REQUEST:: GET /hello
+2021-10-25 19:30:05::DATABASE QUERY:: SELECT * FROM users WHERE email='' AND password=''
+2021-10-25 19:30:23::REQUEST:: GET /teste
+2021-10-25 19:30:43::REQUEST:: GET /teste
+2021-10-25 19:31:09::REQUEST:: GET /teste
+2021-10-25 19:39:09::REQUEST:: GET /teste
+2021-10-25 19:39:44::REQUEST:: GET /teste
+2021-10-25 19:40:13::REQUEST:: GET /teste
+2021-10-25 19:41:25::REQUEST:: GET /teste
+2022-02-15 16:39:59::REQUEST:: GET /
+2022-02-15 16:40:00::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 16:40:00::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 16:40:00::DATABASE QUERY:: INSERT INTO users SET name='Tsiresy',email='tsiresy@gmail.com',password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09',roles='ROLE_ADMIN',created_at='2022-02-15 16:40:00',updated_at='2022-02-15 16:40:00'
+2022-02-15 16:40:00::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 17:40:05::REQUEST:: GET /
+2022-02-15 17:41:40::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 17:41:40::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 17:41:40::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 17:46:50::REQUEST:: GET /
+2022-02-15 17:54:17::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 17:54:17::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 17:54:17::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 19:19:19::REQUEST:: GET /
+2022-02-15 19:27:48::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 19:27:48::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 19:27:48::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 19:36:52::REQUEST:: GET /
+2022-02-15 19:39:45::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 19:39:45::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 19:39:45::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 19:41:21::REQUEST:: GET /
+2022-02-15 19:43:48::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 19:43:48::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 19:43:48::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 19:47:28::REQUEST:: GET /
+2022-02-15 19:47:50::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 19:47:50::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 19:47:50::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 19:50:31::REQUEST:: GET /
+2022-02-15 19:53:30::REQUEST:: GET /
+2022-02-15 19:54:16::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 19:54:16::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 19:54:16::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 20:10:02::REQUEST:: GET /
+2022-02-15 20:11:40::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 20:11:41::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 20:11:41::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 20:16:01::REQUEST:: GET /
+2022-02-15 20:17:44::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 20:17:45::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 20:17:45::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 20:18:03::REQUEST:: GET /
+2022-02-15 20:19:26::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 20:19:27::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 20:19:27::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 20:26:30::REQUEST:: GET /
+2022-02-15 20:27:21::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 20:27:21::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 20:27:21::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-02-15 20:27:28::REQUEST:: GET /
+2022-02-15 20:27:37::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-02-15 20:27:37::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresy@gmail.com'
+2022-02-15 20:27:37::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'

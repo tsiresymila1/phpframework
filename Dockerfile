@@ -23,4 +23,11 @@ RUN docker-php-ext-enable xdebug
 RUN docker-php-ext-install zip
 RUN a2enmod rewrite
 RUN chown -R www-data:www-data /var/www/html
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 WORKDIR /var/www/html
+
+RUN composer require --dev phpunit/phpunit spatie/phpunit-watcher
+RUN composer dumpautoload

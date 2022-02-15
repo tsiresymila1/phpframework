@@ -29,28 +29,28 @@ class Model
     {
         $class = $this->endc(explode('\\', get_class($this)));
         self::$tablename = str_replace(["model", "\\", "models"], "", strtolower($class)) . "s";
-        $this->db = DB::getInstance();
+        $this->db = DB::instance();
 
         $reflect = new ReflectionClass(get_class($this));
-        $sql = "CREATE TABLE " . self::$tablename . " IF NOT EXISTS ( id INT(11) PRIMARY KEY , ";
-        foreach ($reflect->getProperties(ReflectionProperty::IS_PUBLIC) as $p) {
-            $name = $p->getName();
-            $document = $p->getDocComment();
-            if ($document) {
-                try {
-                    $parser = new DocBlock($document);
-                    $parser->parse_block();
-                    $column = $parser->getColumn();
-                } catch (\Exception $e) {
-                }
-            } else if ($p->getType()) {
-                $column  = $p->getType()->getName();
-            } else {
-                $column = "text";
-            }
-            $sql .= $name . " " . $column . ",";
-        }
-        $sql .= ")";
+        // $sql = "CREATE TABLE " . self::$tablename . " IF NOT EXISTS ( id INT(11) PRIMARY KEY , ";
+        // foreach ($reflect->getProperties(ReflectionProperty::IS_PUBLIC) as $p) {
+        //     $name = $p->getName();
+        //     $document = $p->getDocComment();
+        //     if ($document) {
+        //         try {
+        //             $parser = new DocBlock($document);
+        //             $parser->parse_block();
+        //             $column = $parser->getColumn();
+        //         } catch (\Exception $e) {
+        //         }
+        //     } else if ($p->getType()) {
+        //         $column  = $p->getType()->getName();
+        //     } else {
+        //         $column = "text";
+        //     }
+        //     $sql .= $name . " " . $column . ",";
+        // }
+        // $sql .= ")";
     }
 
     protected function endc($array)

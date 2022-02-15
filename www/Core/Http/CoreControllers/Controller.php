@@ -5,24 +5,26 @@ namespace Core\Http\CoreControllers;
 use Core\Http\Request;
 use Core\Http\Response;
 
-class Controller {
+class Controller
+{
 
-    public function __construct(){
-       $this->request = Request::getInstance();
-       $this->response = Response::getInstance();
+    public function __construct()
+    {
+        $this->request = Request::instance();
+        $this->response = Response::instance();
     }
 
-    public function index(){
-        Response::send( static::class." was called ");
+    public function __invoke(...$args)
+    {
+        Response::send(static::class . " was called ");
     }
-    public function url404NotFound(){
+    public function url404NotFound()
+    {
         Response::send(" URL not found");
     }
 
-    public function addFunction($name, $callback){
-        Response::$renderer->addFunction($name,$callback);
+    public function addFunction($name, $callback)
+    {
+        Response::$renderer->addFunction($name, $callback);
     }
-
 }
-
-?>

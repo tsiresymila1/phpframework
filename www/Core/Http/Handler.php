@@ -9,7 +9,7 @@ class Handler
 
     private static $_instance = null;
 
-    public static function getInstance()
+    public static function instance()
     {
 
         if (is_null(self::$_instance)) {
@@ -37,7 +37,7 @@ class Handler
 
     public static function handle()
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         $ins->auth();
     }
 

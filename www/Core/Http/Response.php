@@ -2,6 +2,8 @@
 
 namespace Core\Http;
 
+use BadMethodCallException;
+use Core\Container\Container;
 use Core\Renderer\Template;
 use Exception;
 
@@ -23,7 +25,7 @@ class Response
         });
     }
 
-    public static function getInstance()
+    public static function instance()
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new Response();
@@ -38,8 +40,10 @@ class Response
      */
     public static function Init()
     {
-        $ins = self::getInstance();
-        return $ins;
+        $container = Container::instance();
+        $_i = self::instance();
+        $container->register(static::class, static::class);
+        return $_i;
     }
 
     /**
@@ -65,7 +69,7 @@ class Response
             ob_end_flush();
             die();
         } else {
-            throw new Exception('Route not found');
+            throw new BadMethodCallException('Route not found');
         }
     }
 

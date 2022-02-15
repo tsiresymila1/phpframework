@@ -2,10 +2,12 @@
 
 namespace Core\Database;
 
+use Core\Container\Container;
 use Core\Utils\Logger;
 use Exception;
 use PDO;
 use PDOException;
+use RuntimeException;
 
 class DB
 {
@@ -18,12 +20,12 @@ class DB
     {
         // loading database config
         if (!file_exists(APP_PATH . 'config/database.php')) {
-            throw new Exception('File not found');
+            throw new RuntimeException('File not found');
         }
         $this->config = require APP_PATH . 'config/database.php';
     }
 
-    public static function getInstance()
+    public static function instance()
     {
 
         if (is_null(self::$_instance)) {
@@ -32,14 +34,16 @@ class DB
         return self::$_instance;
     }
 
-    public  static function init()
+    public  static function Init()
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         try {
             $ins->pdo = new PDO($ins->config['DRIVER'] . ':host=' . $ins->config['HOST'] . ';dbname=' . $ins->config['DATABASE'],  $ins->config['USER'],  $ins->config['PASSWORD'], array(
                 PDO::ATTR_PERSISTENT => true,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             ));
+            $container = Container::instance();
+            $container->register(static::class, static::class);
         } catch (PDOException $e) {
             Logger::error("Erreur : " . $e->getMessage() . "");
             die();

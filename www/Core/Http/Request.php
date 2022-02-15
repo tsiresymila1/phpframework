@@ -2,6 +2,7 @@
 
 namespace Core\Http;
 
+use Core\Container\Container;
 use Core\Utils\Logger;
 use Utils\File;
 
@@ -25,7 +26,7 @@ class Request
     public static  $AJAX_HEADERS = [];
     protected $auth = false;
 
-    public static function getInstance()
+    public static function instance()
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new Request();
@@ -70,13 +71,13 @@ class Request
      */
     public function getallheaders()
     {
-        $headers = [];
+        $heads = [];
         foreach ($_SERVER as $name => $value) {
             if (substr($name, 0, 5) == 'HTTP_') {
-                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+                $heads[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
             }
         }
-        return $headers;
+        return $heads;
     }
 
     /**
@@ -88,9 +89,11 @@ class Request
      */
     public static function Init($path = "/")
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         $ins->set('path', $path);
         Logger::infos($ins->method . " " . $path, "REQUEST");
+        $container = Container::instance();
+        $container->register(static::class, static::class);
         return $ins;
     }
 
@@ -104,7 +107,7 @@ class Request
      */
     public static function Get($key = null)
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         if (!is_null($key)) {
             return $ins->get[$key];
         }
@@ -119,7 +122,7 @@ class Request
      */
     public static function Post($key = null)
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         if (!is_null($key)) {
             return $ins->post[$key];
         }
@@ -135,7 +138,7 @@ class Request
      */
     public static function File($key = null)
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         if (!is_null($key)) {
             return $ins->file[$key];
         }
@@ -151,7 +154,7 @@ class Request
      */
     public static function setParams($params)
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         $ins->set('params', $params);
         return $ins;
     }
@@ -165,7 +168,7 @@ class Request
      */
     public static function Headers($key = null)
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         if (!is_null($key)) {
             return $ins->headers[$key];
         }
@@ -177,11 +180,11 @@ class Request
      *
      * @param $key = "Authorization"
      *
-     * @return void
+     * @return string
      */
     public static function GetToken($key = "Authorization")
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         if (isset($ins->headers[$key])) {
             return str_replace('Bearer ', '', $ins->headers[$key]);
         }
@@ -193,11 +196,11 @@ class Request
      *
      * @param $key = null
      *
-     * @return void
+     * @return mixed
      */
     public static function Resources($key = null)
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         if (!is_null($key)) {
             return $ins->params[$key];
         }
@@ -209,7 +212,7 @@ class Request
      */
     public static function isGet()
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         return $ins->method === "GET";
     }
     /** 
@@ -217,7 +220,6 @@ class Request
      */
     public static function isAjax()
     {
-        $ins = self::getInstance();
         return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
 
@@ -226,7 +228,7 @@ class Request
      */
     public static function isPost()
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         return $ins->method === "POST";
     }
     /** 
@@ -234,7 +236,7 @@ class Request
      */
     public static function isAuth()
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         return $ins->auth;
     }
 
@@ -243,7 +245,7 @@ class Request
      */
     public static  function getMethod()
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         return $ins->method;
     }
 
@@ -252,7 +254,7 @@ class Request
      */
     public static  function getPath()
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         return $ins->path;
     }
 

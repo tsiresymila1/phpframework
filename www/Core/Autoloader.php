@@ -28,4 +28,7 @@ class Autoloader
         require str_replace("\\", DIRECTORY_SEPARATOR, $filepath);
     }
 }
+define('DIR', dirname(dirname(__FILE__)) . '/');
+define('APP_PATH', dirname(dirname(__FILE__)) . '/src' . '/');
+require DIR . '/vendor/autoload.php'; //load vendor autoloader
 Autoloader::register();

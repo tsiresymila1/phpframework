@@ -4,6 +4,8 @@ namespace Core\Http;
 
 use App\Controller;
 use App\Middleware;
+use BadMethodCallException;
+use Core\Container\Container;
 use Core\Http\CoreControllers\Controller as CoreController;
 use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
 use Exception;
@@ -20,6 +22,8 @@ class Router
     public static $path;
     public static Route $current;
     public  $name;
+    public $namespace = "App\Controller\\";
+    public $container;
     private  static $routes = [
         "GET" => [],
         "POST" => []
@@ -27,7 +31,7 @@ class Router
 
     private static  $_instance = null;
 
-    private static function getInstance()
+    private static function instance()
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new Router();
@@ -38,7 +42,7 @@ class Router
 
     public static function Config(String $path)
     {
-        $ins = self::getInstance();
+        $ins = self::instance();
         $ins::$path = trim($path, '/');
         return $ins;
     }
@@ -97,7 +101,8 @@ class Router
     public static function find()
     {
         $method = Request::getMethod();
-        $ins = self::getInstance();
+        $ins = self::instance();
+        $ins->container = Container::instance();
         $routes = self::$routes[$method];
         $controller = new CoreController();
         foreach ($routes as $route) {
@@ -117,15 +122,17 @@ class Router
         $r = new ReflectionMethod($class, $method);
         $paramsmethod = $r->getParameters();
         foreach ($paramsmethod as $p) {
-            $name = $p->name;
+            $pname = $p->name;
             $type = $p->getType();
-            if (is_null($type) && isset($this->params[$name])) {
-                $arguments[] = $this->params[$name];
+            if (is_null($type) && isset($this->params[$pname])) {
+                $arguments[] = $this->params[$pname];
             } else {
                 if (!is_null($type) && method_exists($type->getName(), 'getInstance')) {
                     $className = $type->getName();
-                    $arguments[] = $className::getInstance();
-                } else throw new Exception('Error params not found ');
+                    $arguments[] = $className::instance();
+                } else {
+                    throw new BadMethodCallException('Error params not found ');
+                }
             }
         }
         return $arguments;
@@ -133,22 +140,18 @@ class Router
 
     public function invokeSucess()
     {
-        $params = explode("@", self::$current->action);
-        $ControllerClass = "App\Controller\\" . $params[0];
-        $method = $params[1];
-        $arguments = $this->getArguments($ControllerClass, $method);
-        $ctrlins = new $ControllerClass();
-        $ctrlins->$method(...$arguments);
+        $cparams = explode("@", self::$current->action);
+        $ControllerClass = $this->namespace . $cparams[0];
+        $method = $cparams[1];
+        $ctrlins = $this->container->resolve($ControllerClass, $method);
         return  $ctrlins;
     }
 
     public function invokeFail($method)
     {
-        $params = explode("@", $this->action);
-        $ControllerClass = "App\Controller\\" . $params[0];
-        $arguments = $this->getArguments($ControllerClass, $method);
-        $ctrlins = new $ControllerClass();
-        $ctrlins->$method(...$arguments);
+        $methodsparams = explode("@", $this->action);
+        $ControllerClass = $this->namespace . $methodsparams[0];
+        $ctrlins = $this->container->resolve($ControllerClass, $method);
         return  $ctrlins;
     }
 
@@ -157,13 +160,12 @@ class Router
         foreach (self::$current->middlewares as $middleware) {
             if (!is_null($middleware)) {
                 $MiddlewareClass = "App\Middleware\\" . $middleware;
-                $middleins = new $MiddlewareClass();
+                $middleins = $this->container->make($MiddlewareClass);
                 if ($middleins instanceof BaseAuthMiddleware) {
                     $middleins->handle();
                 }
             }
         }
-        $ctrlins = $this->invokeSucess();
-        return $ctrlins;
+        return $this->invokeSucess();
     }
 }

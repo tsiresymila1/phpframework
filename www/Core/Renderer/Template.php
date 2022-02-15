@@ -63,7 +63,6 @@ class Template
         $code = $this->compileYield($code);
         $code = $this->compileEscapedEcho($code);
         $code = $this->compileFilter($code);
-        // $code = $this->compileEcho($code);
         $code = $this->compilePHP($code);
         return $code;
     }
@@ -86,7 +85,7 @@ class Template
 
     protected function compileFilter($code)
     {
-        $varibale = preg_replace_callback('~\{{\s*(.+?)\s*\}}~is', function ($match) {
+        return preg_replace_callback('~\{{\s*(.+?)\s*\}}~is', function ($match) {
             $array_varibales = explode('|', $match[1]);
             if (count($array_varibales) == 2) {
                 $var = trim($array_varibales[0]);
@@ -111,8 +110,6 @@ class Template
                 return preg_replace('~\{{\s*(.+?)\s*\}}~is', '<?php echo $$1 ?>', $match[0]);
             }
         }, $code);
-
-        return $varibale;
     }
 
     protected function compileEcho($code)
@@ -129,7 +126,9 @@ class Template
     {
         preg_match_all('/{% ?block ?(.*?) ?%}(.*?){% ?endblock ?%}/is', $code, $matches, PREG_SET_ORDER);
         foreach ($matches as $value) {
-            if (!array_key_exists($value[1], $this->blocks)) $this->blocks[$value[1]] = '';
+            if (!array_key_exists($value[1], $this->blocks)) {
+                $this->blocks[$value[1]] = '';
+            }
             if (strpos($value[2], '@parent') === false) {
                 $this->blocks[$value[1]] = $value[2];
             } else {

@@ -8,9 +8,6 @@
 
 use Core\Bootstrap;
 
-define('DIR', dirname(dirname(__FILE__)) . '/');
-define('APP_PATH', dirname(dirname(__FILE__)) . '/src' . '/');
-require DIR . 'Core/Autoloader.php';
+require '../Core/Autoloader.php';
 // using composer, 
-// require DIR.'/vendor/autoload.php'
 Bootstrap::boot();

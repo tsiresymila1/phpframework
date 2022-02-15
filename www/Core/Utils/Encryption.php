@@ -10,7 +10,7 @@ class Encryption
     private  $encryption_iv;
     private  $options;
 
-    public function __construct($ciphering = "aes-256-cbc", $encryption_key = "SuPerEncKey2010", $encryption_iv = "1234567891011121", $options = 0)
+    public function __construct($ciphering = "aes-256-cbc", $encryption_key = "SuPerEncKey2022", $encryption_iv = "1234567891011121", $options = 0)
     {
         $this->ciphering = $ciphering;
         $this->encryption_key = $encryption_key;

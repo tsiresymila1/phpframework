@@ -33,7 +33,7 @@ class UserModel extends Model  implements AuthenticatorModelInterface
     /**
      * @type int(11)
      */
-    public  $nb_connextion;
+    public  $nb_connexion;
 
     public function getRoles()
     {

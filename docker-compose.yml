@@ -11,7 +11,7 @@ services:
       - mysqldb
     command: >
       /bin/sh -c "envsubst '$${HOST}' < /etc/apache2/sites-available/000-default.conf.example > /etc/apache2/sites-available/000-default.conf
-      && apache2-foreground "
+      && apache2-foreground"
     environment:
       - DEVELOPMENT=true
       - HOST=${HOST}
@@ -37,6 +37,15 @@ services:
     environment:
       - PMA_HOST=mysqldb
       - PMA_PORT=3306
+
+  phpunitwatcher:
+    image: josimarlemos/phpunit-watcher:alpine
+    volumes:
+      - ./www:/app
+    working_dir: /app
+    tty: true
+    command: >
+       /bin/sh -c "phpunit-watcher watch"
 
 volumes:
   data_db:

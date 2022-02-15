@@ -2,12 +2,14 @@
 
 namespace Core\Session;
 
+use Core\Container\Container;
+
 class Session
 {
 
     private static $_instance = null;
 
-    public static function getInstance()
+    public static function instance()
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new Session();
@@ -27,7 +29,9 @@ class Session
 
     public static function  Set($key, $value)
     {
-        if (isset($_SESSION[$key])) unset($_SESSION[$key]);
+        if (isset($_SESSION[$key])) {
+            unset($_SESSION[$key]);
+        }
         $_SESSION[$key] = $value;
     }
     /**
@@ -55,6 +59,9 @@ class Session
 
     public static function Init()
     {
-        return self::getInstance();
+        $container = Container::instance();
+        $_i = self::instance();
+        $container->register(static::class, static::class);
+        return $_i;
     }
 }
