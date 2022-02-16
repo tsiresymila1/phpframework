@@ -4,12 +4,12 @@ namespace App\Controller;
 use Core\Http\CoreControllers\Controller;
 use Core\Http\Response;
 
-class TestController extends Controller
+class ReactController extends Controller
 {
 
     public function index()
     {
-        Response::render("test.index", []);
+        Response::render("react.index", ["name"=> "ReactController"]);
     }
 }
         

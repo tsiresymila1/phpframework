@@ -15,7 +15,8 @@ class CommandHandler
             $ins =  $container->command[$name];
             $ins->handle($args);
         } else {
-            echo "Command not found";
+            echo "Command not found\n";
+            exit();
         }
         return $ins;
     }

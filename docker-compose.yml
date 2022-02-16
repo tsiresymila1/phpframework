@@ -47,5 +47,16 @@ services:
     command: >
        /bin/sh -c "phpunit-watcher watch"
 
+  node:
+    image: nodejs:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    volumes:
+      - ./www:/usr/src/app
+    restart: always
+    command: >
+      /bin/sh -c "npm install && nodemon --legacy-watch 'assets/**/*' -e ts,tsx,js,jsx --exec 'webpack'" 
+
 volumes:
   data_db:

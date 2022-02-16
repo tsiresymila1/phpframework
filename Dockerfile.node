@@ -1,0 +1,6 @@
+FROM node:16.6.1
+
+WORKDIR /usr/src/app
+RUN npm install -g nodemon 
+RUN npm install -g ts-node
+RUN npm install -g webpack-cli
