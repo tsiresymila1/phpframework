@@ -20,9 +20,10 @@ class Request
     protected  $path;
     protected  $get;
     protected  $post;
-    protected  $files;
+    protected  $files = [];
     protected  $params;
     protected  $headers;
+    protected $request_data;
     public static  $AJAX_HEADERS = [];
     protected $auth = false;
 
@@ -45,6 +46,7 @@ class Request
         $this->get = $_GET;
         $this->post = $_POST;
         $this->params = [];
+        $this->request_data = $_REQUEST;
         $this->headers = $this->getallheaders();
         foreach ($_FILES as $key => $file) {
             $this->files[$key] = new File($file);
@@ -143,6 +145,36 @@ class Request
             return $ins->file[$key];
         }
         return $ins->file;
+    }
+
+    /**
+     * File
+     *
+     * @param $key = null
+     *
+     * @return void
+     */
+    public  function files($key = null)
+    {
+        if (!is_null($key)) {
+            return $this->file[$key];
+        }
+        return $this->file;
+    }
+
+    /**
+     * File
+     *
+     * @param $key = null
+     *
+     * @return void
+     */
+    public  function input($key = null)
+    {
+        if (!is_null($key)) {
+            return $this->request_data[$key];
+        }
+        return $this->request_data;
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Controller;
 use Core\Http\CoreControllers\Controller;
 use Core\Utils\Encryption;
 use App\Model\UserModel;
+use Core\Database\DB;
 use Core\Http\Request;
 use Core\Http\Response;
 
@@ -20,7 +21,7 @@ class DefaultController extends Controller
         parent::__construct();
     }
 
-    public  function index(UserModel $user, Request $request)
+    public  function index(UserModel $user, Request $request, DB $db)
     {
         $result = $user->findAll()->orWhere(array('email' => "tsiresymila@gmail.com", 'soft_deleted' => 0))->where(array('id' => 1))->get();
         $encrypt = new Encryption();

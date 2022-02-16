@@ -64,7 +64,7 @@ class Container implements ContainerInterface
         return $methodReflection->invoke($initClass, ...$dependencies);
     }
 
-    public function make($class)
+    public function make($class, $parents = [])
     {
         $classReflection = new ReflectionClass($class);
         $constructorParams = $classReflection->getConstructor() ? $classReflection->getConstructor()->getParameters() : [];
@@ -73,12 +73,17 @@ class Container implements ContainerInterface
             $type = $constructorParam->getType();
             $className = $type->getName();
             if (array_key_exists($className, $this->container)) {
+                $this->handleCircularReference($className, $parents);
+                $parents[] = $className;
                 array_push($dependencies, $this->container[$className]);
             } else if ($type && $type instanceof ReflectionNamedType) {
-                array_push($dependencies, $this->make($constructorParam->getClass()));
+                $className = $constructorParam->getClass();
+                $this->handleCircularReference($className, $parents);
+                $parents[] = $className;
+                array_push($dependencies, $this->make($className, $parents));
             } else {
                 $name = $constructorParam->getName();
-                if (!empty($parameters) && array_key_exists($name, $this->container)) {
+                if (!empty($this->container) && array_key_exists($name, $this->container)) {
                     array_push($dependencies, $this->container[$name]);
                 } else {
                     if (!$constructorParam->isOptional()) {
@@ -88,5 +93,13 @@ class Container implements ContainerInterface
             }
         }
         return $classReflection->newInstance(...$dependencies);
+    }
+
+    public function handleCircularReference($className, $classes)
+    {
+        if (in_array($className, $classes)) {
+            throw new Exception("Circular reference found in dependancy injection");
+            exit();
+        }
     }
 }

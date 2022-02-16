@@ -118,6 +118,7 @@ class Response
 
     public static function Render($template, $context = [])
     {
+        $template = str_replace('.', '/', $template);
         ob_start();
         header('Content-type: text/html');
         self::setHeader();

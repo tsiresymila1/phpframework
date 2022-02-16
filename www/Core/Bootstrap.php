@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Core\Command\CommandContainer;
 use Core\Database\DB;
 use Core\Http\Handler;
 use Core\Session\Session;
@@ -12,9 +13,21 @@ class Bootstrap
 {
     public static function boot()
     {
+
         Session::Init();
         DB::Init();
         Handler::handle();
+        static::handleError();
+    }
+    public static function load()
+    {
+        CommandContainer::Init();
+        DB::Init();
+        //static::handleError();
+    }
+
+    public static function handleError()
+    {
         set_error_handler(function ($errno, $errstr, $errfile, $errline) {
             Logger::error($errno);
             Logger::error($errstr);
