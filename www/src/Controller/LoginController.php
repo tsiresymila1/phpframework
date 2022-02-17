@@ -11,6 +11,6 @@ class LoginController extends Controller
 
     public function login()
     {
-        Response::render("login", []);
+        return Response::render("login", []);
     }
 }

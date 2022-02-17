@@ -21,7 +21,7 @@ class DefaultController extends Controller
         parent::__construct();
     }
 
-    public  function index(UserModel $user, Request $request, DB $db)
+    public  function index(UserModel $user)
     {
         $result = $user->findAll()->orWhere(array('email' => "tsiresymila@gmail.com", 'soft_deleted' => 0))->where(array('id' => 1))->get();
         $encrypt = new Encryption();
@@ -35,21 +35,21 @@ class DefaultController extends Controller
             ));
         }
         $user->set(array('password' => $encrypt->encode("Tsiresy_wp1")))->where(['email' => 'tsiresymila@gmail.com'])->update();
-        Response::Json($result);
+        return Response::Json($result);
     }
 
     public  function admin()
     {
-        Response::Json(['data' => "okey"]);
+        return Response::Json(['data' => "okey"]);
         // Response::Render('admin',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
     }
     public  function webpack()
     {
-        Response::Render('test.html.twig', ['name' => 'Tsiresy Milà', 'occupation' => 'Developper']);
+        return Response::Render('test.html.twig', ['name' => 'Tsiresy Milà', 'occupation' => 'Developper']);
     }
 
     public  function json()
     {
-        Response::Json(['key' => "valuen"]);
+        return Response::Json(['key' => "valuen"]);
     }
 }

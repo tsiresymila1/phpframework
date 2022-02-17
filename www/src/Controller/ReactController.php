@@ -9,7 +9,7 @@ class ReactController extends Controller
 
     public function index($react)
     {
-        Response::render("react.index", ["name"=> "ReactController"]);
+        return Response::render("react.index", ["name"=> "ReactController"]);
     }
 }
         

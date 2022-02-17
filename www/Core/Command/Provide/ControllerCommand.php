@@ -62,7 +62,7 @@ class ' . ucfirst($name) . 'Controller extends Controller
 
     public function index()
     {
-        Response::render("' . $name . '.index", ["name"=> "' . ucfirst($name) . 'Controller"]);
+        return Response::render("' . $name . '.index", ["name"=> "' . ucfirst($name) . 'Controller"]);
     }
 }
         ';

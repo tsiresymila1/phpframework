@@ -16,6 +16,8 @@ class Response
      */
     private static  $_instance = null;
     public static $renderer;
+    private $content = null;
+    private $status = 200;
 
     public function __construct()
     {
@@ -24,6 +26,30 @@ class Response
             return strtolower($data);
         });
     }
+
+    private function setStatus($status = 200)
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    private function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    public function getContent()
+    {
+        return $this->content;
+    }
+    public function getHeader()
+    {
+        return self::$HEADER;
+    }
+
 
     public static function instance()
     {
@@ -58,6 +84,16 @@ class Response
     {
         self::$HEADER[$key] = $value;
     }
+    public static function loadHeader()
+    {
+        if (self::$HEADER) {
+            foreach (self::$HEADER as $key => $header)
+                header($key . ': ' . $header);
+        }
+    }
+    public function setHeader($key,$value){
+        self::$HEADER[$key] = $value;
+    }
 
     public static function Redirect($name)
     {
@@ -66,19 +102,35 @@ class Response
             $route = $routes['GET'][$name]->path;
             ob_start();
             header('Location: /' . $route);
-            ob_end_flush();
+            $content = ob_get_contents();
+            ob_end_clean();
+            $ins = self::instance();
+            $ins->setContent($content);
+            $ins->setStatus(302);
+            return $ins;
             die();
         } else {
             throw new BadMethodCallException('Route not found');
         }
     }
-
+    
+    /**
+     * RedirectToRoute
+     *
+     * @param mixed route
+     *
+     * @return Response
+     */
     public static function RedirectToRoute($route = "/")
     {
         ob_start();
         header('Location: ' . $route);
-        ob_end_flush();
-        die();
+        $content = ob_get_contents();
+        ob_end_clean();
+        $ins = self::instance();
+        $ins->setContent($content);
+        $ins->setStatus(302);
+        return $ins;
     }
 
     /**
@@ -86,34 +138,44 @@ class Response
      *
      * @param array $data = []
      *
-     * @return void
+     * @return Response
      */
-    public static function Json(array $data = [])
+    public static function Json($data = [], $status = 200)
     {
         ob_start();
         header('Content-type:application/json;charset=utf-8');
-        self::setHeader();
+        self::loadHeader();
         echo json_encode($data);
-        ob_end_flush();
-        exit(200);
+        $content = ob_get_contents();
+        ob_end_clean();
+        $ins = self::instance();
+        $ins->setContent($content);
+        $ins->setStatus($status);
+        return $ins;
     }
 
-    public static function setHeader()
-    {
-        if (self::$HEADER) {
-            foreach (self::$HEADER as $key => $header)
-                header($key . ': ' . $header);
-        }
-    }
-
-    public static function Send(String $data = "")
+    
+    
+    /**
+     * Send
+     *
+     * @param string data
+     * @param mixed status
+     *
+     * @return Response
+     */
+    public static function Send(String $data = "",$status = 200)
     {
         ob_start();
         header('Content-type:text/plain;charset=utf-8');
-        self::setHeader();
+        self::loadHeader();
         echo $data;
-        ob_end_flush();
-        exit(200);
+        $content = ob_get_contents();
+        ob_end_clean();
+        $ins = self::instance();
+        $ins->setContent($content);
+        $ins->setStatus($status);
+        return $ins;
     }
 
     public static function Render($template, $context = [])
@@ -121,9 +183,13 @@ class Response
         $template = str_replace('.', '/', $template);
         ob_start();
         header('Content-type: text/html');
-        self::setHeader();
+        self::loadHeader();
         self::$renderer->view($template, $context);
-        ob_end_flush();
-        exit(200);
+        $content = ob_get_contents();
+        ob_end_clean();
+        $ins = self::instance();
+        $ins->setContent($content);
+        $ins->setStatus(200);
+        return $ins;
     }
 }

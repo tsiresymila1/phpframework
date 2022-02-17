@@ -5,11 +5,8 @@ namespace Core\Http;
 use App\Controller;
 use BadMethodCallException;
 use Core\Container\Container;
-use Core\Http\CoreControllers\Controller as CoreController;
 use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
-use Exception;
 use ReflectionMethod;
-use ReflectionParameter;
 
 class Router
 {
@@ -104,7 +101,7 @@ class Router
     }
 
     /**
-     * @return Controller
+     * @return Response | null
      */
     public static function find()
     {
@@ -112,16 +109,15 @@ class Router
         $ins = self::instance();
         $ins->container = Container::instance();
         $routes = self::$routes[$method];
-        $controller = new CoreController();
         foreach ($routes as $route) {
             if ($ins->matches(trim($route->path, '/'))) {
                 $ins::$isFound = true;
                 $ins::$current = $route;
-                $controller = $ins->execute();
+                return $ins->execute();
                 break;
             }
         }
-        return $controller;
+        return null;
     }
 
     public function getArguments($class, $method)
@@ -156,8 +152,8 @@ class Router
         $cparams = explode("@", self::$current->action);
         $ControllerClass = $this->namespace . $cparams[0];
         $method = $cparams[1];
-        $ctrlins = $this->container->resolve($ControllerClass, $method, $this->params);
-        return  $ctrlins;
+        $content = $this->container->resolve($ControllerClass, $method, $this->params);
+        return  $content;
     }
 
     /**
@@ -171,8 +167,8 @@ class Router
     {
         $methodsparams = explode("@", $this->action);
         $ControllerClass = $this->namespace . $methodsparams[0];
-        $ctrlins = $this->container->resolve($ControllerClass, $method, $this->params);
-        return  $ctrlins;
+        $content = $this->container->resolve($ControllerClass, $method, $this->params);
+        return  $content;
     }
 
     /**
@@ -192,5 +188,10 @@ class Router
             }
         }
         return $this->invokeSucess();
+    }
+    public static function renderViewContent($content, $status = 200)
+    {
+        echo $content;
+        exit($status);
     }
 }

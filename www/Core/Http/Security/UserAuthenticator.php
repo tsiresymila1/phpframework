@@ -6,9 +6,12 @@ use Core\Http\Request;
 use Core\Http\Response;
 use Core\Http\Router;
 use Core\Http\Security\UserAuthenticatorInterface;
+use Core\Http\CoreControllers\Controller as CoreController;
+use Core\Http\Handler;
 use Core\Session\Session;
 use Core\Utils\Encryption;
 use Core\Utils\JWT;
+use Exception;
 
 class UserAuthenticator implements UserAuthenticatorInterface
 {
@@ -107,10 +110,14 @@ class UserAuthenticator implements UserAuthenticatorInterface
     public function pass()
     {
         Router::$isFound = false;
-        $controller = Router::find();
-        if (!Router::$isFound) {
-            return $controller->url404NotFound();
+        $response = Router::find();
+        if (!isset($response)) {
+            throw new Exception('Controller must return response ');
+        } else if (!Router::$isFound) {
+            $controller = new CoreController();
+            $response = $controller->url404NotFound();
         }
+        Handler::renderViewContent($response);
     }
 
     public function verifyPost($successcallback, $errorcalback)

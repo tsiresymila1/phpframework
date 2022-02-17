@@ -16,11 +16,11 @@ class Controller
 
     public function __invoke(...$args)
     {
-        Response::send(static::class . " was called ");
+        return Response::send(static::class . " was called ");
     }
     public function url404NotFound()
     {
-        Response::send(" URL not found");
+        return Response::send(" URL not found");
     }
 
     public function addFunction($name, $callback)

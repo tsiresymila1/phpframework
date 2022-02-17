@@ -40,6 +40,7 @@ module.exports = {
     new BrowserSyncPlugin(
       {
         host: "localhost", 
+        port: 4445,
         proxy: "http://127.0.0.1:4444",
         files: ["./src/**/*.php", "./assets/**/*"],
         open: 'local',

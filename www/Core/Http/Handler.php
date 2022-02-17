@@ -2,6 +2,7 @@
 
 namespace Core\Http;
 
+use Core\Http\CoreControllers\Controller as CoreController;
 use Exception;
 
 class Handler
@@ -57,10 +58,20 @@ class Handler
     public function doRouting()
     {
         Router::$isFound = false;
-        $controller = Router::find();
-        if (!Router::$isFound) {
-            return $controller->url404NotFound();
+        $response = Router::find();
+        if (!isset($response)) {
+            throw new Exception('Controller must return response ');
+        } else if (!Router::$isFound) {
+            $controller = new CoreController();
+            $response = $controller->url404NotFound();
         }
+        self::renderViewContent($response);
+    }
+
+    public static function renderViewContent(Response $response)
+    {
+        echo $response->getContent();
+        exit($response->getStatus());
     }
 
     public  function request_path()

@@ -10,14 +10,14 @@ class LoginAuthenticator extends UserAuthenticator
 
     public function onAuthenticateFail()
     {
-        Response::Redirect("app_login");
+        return Response::Redirect("app_login");
     }
     public function onAuthenticateSuccess($user)
     {
-        Response::Redirect('admin');
+        return Response::Redirect('admin');
     }
     public function  onApiAuthenticateFail()
     {
-        Response::Json(['message api' => 'Not authentified']);
+        return Response::Json(['message api' => 'Not authentified']);
     }
 }
