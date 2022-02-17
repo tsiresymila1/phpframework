@@ -9,13 +9,10 @@
     {{ name }}
     </title>
     <script defer src="/js/index.bundle.js"></script>
-    <script id="__bs_script__">//<![CDATA[
-        document.write("<script async src='http://HOST:4445/browser-sync/browser-sync-client.js?v=2.27.7'><\/script>".replace("HOST", location.hostname));
-    //]]></script>
 </head>
 
 <body>
-    <div id="root">Hello from {{ name }}</div>
+    <div id="root"></div>
 </body>
 
 </html>

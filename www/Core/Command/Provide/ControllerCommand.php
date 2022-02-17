@@ -26,14 +26,20 @@ class ControllerCommand extends Command
             $templatepath = $this->template . $prefix;
             if (!file_exists($filename)) {
                 $content = $this->getContent($prefix);
-                $templateContent = $this->templateContent();
+                $key = array_search('--jsbundle', $args);
+                if ($key && sizeof($args) > $key + 1) {
+                    $templateContent = $this->templateContent($args[$key + 1]);
+                    file_put_contents($this->routepath,  'Route::Get("/", "' . $ctrname . '@index")->name("' . $prefix . '");' . PHP_EOL, FILE_APPEND | LOCK_EX);
+                    file_put_contents($this->routepath,  'Route::Get("/{' . $prefix . '}", "' . $ctrname . '@index")->name("' . $prefix . '_route");' . PHP_EOL, FILE_APPEND | LOCK_EX);
+                } else {
+                    $templateContent = $this->templateContent();
+                    file_put_contents($this->routepath,  'Route::Get("/' . $prefix . '", "' . $ctrname . '@index")->name("' . $prefix . '");' . PHP_EOL, FILE_APPEND | LOCK_EX);
+                }
                 file_put_contents($filename, $content);
                 if (!file_exists($templatepath)) {
                     mkdir($templatepath, 0777, true);
                 }
                 file_put_contents($templatepath . DIRECTORY_SEPARATOR . 'index.php', $templateContent);
-                //register route 
-                file_put_contents($this->routepath,  'Route::Get("/' . $prefix . '", "' . $ctrname . '@index")->name("' . $prefix . '");' . PHP_EOL, FILE_APPEND | LOCK_EX);
                 echo $ctrname . ' was created successfully';
             } else {
                 echo $ctrname . ' alread exist';
@@ -62,8 +68,10 @@ class ' . ucfirst($name) . 'Controller extends Controller
         ';
     }
 
-    public function templateContent()
+    public function templateContent($jsbundle = null)
     {
+        $jspath = $jsbundle ? '<script defer src="' . $jsbundle . '"></script>' : '';
+        $div = $jsbundle ? '<div id="root"></div>' : '<div>Hello from {{ name }}</div>';
         return '<!DOCTYPE html>
 <html lang="en">
 
@@ -74,11 +82,11 @@ class ' . ucfirst($name) . 'Controller extends Controller
     <title>
     {{ name }}
     </title>
-    <script defer src="/js/index.bundle.js"></script>
+    ' . $jspath . '
 </head>
 
 <body>
-    <div id="app">Hello from {{ name }}</div>
+    ' . $div . '
 </body>
 
 </html>';

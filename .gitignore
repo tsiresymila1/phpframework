@@ -9,6 +9,7 @@ www/package-lock.json
 www/storage/session/*
 www/storage/logs/*
 www/vendor
+www/public/js/*
 /test
 .idea
 .vscode

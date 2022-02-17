@@ -13,5 +13,5 @@ Route::Group('/api', null, function () {
               Route::Get('/admin', "DefaultController@admin")
        ];
 });
-Route::Get("/", "ReactController@index")->name('home');
-Route::Get("/{react}", "ReactController@index")->name("react");
+Route::Get("/", "ReactController@index")->name("react");
+Route::Get("/{react}", "ReactController@index")->name("react_route");
