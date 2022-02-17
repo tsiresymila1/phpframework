@@ -20,31 +20,52 @@ class Container implements ContainerInterface
         return static::$instance;
     }
 
+    /**
+     * register
+     *
+     * @param mixed key
+     * @param mixed class
+     *
+     * @return void
+     */
     public function register($key, $class)
     {
         $this->container[$key] = $class;
     }
 
-    public function getDependancies($class, $method)
+    /**
+     * getDependancies
+     *
+     * @param mixed class
+     * @param mixed method
+     * @param mixed params
+     *
+     * @return array
+     */
+    public function getDependancies($class, $method, $params = [])
     {
-
         $dependencies = [];
         $methodReflection = new ReflectionMethod($class, $method);
         $methodParams = $methodReflection->getParameters();
         foreach ($methodParams as $param) {
             $type = $param->getType();
-            $className = $type->getName();
-            if (array_key_exists($className, $this->container)) {
-                array_push($dependencies, $this->container[$className]::instance());
-            } else if ($type && $type instanceof ReflectionNamedType) {
-                array_push($dependencies, $this->make($className));
+            $name = $param->getName();
+            if (is_null($type) && array_key_exists($name,$params)) {
+                array_push($dependencies, $params[$name]);
             } else {
-                $name = $param->getName();
-                if (array_key_exists($name, $this->container)) {
-                    array_push($dependencies, $this->container[$name]);
+                $className = $type->getName();
+                if (array_key_exists($className, $this->container)) {
+                    array_push($dependencies, $this->container[$className]::instance());
+                } else if ($type && $type instanceof ReflectionNamedType) {
+                    array_push($dependencies, $this->make($className));
                 } else {
-                    if (!$param->isOptional()) {
-                        throw new Exception("Can not resolve parameters");
+                    $name = $param->getName();
+                    if (array_key_exists($name, $this->container)) {
+                        array_push($dependencies, $this->container[$name]);
+                    } else {
+                        if (!$param->isOptional()) {
+                            throw new Exception("Can not resolve parameters");
+                        }
                     }
                 }
             }
@@ -52,42 +73,64 @@ class Container implements ContainerInterface
         return $dependencies;
     }
 
-    public function resolve($class, $method)
+    /**
+     * resolve
+     *
+     * @param mixed class
+     * @param mixed method
+     * @param mixed params
+     *
+     * @return mixed
+     */
+    public function resolve($class, $method, $params = [])
     {
-        $dependencies = $this->getDependancies($class, $method);
+        $dependencies = $this->getDependancies($class, $method, $params);
         $methodReflection = new ReflectionMethod($class, $method);
         if (!is_object($class)) {
-            $initClass = $this->make($class);
+            $initClass = $this->make($class, [], $params);
         } else {
             $initClass = $this->callbackClass;
         }
         return $methodReflection->invoke($initClass, ...$dependencies);
     }
 
-    public function make($class, $parents = [])
+    /**
+     * make
+     *
+     * @param mixed class
+     * @param mixed parents
+     * @param mixed params
+     *
+     * @return mixed
+     */
+    public function make($class, $parents = [], $params = [])
     {
         $classReflection = new ReflectionClass($class);
         $constructorParams = $classReflection->getConstructor() ? $classReflection->getConstructor()->getParameters() : [];
         $dependencies = [];
         foreach ($constructorParams as $constructorParam) {
             $type = $constructorParam->getType();
-            $className = $type->getName();
-            if (array_key_exists($className, $this->container)) {
-                $this->handleCircularReference($className, $parents);
-                $parents[] = $className;
-                array_push($dependencies, $this->container[$className]);
-            } else if ($type && $type instanceof ReflectionNamedType) {
-                $className = $constructorParam->getClass();
-                $this->handleCircularReference($className, $parents);
-                $parents[] = $className;
-                array_push($dependencies, $this->make($className, $parents));
+            $name = $constructorParam->getName();;
+            if (is_null($type) && array_key_exists($name,$params)) {
+                array_push($dependencies, $params[$name]);
             } else {
-                $name = $constructorParam->getName();
-                if (!empty($this->container) && array_key_exists($name, $this->container)) {
-                    array_push($dependencies, $this->container[$name]);
+                $className = $type->getName();
+                if (array_key_exists($className, $this->container)) {
+                    $this->handleCircularReference($className, $parents);
+                    $parents[] = $className;
+                    array_push($dependencies, $this->container[$className]);
+                } else if ($type && $type instanceof ReflectionNamedType) {
+                    $className = $constructorParam->getClass();
+                    $this->handleCircularReference($className, $parents);
+                    $parents[] = $className;
+                    array_push($dependencies, $this->make($className, $parents));
                 } else {
-                    if (!$constructorParam->isOptional()) {
-                        throw new Exception("Can not resolve parameters");
+                    if (!empty($this->container) && array_key_exists($name, $this->container)) {
+                        array_push($dependencies, $this->container[$name]);
+                    } else {
+                        if (!$constructorParam->isOptional()) {
+                            throw new Exception("Can not resolve parameters");
+                        }
                     }
                 }
             }
@@ -95,6 +138,14 @@ class Container implements ContainerInterface
         return $classReflection->newInstance(...$dependencies);
     }
 
+    /**
+     * handleCircularReference
+     *
+     * @param mixed className
+     * @param mixed classes
+     *
+     * @return void
+     */
     public function handleCircularReference($className, $classes)
     {
         if (in_array($className, $classes)) {

@@ -3,7 +3,6 @@
 namespace Core\Http;
 
 use App\Controller;
-use App\Middleware;
 use BadMethodCallException;
 use Core\Container\Container;
 use Core\Http\CoreControllers\Controller as CoreController;
@@ -78,16 +77,25 @@ class Router
 
     public function matches(string $url)
     {
+        $this->variables = [];
         $pathrepalced = preg_replace_callback('/\\\\{([^}]*)\}+/', function ($match) {
-            $this->variables[] = str_replace('\\', '', $match[1]);
-            return '([a-zA-Z0-9\-\_]+)';
+            $exp = '([a-zA-Z0-9\-\_]+)';
+            if (strpos($match[1], '?') !== false) {
+                $exp =  '([a-zA-Z0-9\-\_]+)?';
+            }
+            $this->variables[] = str_replace(['\\', '?'], '', $match[1]);
+            return $exp;
         },  preg_quote($url));
 
         $pathToMatch = "@^" . $pathrepalced . "$@D";
         if (preg_match($pathToMatch, self::$path, $matches)) {
             $this->matches = $matches;
             array_shift($matches);
+            while (sizeof($this->variables) > sizeof($matches)) {
+                $matches[] = null;
+            }
             $this->params = array_combine($this->variables, $matches);
+
             Request::setParams($this->params);
             return true;
         } else {
@@ -138,23 +146,40 @@ class Router
         return $arguments;
     }
 
+    /**
+     * invokeSucess
+     *
+     * @return Controller
+     */
     public function invokeSucess()
     {
         $cparams = explode("@", self::$current->action);
         $ControllerClass = $this->namespace . $cparams[0];
         $method = $cparams[1];
-        $ctrlins = $this->container->resolve($ControllerClass, $method);
+        $ctrlins = $this->container->resolve($ControllerClass, $method, $this->params);
         return  $ctrlins;
     }
 
+    /**
+     * invokeFail
+     *
+     * @param mixed method
+     *
+     * @return Controller
+     */
     public function invokeFail($method)
     {
         $methodsparams = explode("@", $this->action);
         $ControllerClass = $this->namespace . $methodsparams[0];
-        $ctrlins = $this->container->resolve($ControllerClass, $method);
+        $ctrlins = $this->container->resolve($ControllerClass, $method, $this->params);
         return  $ctrlins;
     }
 
+    /**
+     * execute
+     *
+     * @return Controller
+     */
     public function execute()
     {
         foreach (self::$current->middlewares as $middleware) {

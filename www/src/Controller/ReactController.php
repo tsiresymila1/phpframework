@@ -7,7 +7,7 @@ use Core\Http\Response;
 class ReactController extends Controller
 {
 
-    public function index()
+    public function index($react)
     {
         Response::render("react.index", ["name"=> "ReactController"]);
     }

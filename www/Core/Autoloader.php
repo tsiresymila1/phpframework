@@ -30,5 +30,7 @@ class Autoloader
 }
 define('DIR', dirname(dirname(__FILE__)) . '/');
 define('APP_PATH', dirname(dirname(__FILE__)) . '/src' . '/');
-require DIR . '/vendor/autoload.php'; //load vendor autoloader
+if (file_exists(APP_PATH . 'config/autoload.php')) {
+    require APP_PATH . 'config/autoload.php';
+}
 Autoloader::register();

@@ -3,7 +3,7 @@
 use Core\Http\Route;
 
 // Route::Get("/", "DefaultController@index")->name('home');
-Route::Any("/admin/hello", "DefaultController@hello")->name('admin_hello');
+Route::Any("/admin/{hello}/{id}/{key?}", "DefaultController@hello")->name('admin_hello');
 Route::Get("/admin", "DefaultController@admin")->name('admin');
 Route::Any("/login", "LoginController@login")->name('app_login');;
 Route::Get("/teste", "DefaultController@json");
@@ -13,5 +13,4 @@ Route::Group('/api', null, function () {
               Route::Get('/admin', "DefaultController@admin")
        ];
 });
-Route::Get("/", "ReactController@index")->name("react");
-Route::Get("/{react}", "ReactController@index")->name("react_route");
+Route::Get("/{react?}", "ReactController@index")->name("react_route");
