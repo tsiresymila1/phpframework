@@ -1,20 +1,23 @@
 <?php
 
-    namespace App\Security;
+namespace App\Security;
 
-    use Core\Http\Response;
-    use Core\Http\Security\UserAuthenticator;
+use Core\Http\Response;
+use Core\Http\Security\UserAuthenticator;
 
-    class LoginAuthenticator extends UserAuthenticator {
+class LoginAuthenticator extends UserAuthenticator
+{
 
-        public function onAuthenticateFail(){
-            Response::Redirect("app_login");
-        }
-        public function onAuthenticateSuccess($user){
-            Response::Redirect('admin');
-        }
-        
-        
+    public function onAuthenticateFail()
+    {
+        return Response::Redirect("app_login");
     }
-
-?>
+    public function onAuthenticateSuccess($user)
+    {
+        return Response::Redirect('admin');
+    }
+    public function  onApiAuthenticateFail()
+    {
+        return Response::Json(['message api' => 'Not authentified']);
+    }
+}

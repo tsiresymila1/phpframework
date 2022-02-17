@@ -1,14 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="efc6c114-f506-4740-aac1-7b9ae3242361" name="Default Changelist" comment="" />
+    <list default="true" id="efc6c114-f506-4740-aac1-7b9ae3242361" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpframework.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpframework.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Autoloader.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Autoloader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Database/DB.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Database/DB.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Database/Model.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Database/Model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Http/Request.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Http/Request.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Http/Response.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Http/Response.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Http/Router.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Http/Router.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Http/Security/AuthenticatorModelInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Http/Security/AuthenticatorModelInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Http/Security/UserAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Http/Security/UserAuthenticator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Renderer/Template.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Renderer/Template.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Core/Session/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/Session/Session.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/assets/js/features/counter/counter.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/assets/js/features/counter/counter.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/public/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/src/Model/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/Model/UserModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/src/config/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/config/routes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/storage/logs/server.log" beforeDir="false" afterPath="$PROJECT_DIR$/www/storage/logs/server.log" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings">
+  <component name="ComposerSettings" doNotAsk="true">
+    <pharConfigPath>$PROJECT_DIR$/www/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/www/vendor/composer" />
+      <path value="$PROJECT_DIR$/www/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/www/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/www/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/www/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/www/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/www/vendor/yosymfony/resource-watcher" />
+      <path value="$PROJECT_DIR$/www/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/www/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/www/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/www/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/www/vendor/jolicode/jolinotif" />
+      <path value="$PROJECT_DIR$/www/vendor/evenement/evenement" />
+      <path value="$PROJECT_DIR$/www/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/www/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/www/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/www/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/www/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/www/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/www/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/www/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/www/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/www/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/www/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/www/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/www/vendor/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/www/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/www/vendor/react/event-loop" />
+      <path value="$PROJECT_DIR$/www/vendor/react/stream" />
+      <path value="$PROJECT_DIR$/www/vendor/spatie/phpunit-watcher" />
+      <path value="$PROJECT_DIR$/www/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/www/vendor/clue/stdio-react" />
+      <path value="$PROJECT_DIR$/www/vendor/clue/term-react" />
+      <path value="$PROJECT_DIR$/www/vendor/clue/utf8-react" />
+      <path value="$PROJECT_DIR$/www/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/www/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/www/vendor/psr/http-factory" />
+    </include_path>
   </component>
   <component name="ProjectId" id="1tBAHhExdnLNeqcLeXLPFr0IS7m" />
   <component name="ProjectViewState">
@@ -18,7 +112,33 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/www/tests" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="PHPUnit.TEST">
+    <configuration name="DefaultControllerTest.test_if_i_get_json" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="DefaultControllerTest" file="$PROJECT_DIR$/www/tests/Controller/DefaultControllerTest.php" method="test_if_i_get_json" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TEST" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <CommandLine>
+        <PhpTestInterpreterSettings>
+          <option name="interpreterName" value="PHP 7.4" />
+        </PhpTestInterpreterSettings>
+      </CommandLine>
+      <TestRunner directory="$PROJECT_DIR$/www/tests" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="PHPUnit.TEST" />
+      <item itemvalue="PHPUnit.DefaultControllerTest.test_if_i_get_json" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.DefaultControllerTest.test_if_i_get_json" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -29,10 +149,60 @@
       <option name="presentableId" value="Default" />
       <updated>1622232026347</updated>
       <workItem from="1622232027749" duration="462000" />
+      <workItem from="1633283580007" duration="1546000" />
+      <workItem from="1635450257664" duration="129000" />
+      <workItem from="1635450404285" duration="160000" />
+      <workItem from="1635450708874" duration="673000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="436" y="134" key="#CLI_Interpreters" timestamp="1635450976078">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="436" y="134" key="#CLI_Interpreters/0.0.1920.1080@0.0.1920.1080" timestamp="1635450976078" />
+    <state x="825" y="416" key="#Custom_Plugin_Repositories" timestamp="1635450306968">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="825" y="416" key="#Custom_Plugin_Repositories/0.0.1920.1080@0.0.1920.1080" timestamp="1635450306968" />
+    <state x="674" y="316" key="#Notifications" timestamp="1635450814964">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="674" y="316" key="#Notifications/0.0.1920.1080@0.0.1920.1080" timestamp="1635450814964" />
+    <state x="410" y="125" width="1099" height="905" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1635451059758">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="410" y="125" width="1099" height="905" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1635451059758" />
+    <state x="637" y="263" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1635450428589">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="637" y="263" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1635450428589" />
+    <state x="686" y="259" key="FileChooserDialogImpl" timestamp="1635451057762">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="686" y="259" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1635451057762" />
+    <state width="1865" height="272" key="GridCell.Tab.0.bottom" timestamp="1635451388825">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1865" height="272" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1635451388825" />
+    <state width="1865" height="272" key="GridCell.Tab.0.center" timestamp="1635451388825">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1865" height="272" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1635451388825" />
+    <state width="1865" height="272" key="GridCell.Tab.0.left" timestamp="1635451388825">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1865" height="272" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1635451388825" />
+    <state width="1865" height="272" key="GridCell.Tab.0.right" timestamp="1635451388825">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1865" height="272" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1635451388825" />
+    <state x="351" y="98" key="SettingsEditor" timestamp="1635450356597">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="351" y="98" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1635450356597" />
   </component>
 </project>

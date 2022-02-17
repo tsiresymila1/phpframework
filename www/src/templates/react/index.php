@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>React</title>
-<script defer src="js/app.bundle.js"></script><link href="css/app.css" rel="stylesheet"></head>
+    <title>
+    {{ name }}
+    </title>
+    <script defer src="/js/index.bundle.js"></script>
+</head>
 
 <body>
     <div id="root"></div>

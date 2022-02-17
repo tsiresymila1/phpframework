@@ -14,12 +14,12 @@
         {
             $this->name = uniqid();
         }
-        private static function getInstance(){
+        private static function instance(){
             return new Route();
         }
 
         public static function Get($url,$action,$middlewares=null){
-            $ins = self::getInstance();
+            $ins = self::instance();
             $ins->path = trim($url,'/');
             $ins->action = $action;
             if(gettype($middlewares) == "array" ){
@@ -38,7 +38,7 @@
         }
 
         public static function Post($url,$action,$middlewares=null){
-            $ins = self::getInstance();
+            $ins = self::instance();
             $ins->path = trim($url,'/');
             $ins->action = $action;
             $middlewares ??= [];
@@ -54,7 +54,7 @@
         }
 
         public static function Any($url,$action,$middlewares=null){
-            $ins = self::getInstance();
+            $ins = self::instance();
             $ins->path = trim($url,'/');
             $ins->action = $action;
             $middlewares ??= [];
@@ -88,6 +88,5 @@
             Router::Named( $this->name,$name);
         }
 
-        
     }
 ?>

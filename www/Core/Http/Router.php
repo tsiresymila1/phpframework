@@ -1,165 +1,197 @@
 <?php
 
-    namespace Core\Http;
-    use App\Controller;
-    use App\Middleware;
-use Core\Http\CoreControllers\Controller as CoreController;
+namespace Core\Http;
+
+use App\Controller;
+use BadMethodCallException;
+use Core\Container\Container;
 use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
-    use Exception;
-    use ReflectionMethod;
-    use ReflectionParameter;
+use ReflectionMethod;
 
-    class Router {
+class Router
+{
 
-        public $matches ;
-        public $params = [];
-        public $variables = [];
-        public static $isFound;
-        public static $path;
-        public static Route $current;
-        public  $name;
-        private  static $routes = [
-            "GET"=>[],
-            "POST" => []
-        ];
+    public $matches;
+    public $params = [];
+    public $variables = [];
+    public static $isFound;
+    public static $path;
+    public static Route $current;
+    public  $name;
+    public $namespace = "App\Controller\\";
+    public $container;
+    private  static $routes = [
+        "GET" => [],
+        "POST" => []
+    ];
 
-        private static  $_instance = null;
-        
-        private static function getInstance(){
-            if(is_null(self::$_instance)) {
-              self::$_instance = new Router();  
+    private static  $_instance = null;
+
+    private static function instance()
+    {
+        if (is_null(self::$_instance)) {
+            self::$_instance = new Router();
+        }
+        self::$_instance = new  Router();
+        return self::$_instance;
+    }
+
+    public static function Config(String $path)
+    {
+        $ins = self::instance();
+        $ins::$path = trim($path, '/');
+        return $ins;
+    }
+
+    public static function GetRoutes()
+    {
+        return self::$routes;
+    }
+
+    public static function Add(Route $route, $name = null)
+    {
+        $methods = explode('|', $route->method);
+        foreach ($methods as $method) {
+            if (!is_null($name)) {
+                self::$routes[$method][$name]  = $route;
+            } else {
+                self::$routes[$method][$route->name]  = $route;
             }
-            self::$_instance = new  Router();
-            return self::$_instance;
-        }
-
-        public static function Config(String $path){
-            $ins = self::getInstance();
-            $ins::$path = trim($path,'/');
-            return $ins;
-        }
-
-        public static function GetRoutes(){
-            return self::$routes;
-        }
-
-        public static function Add(Route $route,$name=null){
-            $methods = explode('|',$route->method);
-            foreach($methods as $method){
-                if(!is_null($name)){
-                    self::$routes[$method][$name]  = $route;
-                }
-                else{
-                    self::$routes[$method][$route->name]  = $route;
-                }
-                
-            }
-        }
-
-        public static function Named($oldname,$newname){
-            foreach(self::$routes as $method => $routes){
-                foreach($routes as $name => $route){
-                    if($name == $oldname){
-                        unset(self::$routes[$method][$oldname]);
-                        self::$routes[$method][$newname] = $route;
-                    }
-                }
-            }
-        }
-
-        public function matches(string $url){
-            $pathrepalced = preg_replace_callback('/\\\\{([^}]*)\}+/', function($match){
-                $this->variables[] = str_replace('\\','',$match[1]);
-                return '([a-zA-Z0-9\-\_]+)';
-            },  preg_quote($url));
-
-            $pathToMatch = "@^" . $pathrepalced . "$@D";
-            if(preg_match($pathToMatch,self::$path,$matches)){
-                $this->matches = $matches;
-                array_shift($matches);
-                $this->params = array_combine($this->variables,$matches);
-                Request::setParams($this->params);
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-
-        /**
-         * @return Controller
-         */
-        public static function find(){
-            $method = Request::getMethod();
-            $ins = self::getInstance();
-            $routes = self::$routes[$method];
-            $controller = new CoreController() ;
-            foreach($routes as $route){
-                if($ins->matches(trim($route->path,'/'))){
-                    $ins::$isFound = true;
-                    $ins::$current = $route;
-                    $controller = $ins->execute();
-                    break;
-                }
-            }
-            return $controller;
-        }
-
-        public function getArguments($class,$method){
-            $arguments = [];
-            $r = new ReflectionMethod($class, $method);
-            $paramsmethod = $r->getParameters();
-            foreach($paramsmethod as $p){
-                $name = $p->name;
-                $type = $p->getType();
-                if(is_null($type) && isset($this->params[$name])){
-                    $arguments[] = $this->params[$name];
-                }
-                else{   
-                    if(!is_null($type) && method_exists($type->getName(),'getInstance')){
-                        $className = $type->getName();
-                        $arguments[] = $className::getInstance();
-                    }
-                    else throw new Exception('Error params not found ');
-                } 
-            }
-            return $arguments;
-        }
-
-        public function invokeSucess(){
-            $params = explode("@",self::$current->action);
-            $ControllerClass = "App\Controller\\".$params[0];
-            $method = $params[1];
-            $arguments = $this->getArguments($ControllerClass,$method);
-            $ctrlins = new $ControllerClass();
-            $ctrlins->$method(...$arguments);
-            return  $ctrlins ;
-        }
-
-        public function invokeFail($method){
-            $params = explode("@",$this->action);
-            $ControllerClass = "App\Controller\\".$params[0];
-            $arguments = $this->getArguments($ControllerClass,$method);
-            $ctrlins = new $ControllerClass();
-            $ctrlins->$method(...$arguments);
-            return  $ctrlins ;
-        }
-
-        public function execute(){
-            foreach(self::$current->middlewares as $middleware){
-                if(!is_null($middleware)){ 
-                    $MiddlewareClass = "App\Middleware\\".$middleware;
-                    $middleins = new $MiddlewareClass();
-                    if($middleins instanceof BaseAuthMiddleware){
-                        $middleins->handle();
-                    }
-                    
-                }
-            }
-            $ctrlins = $this->invokeSucess();
-            return $ctrlins;
         }
     }
 
+    public static function Named($oldname, $newname)
+    {
+        foreach (self::$routes as $method => $routes) {
+            foreach ($routes as $name => $route) {
+                if ($name == $oldname) {
+                    unset(self::$routes[$method][$oldname]);
+                    self::$routes[$method][$newname] = $route;
+                }
+            }
+        }
+    }
 
-?>
+    public function matches(string $url)
+    {
+        $this->variables = [];
+        $pathrepalced = preg_replace_callback('/\\\\{([^}]*)\}+/', function ($match) {
+            $exp = '([a-zA-Z0-9\-\_]+)';
+            if (strpos($match[1], '?') !== false) {
+                $exp =  '([a-zA-Z0-9\-\_]+)?';
+            }
+            $this->variables[] = str_replace(['\\', '?'], '', $match[1]);
+            return $exp;
+        },  preg_quote($url));
+
+        $pathToMatch = "@^" . $pathrepalced . "$@D";
+        if (preg_match($pathToMatch, self::$path, $matches)) {
+            $this->matches = $matches;
+            array_shift($matches);
+            while (sizeof($this->variables) > sizeof($matches)) {
+                $matches[] = null;
+            }
+            $this->params = array_combine($this->variables, $matches);
+
+            Request::setParams($this->params);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @return Response | null
+     */
+    public static function find()
+    {
+        $method = Request::getMethod();
+        $ins = self::instance();
+        $ins->container = Container::instance();
+        $routes = self::$routes[$method];
+        foreach ($routes as $route) {
+            if ($ins->matches(trim($route->path, '/'))) {
+                $ins::$isFound = true;
+                $ins::$current = $route;
+                return $ins->execute();
+                break;
+            }
+        }
+        return null;
+    }
+
+    public function getArguments($class, $method)
+    {
+        $arguments = [];
+        $r = new ReflectionMethod($class, $method);
+        $paramsmethod = $r->getParameters();
+        foreach ($paramsmethod as $p) {
+            $pname = $p->name;
+            $type = $p->getType();
+            if (is_null($type) && isset($this->params[$pname])) {
+                $arguments[] = $this->params[$pname];
+            } else {
+                if (!is_null($type) && method_exists($type->getName(), 'getInstance')) {
+                    $className = $type->getName();
+                    $arguments[] = $className::instance();
+                } else {
+                    throw new BadMethodCallException('Error params not found ');
+                }
+            }
+        }
+        return $arguments;
+    }
+
+    /**
+     * invokeSucess
+     *
+     * @return Controller
+     */
+    public function invokeSucess()
+    {
+        $cparams = explode("@", self::$current->action);
+        $ControllerClass = $this->namespace . $cparams[0];
+        $method = $cparams[1];
+        $content = $this->container->resolve($ControllerClass, $method, $this->params);
+        return  $content;
+    }
+
+    /**
+     * invokeFail
+     *
+     * @param mixed method
+     *
+     * @return Controller
+     */
+    public function invokeFail($method)
+    {
+        $methodsparams = explode("@", $this->action);
+        $ControllerClass = $this->namespace . $methodsparams[0];
+        $content = $this->container->resolve($ControllerClass, $method, $this->params);
+        return  $content;
+    }
+
+    /**
+     * execute
+     *
+     * @return Controller
+     */
+    public function execute()
+    {
+        foreach (self::$current->middlewares as $middleware) {
+            if (!is_null($middleware)) {
+                $MiddlewareClass = "App\Middleware\\" . $middleware;
+                $middleins = $this->container->make($MiddlewareClass);
+                if ($middleins instanceof BaseAuthMiddleware) {
+                    $middleins->handle();
+                }
+            }
+        }
+        return $this->invokeSucess();
+    }
+    public static function renderViewContent($content, $status = 200)
+    {
+        echo $content;
+        exit($status);
+    }
+}

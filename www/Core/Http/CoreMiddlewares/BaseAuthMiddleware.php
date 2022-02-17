@@ -1,17 +1,14 @@
 <?php
 
-    namespace Core\Http\CoreMiddlewares;
+namespace Core\Http\CoreMiddlewares;
 
-    use Core\Http\Response;
-    use Core\Http\Security\UserAuthenticator;
+use Core\Http\Response;
+use Core\Http\Security\UserAuthenticator;
 
-    class BaseAuthMiddleware implements Middleware {
+class BaseAuthMiddleware implements Middleware
+{
 
-        public function handle()
-        {
-            
-        }
-
+    public function handle()
+    {
     }
-
-?>
+}

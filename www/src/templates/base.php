@@ -3,4 +3,3 @@
 {% block style %}{% endblock %}
 {% block content %}{% endblock %}
 {% block javascript %}{% endblock %}
-

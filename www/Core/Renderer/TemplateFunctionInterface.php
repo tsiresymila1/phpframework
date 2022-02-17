@@ -1,5 +1,4 @@
 <?php
-    interface TemplateFunctionInterface{
-        
-    }
-?>
+interface TemplateFunctionInterface
+{
+}

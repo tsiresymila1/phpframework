@@ -1,12 +1,11 @@
 <?php
-    namespace Core\Database;
 
-    class Migration {
-        
-        public function __construct()
-        {
-            
-        }
+namespace Core\Database;
+
+class Migration
+{
+
+    public function __construct()
+    {
     }
-
-?>
+}
