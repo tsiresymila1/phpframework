@@ -9,8 +9,9 @@ use Core\Http\Response;
 class LoginController extends Controller
 {
 
-    public function login()
+    public function login(Request $request)
     {
-        return Response::render("login", []);
+        $data = $request->input();
+        return Response::Json("login", $data);
     }
 }

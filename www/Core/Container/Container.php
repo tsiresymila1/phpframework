@@ -53,6 +53,10 @@ class Container implements ContainerInterface
             if (is_null($type) && array_key_exists($name,$params)) {
                 array_push($dependencies, $params[$name]);
             } else {
+                if(is_null($type)){
+                    array_push($dependencies, null);
+                    continue;
+                }
                 $className = $type->getName();
                 if (array_key_exists($className, $this->container)) {
                     array_push($dependencies, $this->container[$className]::instance());
@@ -64,7 +68,7 @@ class Container implements ContainerInterface
                         array_push($dependencies, $this->container[$name]);
                     } else {
                         if (!$param->isOptional()) {
-                            throw new Exception("Can not resolve parameters");
+                            array_push($dependencies, null);;
                         }
                     }
                 }

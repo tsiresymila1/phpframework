@@ -18,6 +18,6 @@ class LoginAuthenticator extends UserAuthenticator
     }
     public function  onApiAuthenticateFail()
     {
-        return Response::Json(['message api' => 'Not authentified']);
+        return Response::Json(['error' => null, 'auth'=>true]);
     }
 }

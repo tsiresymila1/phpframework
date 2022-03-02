@@ -7,11 +7,11 @@ use TemplateFunctionInterface;
 class Template
 {
 
-    protected $blocks = array();
-    protected $cache_path = DIR . 'storage/cache/';
+    protected array $blocks = array();
+    protected string $cache_path = DIR . 'storage/cache/';
     protected $cache_enabled;
     protected $ENV;
-    protected  $functions = [];
+    protected array $functions = [];
 
     public function __construct($template, $cache_enabled = FALSE)
     {
@@ -86,19 +86,19 @@ class Template
     protected function compileFilter($code)
     {
         return preg_replace_callback('~\{{\s*(.+?)\s*\}}~is', function ($match) {
-            $array_varibales = explode('|', $match[1]);
-            if (count($array_varibales) == 2) {
-                $var = trim($array_varibales[0]);
+            $array_variables = explode('|', $match[1]);
+            if (count($array_variables) == 2) {
+                $var = trim($array_variables[0]);
                 $params = array();
-                if (strpos($array_varibales[1], '(') !== false) {
-                    $funcstring = substr(trim($array_varibales[1]), 0, -1);
+                if (strpos($array_variables[1], '(') !== false) {
+                    $funcstring = substr(trim($array_variables[1]), 0, -1);
                     $parts = array_map("trim", explode("(", $funcstring, 2));
                     $func = $parts[0];
                     if (count($parts) > 1) {
                         $params = eval("return [$parts[1]];");
                     }
                 } else {
-                    $func = trim($array_varibales[1]);
+                    $func = trim($array_variables[1]);
                 }
                 if (count($params) != 0) {
                     $args = "$" . $var . ",'" . implode('\',\'', $params) . "'";

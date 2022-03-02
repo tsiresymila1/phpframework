@@ -1,7 +1,57 @@
-2022-02-17 13:16:08::REQUEST:: GET /test
-2022-02-17 13:19:43::REQUEST:: GET /test
-2022-02-17 13:21:15::REQUEST:: GET /test
-2022-02-17 13:22:13::REQUEST:: GET /
-2022-02-17 13:22:18::REQUEST:: GET /static/images/avatar/2.jpg
-2022-02-17 13:42:49::REQUEST:: GET /
-2022-02-17 13:43:13::REQUEST:: GET /
+2022-03-02 08:32:38::REQUEST:: GET /login
+2022-03-02 08:32:38::ERROR:: Route /login not found in /var/www/html/Core/Http/Router.php on line 127==>404
+2022-03-02 08:32:38::ERROR:: #0 /var/www/html/Core/Http/Handler.php(55): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(113): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(128): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Security/UserAuthenticator.php(148): Core\Http\Security\UserAuthenticator->verifyPost(Object(Closure), Object(Closure))
+#4 /var/www/html/Core/Http/Handler.php(46): Core\Http\Security\UserAuthenticator->authenticate()
+#5 /var/www/html/Core/Http/Handler.php(36): Core\Http\Handler->auth()
+#6 /var/www/html/Core/Bootstrap.php(22): Core\Http\Handler::handle()
+#7 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#8 {main}
+2022-03-02 08:34:30::REQUEST:: GET /login
+2022-03-02 08:34:30::ERROR:: Route /login not found in /var/www/html/Core/Http/Router.php on line 127==>404
+2022-03-02 08:34:30::ERROR:: #0 /var/www/html/Core/Http/Handler.php(55): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(113): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(128): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Security/UserAuthenticator.php(148): Core\Http\Security\UserAuthenticator->verifyPost(Object(Closure), Object(Closure))
+#4 /var/www/html/Core/Http/Handler.php(46): Core\Http\Security\UserAuthenticator->authenticate()
+#5 /var/www/html/Core/Http/Handler.php(36): Core\Http\Handler->auth()
+#6 /var/www/html/Core/Bootstrap.php(22): Core\Http\Handler::handle()
+#7 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#8 {main}
+2022-03-02 08:44:41::REQUEST:: GET /api/login
+2022-03-02 08:44:41::ERROR:: Route /api/login not found in /var/www/html/Core/Http/Router.php on line 149==>404
+2022-03-02 08:44:41::ERROR:: #0 /var/www/html/Core/Http/Handler.php(55): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(113): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(128): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Security/UserAuthenticator.php(159): Core\Http\Security\UserAuthenticator->verifyPost(Object(Closure), Object(Closure))
+#4 /var/www/html/Core/Http/Handler.php(46): Core\Http\Security\UserAuthenticator->authenticate()
+#5 /var/www/html/Core/Http/Handler.php(36): Core\Http\Handler->auth()
+#6 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#7 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#8 {main}
+2022-03-02 08:45:12::REQUEST:: GET /api/login
+2022-03-02 08:45:12::ERROR:: 8
+2022-03-02 08:45:12::ERROR:: Array to string conversion
+2022-03-02 08:45:12::ERROR:: /var/www/html/Core/Http/Handler.php
+2022-03-02 08:45:12::ERROR:: 62
+2022-03-02 08:45:21::REQUEST:: GET /api/login
+2022-03-02 08:45:22::ERROR:: 8
+2022-03-02 08:45:22::ERROR:: Array to string conversion
+2022-03-02 08:45:22::ERROR:: /var/www/html/Core/Http/Handler.php
+2022-03-02 08:45:22::ERROR:: 62
+2022-03-02 08:45:38::REQUEST:: GET /api/login
+2022-03-02 08:45:45::REQUEST:: GET /
+2022-03-02 08:45:59::REQUEST:: GET /api/login
+2022-03-02 08:46:14::REQUEST:: GET /login
+2022-03-02 08:46:30::REQUEST:: POST /api/login
+2022-03-02 08:46:30::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresymila@gmail.com' AND password='ekl4c0hQSXJVdXFnTnJXejFDR3NSUT09'
+2022-03-02 08:46:30::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
+2022-03-02 08:46:30::ERROR:: Line#0<br>
+2022-03-02 08:46:30::ERROR:: File#Unknown<br>
+2022-03-02 08:46:32::REQUEST:: GET /static/assets/profile/%7B%7B%20request.session.user.image%7D%7D
+2022-03-02 08:47:02::REQUEST:: GET /static/assets/profile/%7B%7B%20request.session.user.image%7D%7D
+2022-03-02 08:51:29::REQUEST:: GET /
+2022-03-02 08:51:32::REQUEST:: GET /static/assets/profile/%7B%7B%20request.session.user.image%7D%7D
+2022-03-02 08:51:51::REQUEST:: GET /admin

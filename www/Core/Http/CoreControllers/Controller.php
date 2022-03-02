@@ -2,6 +2,7 @@
 
 namespace Core\Http\CoreControllers;
 
+use Core\Http\Exception\ErrorRender;
 use Core\Http\Request;
 use Core\Http\Response;
 
@@ -20,7 +21,8 @@ class Controller
     }
     public function url404NotFound()
     {
-        return Response::send(" URL not found");
+        Response::AddHeader('Content-type','text/html');
+        return Response::send(ErrorRender::showError(404, 'Page not found', true));
     }
 
     public function addFunction($name, $callback)

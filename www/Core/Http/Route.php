@@ -1,7 +1,6 @@
 <?php
 
     namespace Core\Http;
-    use Core\Http\CoreControllers\Controller;
     class Route {
 
         public $path;
@@ -9,79 +8,80 @@
         public $action ;
         public $method ;
         public $middlewares = [];
+        public $prefix = [] ;
+        protected static $_instance = null;
 
-        public function __construct()
+        public static function instance()
         {
-            $this->name = uniqid();
+            if (is_null(self::$_instance)) {
+                self::$_instance = new Route();
+            }
+            return self::$_instance;
         }
-        private static function instance(){
-            return new Route();
+
+        private function register(){
+            $this->name = uniqid();
+            Router::Add((object)(array)$this,$this->name);
+        }
+        private  static function resolve($url,$action,$middlewares=null, $method='GET'){
+            $ins = self::instance();
+            $ins->path = implode('', $ins->prefix).'/'.trim($url,'/');
+            $ins->action = $action;
+            $ins->method = $method;
+            $middlewares ??= [];
+            if(gettype($middlewares) == "array" ){
+                $ins->middlewares = array_merge($ins->middlewares,$middlewares);
+            }
+            else{
+                $ins->middlewares[] = $middlewares;
+            }
+            $ins->register();
+            $array_middlewares =  $ins->middlewares;
+            if(gettype($middlewares) == "array" ){
+                foreach($middlewares as $m){
+                    array_pop($array_middlewares);
+                }
+            }
+            else{
+                array_pop($array_middlewares);
+            }
+            $ins->middlewares = $array_middlewares;
+            return $ins;
         }
 
         public static function Get($url,$action,$middlewares=null){
-            $ins = self::instance();
-            $ins->path = trim($url,'/');
-            $ins->action = $action;
-            if(gettype($middlewares) == "array" ){
-                $ins->middlewares = $middlewares;
-            }
-            else{
-                $ins->middlewares = [$middlewares];
-            }
-            $ins->method = 'GET';
-            $ins->register();
-            return $ins;
-        }
-
-        public function register(){
-            Router::Add($this,$this->name);
+            return self::resolve($url,$action,$middlewares=null);
         }
 
         public static function Post($url,$action,$middlewares=null){
-            $ins = self::instance();
-            $ins->path = trim($url,'/');
-            $ins->action = $action;
-            $middlewares ??= [];
-            if(gettype($middlewares) == "array" ){
-                $ins->middlewares = $middlewares;
-            }
-            else{
-                $ins->middlewares = [$middlewares];
-            }
-            $ins->method = 'POST';
-            $ins->register();
-            return $ins;
+            return self::resolve($url,$action,$middlewares=null,'POST');
         }
 
         public static function Any($url,$action,$middlewares=null){
-            $ins = self::instance();
-            $ins->path = trim($url,'/');
-            $ins->action = $action;
-            $middlewares ??= [];
-            if(gettype($middlewares) == "array" ){
-                $ins->middlewares = $middlewares;
-            }
-            else{
-                $ins->middlewares = [$middlewares];
-            }
-            $ins->method = 'POST|GET';
-            $ins->register();
-            return $ins;
+            return self::resolve($url,$action,$middlewares=null,'POST|GET');
         }
 
         public static function Group($url,$middlewares=null,$callback){
-            $routes = call_user_func($callback);
-            if($routes){      
-                foreach($routes as $route){
-                    $route->path = $url.'/'.$route->path;
-                    $middlewares ??= [];
-                    if(gettype($middlewares) !== "array" ){
-                        $middlewares = [$middlewares];
-                    }
-                    $route->middlewares = array_merge($route->middlewares,$middlewares);
-                    $route->register();
+            $ins = self::instance();
+            $ins->prefix[] = $url;
+            if(gettype($middlewares) == "array" ){
+                $ins->middlewares = array_merge($ins->middlewares,$middlewares);
+            }
+            else{
+                $ins->middlewares[] = $middlewares;
+            }
+            $callback();
+            array_pop($ins->prefix);
+            $array_middlewares =  $ins->middlewares;
+            if(gettype($middlewares) == "array" ){
+                foreach($middlewares as $m){
+                    array_pop($array_middlewares);
                 }
             }
+            else{
+                array_pop($array_middlewares);
+            }
+            $ins->middlewares = $array_middlewares;
         }
 
         public function name($name){

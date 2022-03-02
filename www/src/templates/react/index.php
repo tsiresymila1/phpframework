@@ -8,7 +8,7 @@
     <title>
     {{ name }}
     </title>
-    <script defer src="/js/index.bundle.js"></script>
+    <script defer src="/js/bundle/index.bundle.js"></script>
 </head>
 
 <body>

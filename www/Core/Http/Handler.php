@@ -1,8 +1,6 @@
 <?php
 
 namespace Core\Http;
-
-use Core\Http\CoreControllers\Controller as CoreController;
 use Exception;
 
 class Handler
@@ -26,10 +24,6 @@ class Handler
         Request::Init($this->path);
         Response::Init();
         Router::Config($this->path);
-        if (!file_exists(APP_PATH . 'config/config.php')) {
-            throw new Exception('config.php file not found');
-        }
-        require APP_PATH . 'config/config.php';
         if (!file_exists(APP_PATH . 'config/routes.php')) {
             throw new Exception('routes.php file not found');
         }
@@ -51,20 +45,14 @@ class Handler
             $autheticator = new $Athenticator();
             $autheticator->authenticate();
         } else {
-            $this->doRouting();
+            self::DoRouting();
         }
     }
 
-    public function doRouting()
+    public static function DoRouting()
     {
         Router::$isFound = false;
         $response = Router::find();
-        if (!isset($response)) {
-            throw new Exception('Controller must return response ');
-        } else if (!Router::$isFound) {
-            $controller = new CoreController();
-            $response = $controller->url404NotFound();
-        }
         self::renderViewContent($response);
     }
 
@@ -74,6 +62,9 @@ class Handler
         exit($response->getStatus());
     }
 
+    /**
+     * @return string
+     */
     public  function request_path()
     {
         $request_uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));

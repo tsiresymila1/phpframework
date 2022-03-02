@@ -26,6 +26,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
     protected $rememberme = true;
     public $login = "/login";
     public $logout = "/logout";
+    private $content;
 
     public function __construct()
     {
@@ -109,15 +110,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
 
     public function pass()
     {
-        Router::$isFound = false;
-        $response = Router::find();
-        if (!isset($response)) {
-            throw new Exception('Controller must return response ');
-        } else if (!Router::$isFound) {
-            $controller = new CoreController();
-            $response = $controller->url404NotFound();
-        }
-        Handler::renderViewContent($response);
+        Handler::DoRouting();
     }
 
     public function verifyPost($successcallback, $errorcalback)
@@ -143,26 +136,26 @@ class UserAuthenticator implements UserAuthenticatorInterface
             //verify if logout
             if (preg_match("#^" . $this->logout . '/$#', $path)) {
                 $this->eraseCredentials();
-                $this->onAuthenticateFail();
+                $this->content = $this->onAuthenticateFail();
             }
             // verify if login 
             else if (preg_match("#^" . $this->login . '/$#', $path)) {
                 $this->eraseCredentials();
                 $this->verifyPost(function ($user) {
-                    $this->onAuthenticateSuccess($user);
+                    Handler::renderViewContent($this->onAuthenticateSuccess($user));
                 }, function () {
-                    $this->onAuthenticateFail();
+                    Handler::renderViewContent($this->onAuthenticateFail());
                 });
             }
             // verify if api login
             else if (preg_match("#^" . API_PREFIX . $this->login . '/$#', $path)) {
-                $this->verifyPost(function ($user) {
+                $this->verifyPost(function ($user){
                     $jwt = new JWT(SECRET);
                     $token = $jwt->generate($user->id, $user->getRoles());
                     Response::AddHeader('token', $token);
-                    $this->onApiAuthenticateSuccess($user);
+                    Handler::renderViewContent($this->onApiAuthenticateSuccess($user));
                 }, function () {
-                    $this->onApiAuthenticateFail();
+                    Handler::renderViewContent($this->onApiAuthenticateFail());
                 });
             } else {
                 // veirfy if current path like  url 
@@ -175,7 +168,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
                             $ins->Set('auth', true);
                             $this->pass();
                         } else {
-                            $this->onAuthenticateFail();
+                            Handler::renderViewContent($this->onAuthenticateFail());
                         }
                         break;
                     }
@@ -187,7 +180,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
                             $ins->Set('auth', true);
                             $this->pass();
                         } else {
-                            $this->onApiAuthenticateFail();
+                            Handler::renderViewContent($this->onApiAuthenticateFail());
                         }
                         break;
                     }
@@ -210,21 +203,23 @@ class UserAuthenticator implements UserAuthenticatorInterface
 
     public function onAuthenticateSuccess($data)
     {
-        Response::RedirectToRoute('/' . $_SERVER['HTTP_REFERER'] ?? '');
+        return Response::RedirectToRoute('/' . $_SERVER['HTTP_REFERER'] ?? '');
     }
 
     public function onAuthenticateFail()
     {
-        Response::Json(['Not authentified']);
+        return Response::Json(['Not authentified']);
     }
 
 
     public function  onApiAuthenticateSuccess($data)
     {
-        Response::Json(['data' => (array)$data]);
+        return Response::Json(['data' => (array)$data]);
     }
     public function  onApiAuthenticateFail()
     {
-        Response::Json(['message' => 'Not authentified']);
+        return Response::Json(['message' => 'Not authentified'], 403);
+    }
+    public function onAuthenticate($data, $next){
     }
 }

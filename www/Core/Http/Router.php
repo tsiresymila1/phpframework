@@ -2,10 +2,12 @@
 
 namespace Core\Http;
 
-use App\Controller;
 use BadMethodCallException;
 use Core\Container\Container;
+use Core\Http\CoreControllers\Controller;
+use Core\Http\CoreControllers\Controller as CoreController;
 use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
+use Exception;
 use ReflectionMethod;
 
 class Router
@@ -16,7 +18,7 @@ class Router
     public $variables = [];
     public static $isFound;
     public static $path;
-    public static Route $current;
+    public static  $current;
     public  $name;
     public $namespace = "App\Controller\\";
     public $container;
@@ -27,6 +29,9 @@ class Router
 
     private static  $_instance = null;
 
+    /**
+     * @return Router|null
+     */
     private static function instance()
     {
         if (is_null(self::$_instance)) {
@@ -36,6 +41,10 @@ class Router
         return self::$_instance;
     }
 
+    /**
+     * @param String $path
+     * @return Router|null
+     */
     public static function Config(String $path)
     {
         $ins = self::instance();
@@ -43,12 +52,19 @@ class Router
         return $ins;
     }
 
+    /**
+     * @return array[]
+     */
     public static function GetRoutes()
     {
         return self::$routes;
     }
 
-    public static function Add(Route $route, $name = null)
+    /**
+     * @param $route
+     * @param null $name
+     */
+    public static function Add($route, $name = null)
     {
         $methods = explode('|', $route->method);
         foreach ($methods as $method) {
@@ -60,6 +76,10 @@ class Router
         }
     }
 
+    /**
+     * @param $oldname
+     * @param $newname
+     */
     public static function Named($oldname, $newname)
     {
         foreach (self::$routes as $method => $routes) {
@@ -72,6 +92,10 @@ class Router
         }
     }
 
+    /**
+     * @param string $url
+     * @return bool
+     */
     public function matches(string $url)
     {
         $this->variables = [];
@@ -110,44 +134,29 @@ class Router
         $ins->container = Container::instance();
         $routes = self::$routes[$method];
         foreach ($routes as $route) {
-            if ($ins->matches(trim($route->path, '/'))) {
+            if (trim($route->path, '/') == "*" || $ins->matches(trim($route->path, '/'))) {
                 $ins::$isFound = true;
                 $ins::$current = $route;
                 return $ins->execute();
                 break;
             }
         }
+        if(defined('DEBUG') && DEBUG == false) {
+            $controller = new CoreController();
+            return  $controller->url404NotFound();
+        }
+        else{
+            throw new Exception('Route /'. self::$path.' not found', 404);
+        }
         return null;
     }
 
-    public function getArguments($class, $method)
-    {
-        $arguments = [];
-        $r = new ReflectionMethod($class, $method);
-        $paramsmethod = $r->getParameters();
-        foreach ($paramsmethod as $p) {
-            $pname = $p->name;
-            $type = $p->getType();
-            if (is_null($type) && isset($this->params[$pname])) {
-                $arguments[] = $this->params[$pname];
-            } else {
-                if (!is_null($type) && method_exists($type->getName(), 'getInstance')) {
-                    $className = $type->getName();
-                    $arguments[] = $className::instance();
-                } else {
-                    throw new BadMethodCallException('Error params not found ');
-                }
-            }
-        }
-        return $arguments;
-    }
-
     /**
-     * invokeSucess
+     * invokeSuccess
      *
      * @return Controller
      */
-    public function invokeSucess()
+    public function invokeSuccess()
     {
         $cparams = explode("@", self::$current->action);
         $ControllerClass = $this->namespace . $cparams[0];
@@ -187,7 +196,7 @@ class Router
                 }
             }
         }
-        return $this->invokeSucess();
+        return $this->invokeSuccess();
     }
     public static function renderViewContent($content, $status = 200)
     {

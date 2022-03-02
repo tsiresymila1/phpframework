@@ -16,7 +16,7 @@ class CommandHandler
             $ins->handle($args);
         } else {
             echo "Command not found\n";
-            exit();
+                exit();
         }
         return $ins;
     }

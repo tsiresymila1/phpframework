@@ -5,6 +5,7 @@ namespace Core\Http;
 use Core\Container\Container;
 use Core\Utils\Logger;
 use Utils\File;
+use function PHPUnit\Framework\isNull;
 
 /**
  * Request
@@ -44,10 +45,13 @@ class Request
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->get = $_GET;
+        if (isNull($_POST)){
+            $_POST = json_decode(file_get_contents('php://input'),true,512);
+        }
         $this->post = $_POST;
         $this->params = [];
         $this->request_data = $_REQUEST;
-        $this->headers = $this->getallheaders();
+        $this->headers = $this->getAllHeaders();
         foreach ($_FILES as $key => $file) {
             $this->files[$key] = new File($file);
         }
@@ -63,7 +67,7 @@ class Request
      */
     public function set($key, $value)
     {
-        $this->$key = $value;
+        $this->{$key} = $value;
     }
 
     /**
