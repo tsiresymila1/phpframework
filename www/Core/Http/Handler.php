@@ -1,12 +1,14 @@
 <?php
 
 namespace Core\Http;
+use Core\OpenAPI\OpenApi;
 use Exception;
 
 class Handler
 {
 
     private static $_instance = null;
+    private string $path;
 
     public static function instance()
     {
@@ -28,6 +30,7 @@ class Handler
             throw new Exception('routes.php file not found');
         }
         require APP_PATH . 'config/routes.php';
+        $spec = OpenApi::getSPec();
     }
 
     public static function handle()

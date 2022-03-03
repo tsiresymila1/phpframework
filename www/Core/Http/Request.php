@@ -45,7 +45,7 @@ class Request
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->get = $_GET;
-        if (isNull($_POST)){
+        if (is_null($_POST) || sizeof($_POST) == 0){
             $_POST = json_decode(file_get_contents('php://input'),true,512);
         }
         $this->post = $_POST;
@@ -68,6 +68,14 @@ class Request
     public function set($key, $value)
     {
         $this->{$key} = $value;
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     */
+    public function setRequestData($key, $value){
+        $this->request_data[$key] = $value;
     }
 
     /**
@@ -115,7 +123,12 @@ class Request
     {
         $ins = self::instance();
         if (!is_null($key)) {
-            return $ins->get[$key];
+            if(array_key_exists($key,$ins->get)) {
+                return $ins->get[$key];
+            }
+            else {
+                return null;
+            }
         }
         return $ins->get;
     }
@@ -130,7 +143,12 @@ class Request
     {
         $ins = self::instance();
         if (!is_null($key)) {
-            return $ins->post[$key];
+            if(array_key_exists($key,$ins->post)) {
+                return $ins->post[$key];
+            }
+            else {
+                return null;
+            }
         }
         return $ins->post;
     }
@@ -146,7 +164,12 @@ class Request
     {
         $ins = self::instance();
         if (!is_null($key)) {
-            return $ins->file[$key];
+            if(array_key_exists($key,$ins->file)) {
+                return $ins->file[$key];
+            }
+            else {
+                return null;
+            }
         }
         return $ins->file;
     }
@@ -161,7 +184,12 @@ class Request
     public  function files($key = null)
     {
         if (!is_null($key)) {
-            return $this->file[$key];
+            if(array_key_exists($key,$this->file)) {
+                return $this->file[$key];
+            }
+            else {
+                return null;
+            }
         }
         return $this->file;
     }
@@ -176,7 +204,12 @@ class Request
     public  function input($key = null)
     {
         if (!is_null($key)) {
-            return $this->request_data[$key];
+            if(array_key_exists($key,$this->request_data)) {
+                return $this->request_data[$key];
+            }
+            else {
+                return null;
+            }
         }
         return $this->request_data;
     }
@@ -206,7 +239,12 @@ class Request
     {
         $ins = self::instance();
         if (!is_null($key)) {
-            return $ins->headers[$key];
+            if(array_key_exists($key,$ins->headers)) {
+                return $ins->headers[$key];
+            }
+            else {
+                return null;
+            }
         }
         return $ins->headers;
     }
@@ -221,8 +259,8 @@ class Request
     public static function GetToken($key = "Authorization")
     {
         $ins = self::instance();
-        if (isset($ins->headers[$key])) {
-            return str_replace('Bearer ', '', $ins->headers[$key]);
+        if (isset($ins->headers[ucfirst($key)])) {
+            return str_replace('Bearer ', '', $ins->headers[ucfirst($key)]);
         }
         return '';
     }

@@ -112,7 +112,7 @@ class Response
             return $ins;
             die();
         } else {
-            throw new Exception('Route not found');
+            throw new Exception('Route not found',404);
         }
     }
     

@@ -28,12 +28,17 @@ class Bootstrap
 
     public static function handleError()
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline,$errcontext) {
             Logger::error($errno);
             Logger::error($errstr);
             Logger::error($errfile);
             Logger::error($errline);
-            exit(500);
+            if(!defined('DEBUG') || DEBUG == true) {
+                $strace = debug_backtrace();
+                $withcode = array_key_exists(strval($errno),ErrorRender::$code);
+                echo ErrorRender::showErrorDetails($errstr . ' in ' . $errfile . ' on line ' . $errline, $strace, $withcode ? $errno : '500');
+                exit();
+            }
         }, E_ALL | E_STRICT | E_ERROR | E_WARNING | E_NOTICE);
 
         set_exception_handler(function($e) {
@@ -45,10 +50,8 @@ class Bootstrap
             Logger::error( $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(). '==>'.$e->getCode());
             Logger::error($e->getTraceAsString());
             if(!defined('DEBUG') || DEBUG == true) {
-                $array = explode('#', $e->getTraceAsString());
-                array_shift($array);
                 $withcode = array_key_exists(strval($e->getCode()),ErrorRender::$code);
-                echo ErrorRender::showErrorDetails($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $array, $withcode ? $e->getCode() : '500');
+                echo ErrorRender::showErrorDetails($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $e->getTrace(), $withcode ? $e->getCode() : '500');
             };
         });
 

@@ -2,13 +2,13 @@
 
 namespace Core\Http;
 
-use BadMethodCallException;
 use Core\Container\Container;
 use Core\Http\CoreControllers\Controller;
 use Core\Http\CoreControllers\Controller as CoreController;
 use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
+use Core\OpenAPI\OAIParameter;
+use Core\OpenAPI\OAIResponse;
 use Exception;
-use ReflectionMethod;
 
 class Router
 {
@@ -87,9 +87,52 @@ class Router
                 if ($name == $oldname) {
                     unset(self::$routes[$method][$oldname]);
                     self::$routes[$method][$newname] = $route;
+                    break;
                 }
             }
         }
+    }
+
+    /**
+     * @param $oldname
+     * @param OAIParameter $p
+     */
+    public static function AddParameter($oldname, OAIParameter $p)
+    {
+        foreach (self::$routes as $method => $routes) {
+            foreach ($routes as $name => $route) {
+                if ($name == $oldname) {
+                    $route->parameters[] = $p;
+                    self::$routes[$method][$oldname] = $route;
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $search_name
+     * @param OAIResponse $r
+     */
+    public static function AddResponse($search_name, OAIResponse $r)
+    {
+        foreach (self::$routes as $method => $routes) {
+            foreach ($routes as $name => $route) {
+                if ($name == $search_name) {
+                    $route->response[] = $r;
+                    self::$routes[$method][$search_name] = $route;
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $callable
+     * @return bool
+     */
+    public function isFunction($callable) {
+        return $callable && !is_string($callable) && !is_array($callable) && is_callable($callable);
     }
 
     /**
@@ -99,19 +142,25 @@ class Router
     public function matches(string $url)
     {
         $this->variables = [];
-        $pathrepalced = preg_replace_callback('/\\\\{([^}]*)\}+/', function ($match) {
-            $exp = '([a-zA-Z0-9\-\_]+)';
+        $pathrepalced = preg_replace_callback('/\/\\\\{([^}]*)\}+/', function ($match) {
+            $exp = '/([a-zA-Z0-9\-\_]+)';
             if (strpos($match[1], '?') !== false) {
-                $exp =  '([a-zA-Z0-9\-\_]+)?';
+                $exp =  '([/\\\\]{1,1}[a-zA-Z0-9\-\_]+)?';
             }
             $this->variables[] = str_replace(['\\', '?'], '', $match[1]);
             return $exp;
         },  preg_quote($url));
 
         $pathToMatch = "@^" . $pathrepalced . "$@D";
-        if (preg_match($pathToMatch, self::$path, $matches)) {
+        $tomatch = self::$path;
+        if (preg_match($pathToMatch,$tomatch , $matches)) {
             $this->matches = $matches;
             array_shift($matches);
+            $matches = array_map(function ($m){
+                $p = ltrim($m, '/');
+                $ps = explode('/', $p);
+                return $ps[0];
+                },$matches);
             while (sizeof($this->variables) > sizeof($matches)) {
                 $matches[] = null;
             }
@@ -126,6 +175,7 @@ class Router
 
     /**
      * @return Response | null
+     * @throws Exception
      */
     public static function find()
     {
@@ -158,26 +208,16 @@ class Router
      */
     public function invokeSuccess()
     {
-        $cparams = explode("@", self::$current->action);
-        $ControllerClass = $this->namespace . $cparams[0];
-        $method = $cparams[1];
-        $content = $this->container->resolve($ControllerClass, $method, $this->params);
-        return  $content;
-    }
+        if($this->isFunction(self::$current->action)){
+            return $this->container->resolve(self::$current->action, null, $this->params, true);
+        }
+        else{
+            $cparams = explode("@", self::$current->action);
+            $ControllerClass = $this->namespace . $cparams[0];
+            $method = $cparams[1];
+            return $this->container->resolve($ControllerClass, $method, $this->params);
+        }
 
-    /**
-     * invokeFail
-     *
-     * @param mixed method
-     *
-     * @return Controller
-     */
-    public function invokeFail($method)
-    {
-        $methodsparams = explode("@", $this->action);
-        $ControllerClass = $this->namespace . $methodsparams[0];
-        $content = $this->container->resolve($ControllerClass, $method, $this->params);
-        return  $content;
     }
 
     /**
@@ -189,10 +229,15 @@ class Router
     {
         foreach (self::$current->middlewares as $middleware) {
             if (!is_null($middleware)) {
-                $MiddlewareClass = "App\Middleware\\" . $middleware;
-                $middleins = $this->container->make($MiddlewareClass);
-                if ($middleins instanceof BaseAuthMiddleware) {
-                    $middleins->handle();
+                if($this->isFunction($middleware)){
+                    $this->container->resolve($middleware, null, $this->params,true);
+                }
+                else{
+                    $MiddlewareClass = "App\Middleware\\" . $middleware;
+                    $middleins = $this->container->make($MiddlewareClass,[],$this->params);
+                    if ($middleins instanceof BaseAuthMiddleware) {
+                        $middleins->handle();
+                    }
                 }
             }
         }

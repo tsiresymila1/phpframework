@@ -4,14 +4,10 @@ namespace Core\Http\Security;
 
 use Core\Http\Request;
 use Core\Http\Response;
-use Core\Http\Router;
-use Core\Http\Security\UserAuthenticatorInterface;
-use Core\Http\CoreControllers\Controller as CoreController;
 use Core\Http\Handler;
 use Core\Session\Session;
 use Core\Utils\Encryption;
 use Core\Utils\JWT;
-use Exception;
 
 class UserAuthenticator implements UserAuthenticatorInterface
 {
@@ -20,6 +16,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
     protected $username;
     protected $password;
     protected $urls;
+    protected $excludes;
     protected $authenticator;
     protected $config;
     protected $roles = [];
@@ -39,6 +36,11 @@ class UserAuthenticator implements UserAuthenticatorInterface
             $this->urls = [$security['url']];
         } else {
             $this->urls = $security['url'];
+        }
+        if (gettype($security['excludes']) !== "array") {
+            $this->excludes = [$security['excludes']];
+        } else {
+            $this->excludes = $security['excludes'];
         }
         $this->config = $security['config'];
         $roles =  $this->config['roles'];
@@ -132,6 +134,12 @@ class UserAuthenticator implements UserAuthenticatorInterface
     public function authenticate()
     {
         $path = rtrim(Request::getPath(), '/') . '/';
+        //test excludes
+        foreach ($this->excludes as $exclude){
+            if (preg_match("#^" .  $exclude . '/$#', $path)) {
+                return $this->pass();
+            }
+        }
         if (isset($this->urls) && isset($this->authenticator) && isset($this->model) && isset($this->config)) {
             //verify if logout
             if (preg_match("#^" . $this->logout . '/$#', $path)) {
@@ -157,11 +165,24 @@ class UserAuthenticator implements UserAuthenticatorInterface
                 }, function () {
                     Handler::renderViewContent($this->onApiAuthenticateFail());
                 });
-            } else {
+            }
+            else {
                 // veirfy if current path like  url 
                 $found = false;
                 foreach ($this->urls as $url) {
-                    if (preg_match("#^" . $url . "/#", $path) === 1) {
+                    if (preg_match("#^" . API_PREFIX . "/#", $path) === 1) {
+                        $found = true;
+                        $ins = Request::instance();
+                        if ($this->IsverifyToken()) {
+                            $ins->Set('auth', true);
+                            $this->pass();
+                        } else {
+                            $ins->Set('auth', false);
+                            Handler::renderViewContent($this->onApiAuthenticateFail());
+                        }
+                        break;
+                    }
+                    else if (preg_match("#^" . $url . "/#", $path) === 1) {
                         $found = true;
                         if ($this->IsverifySession()) {
                             $ins = Request::instance();
@@ -169,18 +190,6 @@ class UserAuthenticator implements UserAuthenticatorInterface
                             $this->pass();
                         } else {
                             Handler::renderViewContent($this->onAuthenticateFail());
-                        }
-                        break;
-                    }
-                    //verify if current path like api 
-                    else if (preg_match("#^" . API_PREFIX . $url . "/#", $path) === 1) {
-                        $found = true;
-                        if ($this->IsverifyToken()) {
-                            $ins = Request::instance();
-                            $ins->Set('auth', true);
-                            $this->pass();
-                        } else {
-                            Handler::renderViewContent($this->onApiAuthenticateFail());
                         }
                         break;
                     }

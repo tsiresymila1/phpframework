@@ -5,6 +5,7 @@
     },
     "require": {
         "guzzlehttp/guzzle": "^7.4",
-        "ext-http": "*"
+        "ext-http": "*",
+      "ext-json": "*"
     }
 }

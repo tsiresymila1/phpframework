@@ -175,11 +175,14 @@ class ErrorRender
      * @param bool $iscontent
      * @return false|string
      */
-    public static function showErrorDetails($title="", $message="Internal server error", $code=500, $iscontent=false)
+    public static function showErrorDetails($title="", $traces=[], $code=500, $iscontent=false)
     {
         $messages_content = '';
-        foreach($message as $s){
-            $messages_content.='<div style="padding:4px 2px;"><code># '.$s.'</code></div>';
+        foreach($traces as $k => $t){
+            $st = isset($t['class'] ) ? $t['class'] : '';
+            $st.= isset($t['class']) ? $t['type']: '';
+            $file = isset($t['file']) ? $t['file'].' on line '.$t['line'] . ': ' : '';
+            $messages_content.='<div style="padding:4px 2px;"><code>#'.$k.' '.$file. $st.$t['function'].'()</code></div>';
         }
         $content = <<<HTML
             <!DOCTYPE>
