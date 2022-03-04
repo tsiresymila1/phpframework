@@ -3,6 +3,7 @@
 namespace Core\Http;
 
 use Core\OpenAPI\OAIParameter;
+use Core\OpenAPI\OAIResponse;
 
 class Route
 {
@@ -11,14 +12,15 @@ class Route
     public $name;
     public $action;
     public $method;
-    public $isAPI = false;
+    public $isAPI = null;
     public $isGroup = false;
     public array $parameters = [];
     public array $responses = [];
     public array $middlewares = [];
     protected static $prefix = [];
     protected static $_instance = null;
-    protected $names = [];
+    protected array $group_names = [];
+    protected array $names = [];
 
     public static function instance()
     {
@@ -39,7 +41,7 @@ class Route
         $new->parameters = $this->parameters;
         $new->responses = $this->responses;
         $new->isAPI = $this->isAPI;
-        $new->names = $this->names;
+        $new->group_names = $this->group_names;
         $new->isGroup = $this->isGroup;
         return $new;
     }
@@ -47,6 +49,7 @@ class Route
     private function register()
     {
         $this->name = uniqid();
+        $this->group_names[] = $this->name;
         $this->names[] = $this->name;
         $this->parameters = [];
         preg_replace_callback('/\\\\{([^}]*)\}+/', function ($match) {
@@ -69,22 +72,18 @@ class Route
      * @param $action
      * @param null $middlewares
      * @param string $method
-     * @param null $isAPI
      * @return Route|null
      */
-    private static function resolve($url, $action, $middlewares = null, $method = 'GET', $isAPI = null)
+    private static function resolve($url, $action, $middlewares = null, $method = 'GET')
     {
         $ins = self::instance();
         $ins->isGroup = false;
         $ins->action = $action;
         $ins->method = $method;
-        $prev_isAPI = $ins->isAPI;
-        if (!is_null($isAPI)) {
-            $ins->isAPI = $isAPI;
-        }
+        $ins->names = [];
         $middlewares ??= [];
         $prev_middlewares = $ins->middlewares;
-        if (gettype($middlewares) == "array") {
+        if (is_array($middlewares)) {
             $ins->middlewares = array_merge($ins->middlewares, $middlewares);
         } else {
             $ins->middlewares[] = $middlewares;
@@ -97,7 +96,7 @@ class Route
             $ins->register();
         }
         $ins->middlewares = $prev_middlewares;
-        $ins->isAPI = $prev_isAPI;
+        $ins->isAPI = null;
         return $ins;
     }
 
@@ -105,46 +104,42 @@ class Route
      * @param $url
      * @param $action
      * @param null $middlewares
-     * @param null $isAPI
      * @return Route|null
      */
-    public static function Get($url, $action, $middlewares = null, $isAPI = null)
+    public static function Get($url, $action, $middlewares = null)
     {
-        return self::resolve($url, $action, $middlewares, 'GET', $isAPI);
+        return self::resolve($url, $action, $middlewares, 'GET');
     }
 
     /**
      * @param $url
      * @param $action
      * @param null $middlewares
-     * @param null $isAPI
      * @return Route|null
      */
-    public static function Post($url, $action, $middlewares = null, $isAPI = null)
+    public static function Post($url, $action, $middlewares = null)
     {
-        return self::resolve($url, $action, $middlewares, 'POST', $isAPI);
+        return self::resolve($url, $action, $middlewares, 'POST');
     }
 
     /**
      * @param $url
      * @param $action
      * @param null $middlewares
-     * @param null $isAPI
      * @return Route|null
      */
-    public static function Any($url, $action, $middlewares = null, $isAPI = null)
+    public static function Any($url, $action, $middlewares = null)
     {
-        return self::resolve($url, $action, $middlewares, 'POST|GET', $isAPI);
+        return self::resolve($url, $action, $middlewares, 'POST|GET');
     }
 
     /**
      * @param $url
-     * @param null $middlewares
      * @param null $callback
-     * @param null $isAPI
-     * @return Route|null
+     * @param null $middlewares
+     * @return void
      */
-    public static function Group($url, $middlewares = null, $callback = null, $isAPI = null)
+    public static function Group($url, $callback = null, $middlewares = null)
     {
         $ins = self::instance();
         $prev_middlewares = $ins->middlewares;
@@ -152,21 +147,18 @@ class Route
         $prev_isAPI = $ins->isAPI;
         $prev_parameters = $ins->parameters;
         $prev_responses = $ins->responses;
-        $prev_names = $ins->names;
-        $ins->names = [];
+        $prev_group_names = $ins->group_names;
+        $ins->group_names = [];
         $group_name = $ins->name;
-        if (!is_null($isAPI)) {
-            $ins->isAPI = $isAPI;
-        }
         self::$prefix[] = $url;
         if (gettype($middlewares) == "array") {
             $ins->middlewares = array_merge($ins->middlewares, $middlewares);
         } else {
             $ins->middlewares[] = $middlewares;
         }
-        $groupes_middlewares = $ins->middlewares;
+        $group_middlewares = $ins->middlewares;
         if (is_callable($callback)) $callback();
-        $ins->middlewares = $groupes_middlewares;
+        $ins->middlewares = $group_middlewares;
         $ins->name = $group_name;
         $ins->isGroup = true;
         $clone = $ins->cloneObject();
@@ -175,8 +167,22 @@ class Route
         $ins->isAPI = $prev_isAPI;
         $ins->parameters = $prev_parameters;
         $ins->responses = $prev_responses;
-        $ins->names = array_merge($prev_names, $ins->names);
+        $ins->group_names = array_merge($prev_group_names, $ins->group_names);
         return $clone;
+    }
+
+    public function asApi($isApi = true)
+    {
+        if ($this->isGroup) {
+            foreach ($this->group_names as $n) {
+                Router::asAPI($n, $isApi);
+            }
+        } else {
+            foreach ($this->names as $n) {
+                Router::asAPI($n, $isApi);
+            }
+        }
+        return $this;
     }
 
     /**
@@ -186,70 +192,73 @@ class Route
     public function name($name)
     {
         if ($this->isGroup) {
-            foreach ($this->names as $n) {
+            foreach ($this->group_names as $n) {
                 $new_name = $name . '_' . $n;
                 Router::Named($n, $new_name);
-                $this->names[array_search($n, $this->names)] = $new_name;
+                $this->group_names[array_search($n, $this->group_names)] = $new_name;
             }
         } else {
-            Router::Named($this->name, $name);
-            $this->names[array_search($this->name, $this->names)] = $name;
+            $isMore = sizeof($this->names)>1;
+            foreach ($this->names as $key=>$n) {
+                $new_name = $isMore ? $name.(intval($key +1)) : $name;
+                Router::Named($n,$new_name);
+                $this->group_names[array_search($n, $this->group_names)] = $new_name;
+                $this->names[array_search($n, $this->names)] = $new_name;
+                $this->name = $new_name;
+            }
         }
-        $this->name = $name;
         return $this;
     }
 
     /**
-     * @param $p
+     * @param  $p
+     * @return $this
+     */
+    public function middleware($p)
+    {
+        if (!$this->isGroup) {
+            foreach ($this->names as $n) {
+                Router::AddMiddleware($n, $p);
+            }
+        } else {
+            foreach ($this->group_names as $name) {
+                Router::AddMiddleware($name, $p);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @param array|OAIParameter $p
      * @return $this
      */
     public function addParameter($p)
     {
-        if (gettype($p) == "array") {
-            if (!$this->isGroup) {
-                $this->parameters = array_merge($this->parameters, $p);
-            } else {
-                foreach ($p as $param) {
-                    foreach ($this->names as $name) {
-                        Router::AddParameter($name, $param);
-                    }
-                }
+        if (!$this->isGroup) {
+            foreach ($this->names as $n) {
+                Router::AddParameter($n, $p);
             }
         } else {
-            if (!$this->isGroup) {
-                $this->parameters[] = $p;
-            } else {
-                foreach ($this->names as $name) {
-                    Router::AddParameter($name, $p);
-                }
+            foreach ($this->group_names as $name) {
+                Router::AddParameter($name, $p);
             }
         }
         return $this;
     }
 
     /**
-     * @param $r
+     * @param array|OAIResponse $r
      * @return $this
      */
     public function addResponse($r)
     {
-        if (gettype($r) == "array") {
-            if (!$this->isGroup) {
-                $this->parameters = array_merge($this->parameters, $r);
-            } else {
-                foreach ($r as $param) {
-                    foreach ($this->names as $name) {
-                        Router::AddResponse($name, $param);
-                    }
-                }
+        if (!$this->isGroup) {
+            foreach ($this->names as $n) {
+                Router::AddResponse($n, $r);
             }
         } else {
-            if (is_null($this->name)) {
-                $this->parameters[] = $r;
-            } else {
-                foreach ($this->names as $name) {
-                    Router::AddResponse($name, $r);
-                }
+            foreach ($this->group_names as $name) {
+                Router::AddResponse($name, $r);
             }
         }
         return $this;

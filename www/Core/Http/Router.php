@@ -95,14 +95,49 @@ class Router
 
     /**
      * @param $oldname
-     * @param OAIParameter $p
+     * @param array|OAIParameter $p
      */
-    public static function AddParameter($oldname, OAIParameter $p)
+    public static function AddParameter($oldname, $p)
     {
         foreach (self::$routes as $method => $routes) {
             foreach ($routes as $name => $route) {
                 if ($name == $oldname) {
-                    $route->parameters[] = $p;
+                    if (gettype($p) == "array") {
+                        $route->parameters = array_merge($p, $route->parameters);
+                    }
+                    else{
+                        $route->parameters[] = $p;
+                    }
+                    self::$routes[$method][$oldname] = $route;
+                    break;
+                }
+            }
+        }
+    }
+
+    public static function asAPI($oldname, $isAs){
+        foreach (self::$routes as $method => $routes) {
+            foreach ($routes as $name => $route) {
+                if ($name == $oldname) {
+                    if(is_null($route->isAPI)){
+                        $route->isAPI = $isAs;
+                    }
+                    self::$routes[$method][$oldname] = $route;
+                    break;
+                }
+            }
+        }
+    }
+    public static function AddMiddleware($oldname, $middleware){
+        foreach (self::$routes as $method => $routes) {
+            foreach ($routes as $name => $route) {
+                if ($name == $oldname) {
+                    if (gettype($middleware) == "array") {
+                        $route->middlewares = array_merge($middleware, $route->response);
+                    }
+                    else{
+                        $route->middlewares[] = $middleware;
+                    }
                     self::$routes[$method][$oldname] = $route;
                     break;
                 }
@@ -112,14 +147,19 @@ class Router
 
     /**
      * @param $search_name
-     * @param OAIResponse $r
+     * @param array | OAIResponse $r
      */
-    public static function AddResponse($search_name, OAIResponse $r)
+    public static function AddResponse($search_name,  $r)
     {
         foreach (self::$routes as $method => $routes) {
             foreach ($routes as $name => $route) {
                 if ($name == $search_name) {
-                    $route->response[] = $r;
+                    if (gettype($r) == "array") {
+                        $route->responses = array_merge($r, $route->response);
+                    }
+                    else{
+                        $route->responses[] = $r;
+                    }
                     self::$routes[$method][$search_name] = $route;
                     break;
                 }

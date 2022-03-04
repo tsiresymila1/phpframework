@@ -3102,3 +3102,140 @@
 2022-03-04 10:20:33::REQUEST:: GET /api/fs
 2022-03-04 10:20:37::REQUEST:: GET /api/docs
 2022-03-04 10:21:26::REQUEST:: GET /api/docs
+2022-03-04 10:41:04::REQUEST:: GET /api
+2022-03-04 10:41:29::REQUEST:: GET /api
+2022-03-04 10:41:34::REQUEST:: GET /api
+2022-03-04 10:41:46::REQUEST:: GET /api/admin/dashboard
+2022-03-04 12:16:32::REQUEST:: GET /api
+2022-03-04 12:16:33::ERROR:: 2
+2022-03-04 12:16:33::ERROR:: array_merge(): Expected parameter 2 to be an array, object given
+2022-03-04 12:16:33::ERROR:: /var/www/html/Core/Http/Route.php
+2022-03-04 12:16:33::ERROR:: 229
+2022-03-04 12:20:40::REQUEST:: GET /api
+2022-03-04 12:20:40::ERROR:: Typed property Core\Http\Route::$responses must be array, Core\OpenAPI\OAIResponse used in /var/www/html/Core/Http/Router.php on line 159==>0
+2022-03-04 12:20:40::ERROR:: #0 /var/www/html/Core/Http/Route.php(227): Core\Http\Router::AddResponse('6221f608d95fd', Object(Core\OpenAPI\OAIResponse))
+#1 /var/www/html/src/config/routes.php(21): Core\Http\Route->addResponse(Object(Core\OpenAPI\OAIResponse))
+#2 /var/www/html/Core/Http/Handler.php(33): require('/var/www/html/s...')
+#3 /var/www/html/Core/Http/Handler.php(18): Core\Http\Handler->__construct()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler::instance()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 12:21:57::REQUEST:: GET /api
+2022-03-04 12:21:57::ERROR:: Typed property Core\OpenAPI\OAIResponse::$schema must not be accessed before initialization in /var/www/html/Core/OpenAPI/OAIResponse.php on line 27==>0
+2022-03-04 12:21:57::ERROR:: #0 /var/www/html/Core/OpenAPI/OAIPath.php(67): Core\OpenAPI\OAIResponse->toJson()
+#1 /var/www/html/Core/OpenAPI/OpenApi.php(69): Core\OpenAPI\OAIPath->addResponses(Array)
+#2 /var/www/html/Core/OpenAPI/OpenApi.php(86): Core\OpenAPI\OpenApi->loadRoute()
+#3 /var/www/html/Core/Http/Handler.php(34): Core\OpenAPI\OpenApi::getSPec()
+#4 /var/www/html/Core/Http/Handler.php(18): Core\Http\Handler->__construct()
+#5 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler::instance()
+#6 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#7 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#8 {main}
+2022-03-04 12:22:59::REQUEST:: GET /api
+2022-03-04 12:23:00::ERROR:: Typed property Core\OpenAPI\OAIResponse::$schema must not be accessed before initialization in /var/www/html/Core/OpenAPI/OAIResponse.php on line 29==>0
+2022-03-04 12:23:00::ERROR:: #0 /var/www/html/Core/OpenAPI/OAIPath.php(67): Core\OpenAPI\OAIResponse->toJson()
+#1 /var/www/html/Core/OpenAPI/OpenApi.php(69): Core\OpenAPI\OAIPath->addResponses(Array)
+#2 /var/www/html/Core/OpenAPI/OpenApi.php(86): Core\OpenAPI\OpenApi->loadRoute()
+#3 /var/www/html/Core/Http/Handler.php(34): Core\OpenAPI\OpenApi::getSPec()
+#4 /var/www/html/Core/Http/Handler.php(18): Core\Http\Handler->__construct()
+#5 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler::instance()
+#6 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#7 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#8 {main}
+2022-03-04 12:24:38::REQUEST:: GET /api
+2022-03-04 12:24:39::ERROR:: Typed property Core\OpenAPI\OAIResponse::$schema must not be accessed before initialization in /var/www/html/Core/OpenAPI/OAIResponse.php on line 37==>0
+2022-03-04 12:24:39::ERROR:: #0 /var/www/html/Core/OpenAPI/OAIPath.php(67): Core\OpenAPI\OAIResponse->toJson()
+#1 /var/www/html/Core/OpenAPI/OpenApi.php(69): Core\OpenAPI\OAIPath->addResponses(Array)
+#2 /var/www/html/Core/OpenAPI/OpenApi.php(86): Core\OpenAPI\OpenApi->loadRoute()
+#3 /var/www/html/Core/Http/Handler.php(34): Core\OpenAPI\OpenApi::getSPec()
+#4 /var/www/html/Core/Http/Handler.php(18): Core\Http\Handler->__construct()
+#5 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler::instance()
+#6 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#7 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#8 {main}
+2022-03-04 13:10:21::REQUEST:: GET /api
+2022-03-04 13:10:21::ERROR:: Typed property Core\OpenAPI\OAIResponse::$schema must not be accessed before initialization in /var/www/html/Core/OpenAPI/OAIResponse.php on line 37==>0
+2022-03-04 13:10:21::ERROR:: #0 /var/www/html/Core/OpenAPI/OAIPath.php(67): Core\OpenAPI\OAIResponse->toJson()
+#1 /var/www/html/Core/OpenAPI/OpenApi.php(69): Core\OpenAPI\OAIPath->addResponses(Array)
+#2 /var/www/html/Core/OpenAPI/OpenApi.php(86): Core\OpenAPI\OpenApi->loadRoute()
+#3 /var/www/html/Core/Http/Handler.php(34): Core\OpenAPI\OpenApi::getSPec()
+#4 /var/www/html/Core/Http/Handler.php(18): Core\Http\Handler->__construct()
+#5 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler::instance()
+#6 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#7 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#8 {main}
+2022-03-04 13:11:43::REQUEST:: GET /api
+2022-03-04 13:11:50::REQUEST:: GET /api
+2022-03-04 13:12:07::REQUEST:: GET /api
+2022-03-04 13:12:28::REQUEST:: GET /api/docs
+2022-03-04 13:12:40::REQUEST:: GET /api/docs
+2022-03-04 13:13:11::REQUEST:: GET /api/docs
+2022-03-04 13:14:01::REQUEST:: GET /api/docs
+2022-03-04 13:14:43::REQUEST:: GET /api/docs
+2022-03-04 13:16:45::REQUEST:: GET /api/docs
+2022-03-04 13:16:53::REQUEST:: GET /api/docs
+2022-03-04 13:17:33::REQUEST:: GET /api/docs
+2022-03-04 13:18:37::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 13:19:00::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 13:19:02::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 13:19:43::REQUEST:: GET /api/docs
+2022-03-04 13:20:13::REQUEST:: GET /api/docs
+2022-03-04 13:21:13::REQUEST:: GET /api/docs
+2022-03-04 13:22:22::REQUEST:: GET /api/docs
+2022-03-04 13:23:16::REQUEST:: GET /api/docs
+2022-03-04 13:25:02::REQUEST:: GET /api/docs
+2022-03-04 13:25:42::REQUEST:: GET /api/docs
+2022-03-04 13:27:12::REQUEST:: GET /get/fsfs
+2022-03-04 13:27:24::REQUEST:: GET /api/docs
+2022-03-04 13:27:34::REQUEST:: GET /get/sfs
+2022-03-04 13:28:51::REQUEST:: GET /api/docs
+2022-03-04 13:33:43::REQUEST:: GET /api/docs
+2022-03-04 13:35:06::REQUEST:: GET /api/docs
+2022-03-04 13:36:13::REQUEST:: GET /api/docs
+2022-03-04 13:40:48::REQUEST:: GET /api/docs
+2022-03-04 13:41:11::REQUEST:: GET /api/docs
+2022-03-04 13:48:27::REQUEST:: GET /api/docs
+2022-03-04 13:48:48::REQUEST:: GET /api/docs
+2022-03-04 13:49:18::REQUEST:: GET /api/docs
+2022-03-04 13:52:55::REQUEST:: GET /api/docs
+2022-03-04 13:53:55::REQUEST:: GET /api/docs
+2022-03-04 14:26:53::REQUEST:: GET /api/docs
+2022-03-04 14:28:34::REQUEST:: GET /api/docs
+2022-03-04 14:30:07::REQUEST:: GET /api/docs
+2022-03-04 14:30:28::REQUEST:: GET /api/docs
+2022-03-04 14:30:59::REQUEST:: GET /api/docs
+2022-03-04 14:31:19::REQUEST:: GET /api/docs
+2022-03-04 14:31:50::REQUEST:: GET /api/docs
+2022-03-04 14:33:24::REQUEST:: GET /api/docs
+2022-03-04 14:34:37::REQUEST:: GET /api/docs
+2022-03-04 14:36:11::REQUEST:: GET /api/docs
+2022-03-04 14:39:15::REQUEST:: GET /api/docs
+2022-03-04 14:39:40::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 14:40:28::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 14:40:33::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 14:41:01::REQUEST:: GET /api/docs
+2022-03-04 14:41:04::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 14:41:09::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 14:41:09::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 14:41:24::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 14:41:25::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 14:41:26::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 14:41:57::REQUEST:: GET /api/docs
+2022-03-04 14:42:00::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 14:42:10::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 14:42:10::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 14:42:49::REQUEST:: GET /api/docs
+2022-03-04 14:42:51::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 14:43:07::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 14:43:07::REQUEST:: GET /api/docs
+2022-03-04 14:43:09::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 14:43:10::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 14:43:10::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 14:43:12::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 14:45:14::REQUEST:: GET /api/docs
+2022-03-04 14:45:17::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 14:45:18::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 14:45:22::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 14:45:43::REQUEST:: GET /api/docs
+2022-03-04 14:58:33::REQUEST:: GET /api/docs

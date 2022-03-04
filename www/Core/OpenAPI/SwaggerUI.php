@@ -30,7 +30,7 @@ class SwaggerUI
         return array('bundle' => $bundle, 'preset' => $preset);
     }
 
-    public static function renderer($url)
+    public static function renderer()
     {
         $ins = new SwaggerUI();
         $css = $ins->loadCss();
@@ -78,13 +78,23 @@ class SwaggerUI
                 <script>${js['preset']}</script>
                 <script>
                 window.onload = function() {
+                    const HideInfoUrlPartsPlugin = () => {
+                      return {
+                        wrapComponents: {
+                          InfoUrl: () => () => null,
+                          InfoBasePath: () => () => null,
+                        }
+                      }
+                    }
                   const ui = SwaggerUIBundle({
                     dom_id: '#swagger-ui',
                     deepLinking: true,
                     presets: [
                       SwaggerUIBundle.presets.apis,
-                      SwaggerUIStandalonePreset
+                      SwaggerUIStandalonePreset,
+                      HideInfoUrlPartsPlugin    
                     ],
+                    layout: "StandaloneLayout",
                     spec: ${spec},
                   })                
                   window.ui = ui;
