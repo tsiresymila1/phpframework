@@ -2,14 +2,11 @@
 
 namespace Core\Database;
 
-use Core\Database\DB;
-use Core\Utils\DocBlock;
 use Core\Utils\Logger;
 use DateTime;
 use PDO;
 use PDOException;
 use ReflectionClass;
-use ReflectionProperty;
 
 class Model
 {

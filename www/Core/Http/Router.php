@@ -18,16 +18,16 @@ class Router
     public $variables = [];
     public static $isFound;
     public static $path;
-    public static  $current;
-    public  $name;
+    public static $current;
+    public $name;
     public $namespace = "App\Controller\\";
     public $container;
-    private  static $routes = [
+    private static $routes = [
         "GET" => [],
         "POST" => []
     ];
 
-    private static  $_instance = null;
+    private static $_instance = null;
 
     /**
      * @return Router|null
@@ -45,7 +45,7 @@ class Router
      * @param String $path
      * @return Router|null
      */
-    public static function Config(String $path)
+    public static function Config(string $path)
     {
         $ins = self::instance();
         $ins::$path = trim($path, '/');
@@ -69,9 +69,9 @@ class Router
         $methods = explode('|', $route->method);
         foreach ($methods as $method) {
             if (!is_null($name)) {
-                self::$routes[$method][$name]  = $route;
+                self::$routes[$method][$name] = $route;
             } else {
-                self::$routes[$method][$route->name]  = $route;
+                self::$routes[$method][$route->name] = $route;
             }
         }
     }
@@ -131,7 +131,8 @@ class Router
      * @param $callable
      * @return bool
      */
-    public function isFunction($callable) {
+    public function isFunction($callable)
+    {
         return $callable && !is_string($callable) && !is_array($callable) && is_callable($callable);
     }
 
@@ -145,22 +146,22 @@ class Router
         $pathrepalced = preg_replace_callback('/\/\\\\{([^}]*)\}+/', function ($match) {
             $exp = '/([a-zA-Z0-9\-\_]+)';
             if (strpos($match[1], '?') !== false) {
-                $exp =  '([/\\\\]{1,1}[a-zA-Z0-9\-\_]+)?';
+                $exp = '([/\\\\]{1,1}[a-zA-Z0-9\-\_]+)?';
             }
             $this->variables[] = str_replace(['\\', '?'], '', $match[1]);
             return $exp;
-        },  preg_quote($url));
+        }, preg_quote($url));
 
         $pathToMatch = "@^" . $pathrepalced . "$@D";
         $tomatch = self::$path;
-        if (preg_match($pathToMatch,$tomatch , $matches)) {
+        if (preg_match($pathToMatch, $tomatch, $matches)) {
             $this->matches = $matches;
             array_shift($matches);
-            $matches = array_map(function ($m){
+            $matches = array_map(function ($m) {
                 $p = ltrim($m, '/');
                 $ps = explode('/', $p);
                 return $ps[0];
-                },$matches);
+            }, $matches);
             while (sizeof($this->variables) > sizeof($matches)) {
                 $matches[] = null;
             }
@@ -174,7 +175,7 @@ class Router
     }
 
     /**
-     * @return Response | null
+     * @return Response
      * @throws Exception
      */
     public static function find()
@@ -191,14 +192,12 @@ class Router
                 break;
             }
         }
-        if(defined('DEBUG') && DEBUG == false) {
+        if (defined('DEBUG') && DEBUG == false) {
             $controller = new CoreController();
-            return  $controller->url404NotFound();
+            return $controller->url404NotFound();
+        } else {
+            throw new Exception('Route /' . self::$path . ' not found', 404);
         }
-        else{
-            throw new Exception('Route /'. self::$path.' not found', 404);
-        }
-        return null;
     }
 
     /**
@@ -208,10 +207,9 @@ class Router
      */
     public function invokeSuccess()
     {
-        if($this->isFunction(self::$current->action)){
+        if ($this->isFunction(self::$current->action)) {
             return $this->container->resolve(self::$current->action, null, $this->params, true);
-        }
-        else{
+        } else {
             $cparams = explode("@", self::$current->action);
             $ControllerClass = $this->namespace . $cparams[0];
             $method = $cparams[1];
@@ -229,12 +227,11 @@ class Router
     {
         foreach (self::$current->middlewares as $middleware) {
             if (!is_null($middleware)) {
-                if($this->isFunction($middleware)){
-                    $this->container->resolve($middleware, null, $this->params,true);
-                }
-                else{
+                if ($this->isFunction($middleware)) {
+                    $this->container->resolve($middleware, null, $this->params, true);
+                } else {
                     $MiddlewareClass = "App\Middleware\\" . $middleware;
-                    $middleins = $this->container->make($MiddlewareClass,[],$this->params);
+                    $middleins = $this->container->make($MiddlewareClass, [], $this->params);
                     if ($middleins instanceof BaseAuthMiddleware) {
                         $middleins->handle();
                     }
@@ -243,6 +240,7 @@ class Router
         }
         return $this->invokeSuccess();
     }
+
     public static function renderViewContent($content, $status = 200)
     {
         echo $content;

@@ -2933,3 +2933,172 @@
 2022-03-03 11:49:59::REQUEST:: POST /api/login
 2022-03-03 11:50:07::DATABASE QUERY:: SELECT * FROM users WHERE username='tsiresy' AND password='ekl4c0hQSXJVdXFnTnJXejFDR3NSUT09'
 2022-03-03 11:50:07::DATABASE ERROR:: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'username' in 'where clause'
+2022-03-04 08:15:22::REQUEST:: GET /api/docs
+2022-03-04 08:19:27::REQUEST:: GET /api/docs
+2022-03-04 08:37:50::REQUEST:: GET /api/docs
+2022-03-04 08:38:26::REQUEST:: GET /api/docs
+2022-03-04 08:40:51::REQUEST:: GET /api/docs
+2022-03-04 08:42:10::REQUEST:: GET /api/docs
+2022-03-04 08:44:35::REQUEST:: GET /api/docs
+2022-03-04 08:48:38::REQUEST:: GET /
+2022-03-04 08:48:53::REQUEST:: GET /static/assets/profile/%7B%7B%20request.session.user.image%7D%7D
+2022-03-04 08:49:34::REQUEST:: GET /admin
+2022-03-04 08:52:25::ERROR:: Route /admin not found in /var/www/html/Core/Http/Router.php on line 199==>404
+2022-03-04 08:52:25::ERROR:: #0 /var/www/html/Core/Http/Handler.php(58): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->authenticate()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler->auth()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 08:52:30::REQUEST:: GET /admin
+2022-03-04 08:53:35::ERROR:: Route /admin not found in /var/www/html/Core/Http/Router.php on line 199==>404
+2022-03-04 08:53:35::ERROR:: #0 /var/www/html/Core/Http/Handler.php(58): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->authenticate()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler->auth()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 08:54:36::REQUEST:: GET /admin
+2022-03-04 08:55:21::ERROR:: Route /admin not found in /var/www/html/Core/Http/Router.php on line 199==>404
+2022-03-04 08:55:21::ERROR:: #0 /var/www/html/Core/Http/Handler.php(58): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->authenticate()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler->auth()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 08:55:53::REQUEST:: GET /admin
+2022-03-04 08:57:40::ERROR:: Route /admin not found in /var/www/html/Core/Http/Router.php on line 199==>404
+2022-03-04 08:57:40::ERROR:: #0 /var/www/html/Core/Http/Handler.php(58): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->authenticate()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler->auth()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 08:58:31::REQUEST:: GET /admin
+2022-03-04 09:01:00::ERROR:: Route /admin not found in /var/www/html/Core/Http/Router.php on line 199==>404
+2022-03-04 09:01:01::ERROR:: #0 /var/www/html/Core/Http/Handler.php(58): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->authenticate()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler->auth()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 09:04:09::REQUEST:: GET /admin
+2022-03-04 09:05:33::ERROR:: Route /admin not found in /var/www/html/Core/Http/Router.php on line 199==>404
+2022-03-04 09:05:33::ERROR:: #0 /var/www/html/Core/Http/Handler.php(58): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->authenticate()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler->auth()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 09:19:51::REQUEST:: GET /admin
+2022-03-04 09:21:13::ERROR:: Route /admin not found in /var/www/html/Core/Http/Router.php on line 199==>404
+2022-03-04 09:21:13::ERROR:: #0 /var/www/html/Core/Http/Handler.php(58): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->authenticate()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler->auth()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 09:22:44::REQUEST:: GET /admin
+2022-03-04 09:23:17::ERROR:: Route /admin not found in /var/www/html/Core/Http/Router.php on line 199==>404
+2022-03-04 09:23:17::ERROR:: #0 /var/www/html/Core/Http/Handler.php(58): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->authenticate()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler->auth()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 09:24:31::REQUEST:: GET /admin
+2022-03-04 09:25:27::ERROR:: Route /admin not found in /var/www/html/Core/Http/Router.php on line 199==>404
+2022-03-04 09:25:28::ERROR:: #0 /var/www/html/Core/Http/Handler.php(58): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->authenticate()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler->auth()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 09:25:32::REQUEST:: GET /admin
+2022-03-04 09:26:19::ERROR:: Route /admin not found in /var/www/html/Core/Http/Router.php on line 199==>404
+2022-03-04 09:26:19::ERROR:: #0 /var/www/html/Core/Http/Handler.php(58): Core\Http\Router::find()
+#1 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#2 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#3 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->authenticate()
+#4 /var/www/html/Core/Http/Handler.php(39): Core\Http\Handler->auth()
+#5 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#6 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#7 {main}
+2022-03-04 09:26:54::REQUEST:: GET /api/docs
+2022-03-04 09:27:48::REQUEST:: GET /api/docs
+2022-03-04 09:28:41::REQUEST:: GET /api/docs
+2022-03-04 09:30:02::REQUEST:: GET /api/docs
+2022-03-04 09:31:49::REQUEST:: GET /api/docs
+2022-03-04 09:32:34::REQUEST:: GET /api/docs
+2022-03-04 09:34:01::REQUEST:: GET /api/docs
+2022-03-04 09:37:21::REQUEST:: GET /api/docs
+2022-03-04 09:38:04::REQUEST:: GET /api/docs
+2022-03-04 09:39:20::REQUEST:: GET /api/docs
+2022-03-04 09:41:32::REQUEST:: GET /api/docs
+2022-03-04 09:42:01::REQUEST:: GET /api/docs
+2022-03-04 09:52:41::REQUEST:: GET /api/docs
+2022-03-04 09:56:06::REQUEST:: GET /api/docs
+2022-03-04 09:58:31::REQUEST:: GET /api/docs
+2022-03-04 09:58:31::ERROR:: Typed static property Core\OpenAPI\OpenApi::$instance must not be accessed before initialization in /var/www/html/Core/OpenAPI/OpenApi.php on line 30==>0
+2022-03-04 09:58:31::ERROR:: #0 /var/www/html/Core/OpenAPI/OpenApi.php(85): Core\OpenAPI\OpenApi::instance()
+#1 /var/www/html/Core/Http/Handler.php(33): Core\OpenAPI\OpenApi::getSPec()
+#2 /var/www/html/Core/Http/Handler.php(17): Core\Http\Handler->__construct()
+#3 /var/www/html/Core/Http/Handler.php(38): Core\Http\Handler::instance()
+#4 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#5 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#6 {main}
+2022-03-04 09:58:53::REQUEST:: GET /api/docs
+2022-03-04 09:58:53::ERROR:: Typed static property Core\OpenAPI\OpenApi::$instance must not be accessed before initialization in /var/www/html/Core/OpenAPI/OpenApi.php on line 30==>0
+2022-03-04 09:58:53::ERROR:: #0 /var/www/html/Core/OpenAPI/OpenApi.php(85): Core\OpenAPI\OpenApi::instance()
+#1 /var/www/html/Core/Http/Handler.php(33): Core\OpenAPI\OpenApi::getSPec()
+#2 /var/www/html/Core/Http/Handler.php(17): Core\Http\Handler->__construct()
+#3 /var/www/html/Core/Http/Handler.php(38): Core\Http\Handler::instance()
+#4 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#5 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#6 {main}
+2022-03-04 09:59:32::REQUEST:: GET /api/docs
+2022-03-04 09:59:58::REQUEST:: GET /api/docs
+2022-03-04 10:00:30::REQUEST:: GET /api/docs
+2022-03-04 10:02:18::REQUEST:: GET /api/docs
+2022-03-04 10:02:41::REQUEST:: GET /function/5/get/undefined
+2022-03-04 10:03:07::REQUEST:: GET /function/5/get/10
+2022-03-04 10:10:06::REQUEST:: GET /get/10
+2022-03-04 10:10:39::REQUEST:: GET /function/5/get/10
+2022-03-04 10:12:12::REQUEST:: GET /api/docs
+2022-03-04 10:12:45::REQUEST:: GET /api/docs
+2022-03-04 10:14:43::REQUEST:: GET /api/docs
+2022-03-04 10:14:55::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 10:15:41::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 10:15:45::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 10:15:59::REQUEST:: GET /api/docs
+2022-03-04 10:16:08::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 10:16:09::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 10:16:11::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 10:18:45::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 10:18:46::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 10:18:48::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 10:20:11::REQUEST:: GET /api/docs
+2022-03-04 10:20:17::REQUEST:: GET /api/swagger-ui.css.map
+2022-03-04 10:20:22::REQUEST:: GET /api/swagger-ui-bundle.js.map
+2022-03-04 10:20:23::REQUEST:: GET /api/swagger-ui-standalone-preset.js.map
+2022-03-04 10:20:33::REQUEST:: GET /api/fs
+2022-03-04 10:20:37::REQUEST:: GET /api/docs
+2022-03-04 10:21:26::REQUEST:: GET /api/docs

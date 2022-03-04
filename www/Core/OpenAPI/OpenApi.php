@@ -58,9 +58,9 @@ class OpenApi
                 $path = new OAIPath($p);
                 if (gettype($r->action) == "string") {
                     $array = explode('@', $r->action);
-                    $tag = str_replace('Controller', '',$array[0]);
-                    if(!array_key_exists($tag,$this->tags)){
-                        $this->tags[$tag] = array('name'=>$tag, 'description' =>'');
+                    $tag = str_replace('Controller', '', $array[0]);
+                    if (!array_key_exists($tag, $this->tags)) {
+                        $this->tags[$tag] = array('name' => $tag, 'description' => '');
                     }
                     $path->addTag($tag);
                     $path->setOperationId($array[1]);
@@ -72,7 +72,7 @@ class OpenApi
                 $oaiPath[strtolower($meth)] = $path;
             }
             if (sizeof($oaiPath) > 0) {
-                $this->paths[$p] = $oaiPath;
+                $this->paths[str_replace('?', '', $p)] = $oaiPath;
             }
         }
     }
@@ -88,7 +88,7 @@ class OpenApi
             'swagger' => $ins->swagger,
             'info' => $ins->info->toJSon(),
             'host' => $_SERVER['HTTP_HOST'],
-            'tags' =>array_values($ins->tags),
+            'tags' => array_values($ins->tags),
             'schemes' => $ins->schemes,
             'paths' => $ins->paths,
             'securityDefinitions' => $ins->securityDefinition

@@ -103,7 +103,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
         return $this->isAuthSessionUser($usernamep, $passwordp);
     }
 
-    public function IsverifyToken()
+    public function IsVerifyToken()
     {
         $jwt = new JWT(SECRET);
         $token = Request::GetToken();
@@ -173,7 +173,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
                     if (preg_match("#^" . API_PREFIX . "/#", $path) === 1) {
                         $found = true;
                         $ins = Request::instance();
-                        if ($this->IsverifyToken()) {
+                        if ($this->IsVerifyToken()) {
                             $ins->Set('auth', true);
                             $this->pass();
                         } else {

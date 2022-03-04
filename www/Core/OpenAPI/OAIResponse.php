@@ -10,15 +10,26 @@ class OAIResponse
     public $description;
     public OAISchema $schema;
 
+    public function __construct($code = 200, $description = 'Response 200', $schema = null)
+    {
+        $this->code = $code;
+        $this->description = $description;
+        $this->$schema = $schema;
+    }
+
     /**
      * @return array
      */
     public function toJson()
     {
-        return array(
+        $data = array(
             'description' => $this->description,
             'schema' => $this->schema->toJson()
         );
+        if (!is_null($this->schema)) {
+            $data['schema'] = $this->schema;
+        }
+        return $data;
     }
 
 }

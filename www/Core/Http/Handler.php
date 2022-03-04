@@ -1,6 +1,7 @@
 <?php
 
 namespace Core\Http;
+
 use Core\OpenAPI\OpenApi;
 use Exception;
 
@@ -21,7 +22,7 @@ class Handler
 
     public function __construct()
     {
-        $route =  $this->request_path();
+        $route = $this->request_path();
         $this->path = "/" . $route;
         Request::Init($this->path);
         Response::Init();
@@ -68,7 +69,7 @@ class Handler
     /**
      * @return string
      */
-    public  function request_path()
+    public function request_path()
     {
         $request_uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         $script_name = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));

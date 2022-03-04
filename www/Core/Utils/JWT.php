@@ -15,7 +15,8 @@ class JWT
         $this->secret = $secret;
         $this->expiration = $expiration;
     }
-    public  function base64UrlEncode($text)
+
+    public function base64UrlEncode($text)
     {
         return str_replace(
             ['+', '/', '='],
@@ -24,7 +25,7 @@ class JWT
         );
     }
 
-    public  function generate($id = null, $roles = ['ROLE_ADMIN'])
+    public function generate($id = null, $roles = ['ROLE_ADMIN'])
     {
         $header = json_encode([
             'typ' => 'JWT',
@@ -33,7 +34,7 @@ class JWT
 
         $base64UrlHeader = $this->base64UrlEncode($header);
         $timestamp = (new DateTime('now'))->getTimestamp();
-        $expired =  $timestamp + $this->expiration;
+        $expired = $timestamp + $this->expiration;
 
         $payload = json_encode([
             'user_id' => $id,
@@ -56,7 +57,7 @@ class JWT
             $payload = base64_decode($tokenParts[1]);
             $expiration = json_decode($payload)->exp;
             $signatureProvided = $tokenParts[2];
-            $isExpired = (new DateTime('now'))->getTimestamp() > (int) $expiration;
+            $isExpired = (new DateTime('now'))->getTimestamp() > (int)$expiration;
             $base64UrlHeader = $this->base64UrlEncode($header);
             $base64UrlPayload = $this->base64UrlEncode($payload);
             $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $this->secret, true);
