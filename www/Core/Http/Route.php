@@ -19,8 +19,8 @@ class Route
     public array $middlewares = [];
     protected static $prefix = [];
     protected static $_instance = null;
-    protected array $group_names = [];
-    protected array $names = [];
+    public array $group_names = [];
+    public array $names = [];
 
     public static function instance()
     {
@@ -137,7 +137,7 @@ class Route
      * @param $url
      * @param null $callback
      * @param null $middlewares
-     * @return void
+     * @return Route
      */
     public static function Group($url, $callback = null, $middlewares = null)
     {
@@ -197,6 +197,7 @@ class Route
                 Router::Named($n, $new_name);
                 $this->group_names[array_search($n, $this->group_names)] = $new_name;
             }
+            $this->name = $name;
         } else {
             $isMore = sizeof($this->names)>1;
             foreach ($this->names as $key=>$n) {

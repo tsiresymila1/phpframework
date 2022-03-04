@@ -86,6 +86,9 @@ class Router
             foreach ($routes as $name => $route) {
                 if ($name == $oldname) {
                     unset(self::$routes[$method][$oldname]);
+                    $currentRoute = Route::instance();
+                    $currentRoute->names[array_search($oldname, $currentRoute->names)] = $newname;
+                    $currentRoute->group_names[array_search($oldname, $currentRoute->group_names)] = $newname;
                     self::$routes[$method][$newname] = $route;
                     break;
                 }
@@ -243,7 +246,7 @@ class Router
     /**
      * invokeSuccess
      *
-     * @return Controller
+     * @return Response
      */
     public function invokeSuccess()
     {
@@ -261,7 +264,7 @@ class Router
     /**
      * execute
      *
-     * @return Controller
+     * @return Response
      */
     public function execute()
     {
