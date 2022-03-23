@@ -3245,3 +3245,846 @@
 2022-03-04 15:25:36::REQUEST:: GET /api/docs
 2022-03-04 15:25:49::REQUEST:: GET /api/docs
 2022-03-04 15:26:18::REQUEST:: GET /api/docs
+2022-03-04 15:33:49::REQUEST:: GET /
+2022-03-04 15:33:52::REQUEST:: GET /static/assets/profile/%7B%7B%20request.session.user.image%7D%7D
+2022-03-04 15:44:54::REQUEST:: GET /test
+2022-03-04 15:44:54::DATABASE QUERY:: SELECT * FROM users  WHERE (email='tsiresymila@gmail.com' AND soft_deleted='0') OR id='1'
+2022-03-04 15:44:55::DATABASE QUERY:: SELECT * FROM users WHERE email='tsiresymila@gmail.com'
+2022-03-04 15:44:55::DATABASE QUERY:: UPDATE users SET password='bmc5STIzR083Ukxob2xqT0Fqb1k2dz09' WHERE email='tsiresymila@gmail.com'
+2022-03-04 18:54:25::REQUEST:: GET /test
+2022-03-04 18:54:25::ERROR:: 2
+2022-03-04 18:54:25::ERROR:: require(/var/www/html/src/Model/UserModel.php): failed to open stream: No such file or directory
+2022-03-04 18:54:25::ERROR:: /var/www/html/Core/Autoloader.php
+2022-03-04 18:54:25::ERROR:: 29
+2022-03-04 18:55:07::REQUEST:: GET /test
+2022-03-04 18:55:08::ERROR:: Typed property Core\Database\Model::$table must not be accessed before initialization in /var/www/html/Core/Database/Model.php on line 29==>0
+2022-03-04 18:55:08::ERROR:: #0 /var/www/html/Core/Http/Security/UserAuthenticator.php(34): Core\Database\Model->__construct()
+#1 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->__construct()
+#2 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#3 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#4 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#5 {main}
+2022-03-04 18:55:39::REQUEST:: GET /test
+2022-03-04 18:55:39::ERROR:: 8
+2022-03-04 18:55:39::ERROR:: Array to string conversion
+2022-03-04 18:55:39::ERROR:: /var/www/html/Core/Database/Model.php
+2022-03-04 18:55:39::ERROR:: 285
+2022-03-04 18:58:10::REQUEST:: GET /test
+2022-03-04 18:58:36::ERROR:: 8
+2022-03-04 18:58:36::ERROR:: Array to string conversion
+2022-03-04 18:58:36::ERROR:: /var/www/html/Core/Database/Model.php
+2022-03-04 18:58:36::ERROR:: 285
+2022-03-04 18:59:27::REQUEST:: GET /test
+2022-03-04 19:00:39::ERROR:: 8
+2022-03-04 19:00:39::ERROR:: Array to string conversion
+2022-03-04 19:00:39::ERROR:: /var/www/html/Core/Database/Model.php
+2022-03-04 19:00:39::ERROR:: 285
+2022-03-04 19:01:34::REQUEST:: GET /test
+2022-03-04 19:02:09::ERROR:: 8
+2022-03-04 19:02:09::ERROR:: Array to string conversion
+2022-03-04 19:02:09::ERROR:: /var/www/html/Core/Database/Model.php
+2022-03-04 19:02:09::ERROR:: 285
+2022-03-04 19:02:15::REQUEST:: GET /test
+2022-03-04 19:03:29::ERROR:: Call to a member function getPDO() on null in /var/www/html/Core/Database/Model.php on line 227==>0
+2022-03-04 19:03:29::ERROR:: #0 /var/www/html/Core/Database/Model.php(265): Core\Database\Model->exec()
+#1 /var/www/html/src/Controller/DefaultController.php(24): Core\Database\Model->get()
+#2 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#3 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#4 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#5 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#6 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#7 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#8 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#10 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#11 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#12 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#13 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#14 {main}
+2022-03-04 19:12:19::REQUEST:: GET /test
+2022-03-04 19:12:46::ERROR:: Call to a member function getPDO() on null in /var/www/html/Core/Database/Model.php on line 233==>0
+2022-03-04 19:12:46::ERROR:: #0 /var/www/html/Core/Database/Model.php(271): Core\Database\Model->exec()
+#1 /var/www/html/src/Controller/DefaultController.php(24): Core\Database\Model->get()
+#2 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#3 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#4 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#5 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#6 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#7 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#8 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#10 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#11 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#12 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#13 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#14 {main}
+2022-03-04 19:14:48::REQUEST:: GET /test
+2022-03-04 19:14:59::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:62225718e56cf AND soft_deleted=:62225718e56f3) OR id=:62225718e5760
+2022-03-04 19:15:01::DATABASE QUERY:: SELECT * FROM users WHERE email=:6222572320feb
+2022-03-04 19:15:01::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:15:01::DATABASE QUERY:: INSERT INTO users SET name=:62225725328ce,email=:62225725328e0,password=:62225725328e5,roles=:62225725328ea,created_at='2022-03-04 19:15:01',updated_at='2022-03-04 19:15:01'
+2022-03-04 19:15:01::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:15:01::DATABASE QUERY:: UPDATE users SET password=:622257253680e' WHERE email=:6222572536876
+2022-03-04 19:15:02::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:16:31::REQUEST:: GET /test
+2022-03-04 19:16:36::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:6222577fb18fe AND soft_deleted=:6222577fb191b) OR id=:6222577fb192c
+2022-03-04 19:16:36::DATABASE QUERY:: SELECT * FROM users WHERE email=:622257848c7d1
+2022-03-04 19:16:36::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:16:36::DATABASE QUERY:: INSERT INTO users SET name=:62225784919dc,email=:62225784919e8,password=:62225784919ec,roles=:62225784919f0,created_at='2022-03-04 19:16:36',updated_at='2022-03-04 19:16:36'
+2022-03-04 19:16:36::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:16:36::DATABASE QUERY:: UPDATE users SET password=:6222578496057  WHERE email=:6222578496072
+2022-03-04 19:16:36::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:19:39::REQUEST:: GET /test
+2022-03-04 19:19:39::DATABASE QUERY:: SELECT * FROM users  WHERE (email=::6222583b95150 AND soft_deleted=::6222583b9515b) OR id=::6222583b9516b
+2022-03-04 19:19:39::DATABASE ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '::6222583b95150 AND soft_deleted=::6222583b9515b) OR id=::6222583b9516b' at line 1
+2022-03-04 19:19:39::DATABASE QUERY:: SELECT * FROM users WHERE email=:6222583bc54ed
+2022-03-04 19:19:39::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:19:39::DATABASE QUERY:: INSERT INTO users SET name=:6222583bc947e,email=:6222583bc948b,password=:6222583bc948f,roles=:6222583bc9492,created_at='2022-03-04 19:19:39',updated_at='2022-03-04 19:19:39'
+2022-03-04 19:19:39::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:19:39::DATABASE QUERY:: UPDATE users SET password=:6222583bcd3fe  WHERE email=::6222583bcd41d
+2022-03-04 19:19:39::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:24:17::REQUEST:: GET /test
+2022-03-04 19:24:18::DATABASE QUERY:: SELECT * FROM users  WHERE (email=::622259523d0a6 AND soft_deleted=::622259523d0c5) OR id=::622259523d0d6
+2022-03-04 19:24:18::DATABASE ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '::622259523d0a6 AND soft_deleted=::622259523d0c5) OR id=::622259523d0d6' at line 1
+2022-03-04 19:24:18::DATABASE QUERY:: SELECT * FROM users WHERE email=:622259524aa8a
+2022-03-04 19:24:18::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:24:18::DATABASE QUERY:: INSERT INTO users SET name=:622259524f98a,email=:622259524f998,password=:622259524f99d,roles=:622259524f9a0,created_at='2022-03-04 19:24:18',updated_at='2022-03-04 19:24:18'
+2022-03-04 19:24:18::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:24:18::DATABASE QUERY:: UPDATE users SET password=:622259525325d  WHERE email=::622259525327a
+2022-03-04 19:24:18::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:24:46::REQUEST:: GET /test
+2022-03-04 19:24:47::DATABASE QUERY:: SELECT * FROM users  WHERE (email=::6222596f308ce AND soft_deleted=::6222596f308e8) OR id=::6222596f308fa
+2022-03-04 19:25:01::DATABASE ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '::6222596f308ce AND soft_deleted=::6222596f308e8) OR id=::6222596f308fa' at line 1
+2022-03-04 19:25:01::DATABASE QUERY:: SELECT * FROM users WHERE email=:6222597d52f01
+2022-03-04 19:25:01::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:25:01::DATABASE QUERY:: INSERT INTO users SET name=:6222597d57971,email=:6222597d57986,password=:6222597d5798d,roles=:6222597d57994,created_at='2022-03-04 19:25:01',updated_at='2022-03-04 19:25:01'
+2022-03-04 19:25:01::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:25:01::DATABASE QUERY:: UPDATE users SET password=:6222597d5c8b5  WHERE email=::6222597d5c8d5
+2022-03-04 19:25:01::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:26:04::REQUEST:: GET /test
+2022-03-04 19:26:04::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:622259bcaf5dd AND soft_deleted=:622259bcaf5eb) OR id=:622259bcaf5fc
+2022-03-04 19:26:36::DATABASE QUERY:: SELECT * FROM users WHERE email=:622259dc8183a
+2022-03-04 19:26:36::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:26:36::DATABASE QUERY:: INSERT INTO users SET name=:622259dc85853,email=:622259dc85861,password=:622259dc85866,roles=:622259dc8586a,created_at='2022-03-04 19:26:36',updated_at='2022-03-04 19:26:36'
+2022-03-04 19:26:36::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:26:36::DATABASE QUERY:: UPDATE users SET password=:622259dc89d63  WHERE email=:622259dc89d7f
+2022-03-04 19:26:36::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:27:11::REQUEST:: GET /test
+2022-03-04 19:27:12::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:4665200a52226 AND soft_deleted=:2765200a52226) OR id=:2865200a52226
+2022-03-04 19:27:19::DATABASE QUERY:: SELECT * FROM users WHERE email=:cdcae70a52226
+2022-03-04 19:27:19::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:27:19::DATABASE QUERY:: INSERT INTO users SET name=:ad9fe70a52226,email=:ae9fe70a52226,password=:fe9fe70a52226,roles=:4f9fe70a52226,created_at='2022-03-04 19:27:19',updated_at='2022-03-04 19:27:19'
+2022-03-04 19:27:19::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:27:19::DATABASE QUERY:: UPDATE users SET password=:bf73f70a52226  WHERE email=:6183f70a52226
+2022-03-04 19:27:20::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:28:06::REQUEST:: GET /test
+2022-03-04 19:28:07::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:2eeb673a52226marap AND soft_deleted=:7feb673a52226marap) OR id=:f0fb673a52226marap
+2022-03-04 19:28:57::DATABASE QUERY:: SELECT * FROM users WHERE email=:2b11396a52226marap
+2022-03-04 19:28:57::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:28:57::DATABASE QUERY:: INSERT INTO users SET name=:4ad5396a52226marap,email=:fbd5396a52226marap,password=:8cd5396a52226marap,roles=:0dd5396a52226marap,created_at='2022-03-04 19:28:57',updated_at='2022-03-04 19:28:57'
+2022-03-04 19:28:57::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:28:57::DATABASE QUERY:: UPDATE users SET password=:aba9396a52226marap  WHERE email=:4da9396a52226marap
+2022-03-04 19:28:57::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:29:01::REQUEST:: GET /test
+2022-03-04 19:29:01::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62225a6d8e5069.69564353 AND soft_deleted=:param62225a6d8e51a3.20103052) OR id=:param62225a6d8e52d0.95262185
+2022-03-04 19:29:10::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: parameter was not defined
+2022-03-04 19:29:10::DATABASE QUERY:: SELECT * FROM users WHERE email=:param62225a76b04ed7.88634376
+2022-03-04 19:29:10::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:29:10::DATABASE QUERY:: INSERT INTO users SET name=:param62225a76b54cc0.15686742,email=:param62225a76b54e88.54162722,password=:param62225a76b54f20.29520476,roles=:param62225a76b54fb0.21038610,created_at='2022-03-04 19:29:10',updated_at='2022-03-04 19:29:10'
+2022-03-04 19:29:10::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:29:10::DATABASE QUERY:: UPDATE users SET password=:param62225a76b9caf1.60196548  WHERE email=:param62225a76b9ce02.39710047
+2022-03-04 19:29:10::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:29:37::REQUEST:: GET /test
+2022-03-04 19:29:38::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62225a92639f1897918673 AND soft_deleted=:param62225a9263a0e340551564) OR id=:param62225a9263a24346073037
+2022-03-04 19:29:40::DATABASE QUERY:: SELECT * FROM users WHERE email=:param62225a94c855b731799079
+2022-03-04 19:29:40::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:29:40::DATABASE QUERY:: INSERT INTO users SET name=:param62225a94ce2b5837835100,email=:param62225a94ce2ca981853945,password=:param62225a94ce2d1002710116,roles=:param62225a94ce2d7377612230,created_at='2022-03-04 19:29:40',updated_at='2022-03-04 19:29:40'
+2022-03-04 19:29:40::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:29:40::DATABASE QUERY:: UPDATE users SET password=:param62225a94d2fdb029213120  WHERE email=:param62225a94d2ffe908075176
+2022-03-04 19:29:40::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:32:16::REQUEST:: GET /test
+2022-03-04 19:32:17::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62225b313bb41406798869 AND soft_deleted=:param62225b313bca3416465367) OR id=:param62225b313be6e209110066
+2022-03-04 19:32:22::DATABASE QUERY:: SELECT * FROM users WHERE email=:param62225b36ab81a772980375
+2022-03-04 19:32:22::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:32:22::DATABASE QUERY:: INSERT INTO users SET name=:param62225b36afd1f794268306,email=:param62225b36afd34973704959,password=:param62225b36afd3a575534004,roles=:param62225b36afd40661883837,created_at='2022-03-04 19:32:22',updated_at='2022-03-04 19:32:22'
+2022-03-04 19:32:22::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:32:22::DATABASE QUERY:: UPDATE users SET password=:param62225b36b4363495331442  WHERE email=:param62225b36b4388682441712
+2022-03-04 19:32:22::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:33:23::REQUEST:: GET /test
+2022-03-04 19:33:23::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62225b73e7f9f950414097 AND soft_deleted=:param62225b73e7fba807061866) OR id=:param62225b73e7fd3582634945
+2022-03-04 19:33:23::DATABASE QUERY:: SELECT * FROM users WHERE email=:param62225b73f113b340194248
+2022-03-04 19:33:23::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:33:24::DATABASE QUERY:: INSERT INTO users SET name=:param62225b7401771856883794,email=:param62225b740178f080061760,password=:param62225b7401799828258622,roles=:param62225b74017a2120264760,created_at='2022-03-04 19:33:24',updated_at='2022-03-04 19:33:24'
+2022-03-04 19:33:24::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:33:24::DATABASE QUERY:: UPDATE users SET password=:param62225b7406c85840095675  WHERE email=:param62225b7406cb7195564297
+2022-03-04 19:33:24::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:49:01::REQUEST:: GET /test
+2022-03-04 19:49:02::ERROR:: Call to a member function getShortName() on string in /var/www/html/Core/Database/Model.php on line 28==>0
+2022-03-04 19:49:02::ERROR:: #0 /var/www/html/Core/Http/Security/UserAuthenticator.php(34): Core\Database\Model->__construct()
+#1 /var/www/html/Core/Http/Handler.php(49): Core\Http\Security\UserAuthenticator->__construct()
+#2 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#3 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#4 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#5 {main}
+2022-03-04 19:49:25::REQUEST:: GET /test
+2022-03-04 19:49:25::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62225f35dfa79954102842 AND soft_deleted=:param62225f35dfb92183773789) OR id=:param62225f35dfbae920601458
+2022-03-04 19:49:25::DATABASE QUERY:: SELECT * FROM users WHERE email=:param62225f35ea4a8331651661
+2022-03-04 19:49:25::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 19:49:25::ERROR:: Typed property Core\Database\Model::$createdAt must not be accessed before initialization in /var/www/html/Core/Database/Model.php on line 78==>0
+2022-03-04 19:49:25::ERROR:: #0 /var/www/html/src/Controller/DefaultController.php(32): Core\Database\Model->save()
+#1 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#2 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#3 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#4 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#5 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#6 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#7 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#8 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#9 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#10 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#11 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#12 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#13 {main}
+2022-03-04 20:08:39::REQUEST:: GET /test
+2022-03-04 20:08:40::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param622263b8500ca009543435 AND soft_deleted=:param622263b8500df066543905) OR id=:param622263b8500f8300315808
+2022-03-04 20:08:40::DATABASE QUERY:: SELECT * FROM users WHERE email=:param622263b85afa7977460143
+2022-03-04 20:08:40::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:08:40::ERROR:: 8
+2022-03-04 20:08:40::ERROR:: Undefined variable: id
+2022-03-04 20:08:40::ERROR:: /var/www/html/Core/Database/Model.php
+2022-03-04 20:08:40::ERROR:: 88
+2022-03-04 20:14:19::REQUEST:: GET /test
+2022-03-04 20:14:20::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param6222650c1b4cc005280543 AND soft_deleted=:param6222650c1b4e2893271167) OR id=:param6222650c1b54a116102842
+2022-03-04 20:14:20::DATABASE QUERY:: SELECT * FROM users WHERE email=:param6222650c26019242909911
+2022-03-04 20:14:20::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:14:20::DATABASE QUERY:: INSERT INTO users SET 0=:param6222650c2a3fa323941300,1=:param6222650c2a405015583797,2=:param6222650c2a40e126964820,3=:param6222650c2a415458811887,4=:param6222650c2a41e388451542,5=:param6222650c2a427960833815,6=:param6222650c2a42f632324946,7=:param6222650c2a437199380861,8=:param6222650c2a43e184704185,created_at='2022-03-04 20:14:20',updated_at='2022-03-04 20:14:20'
+2022-03-04 20:14:20::ERROR:: Object of class DateTime could not be converted to string in /var/www/html/Core/Database/Model.php on line 292==>0
+2022-03-04 20:14:20::ERROR:: #0 /var/www/html/Core/Database/Model.php(292): PDOStatement->execute(Array)
+#1 /var/www/html/Core/Database/Model.php(171): Core\Database\Model->execSilent()
+#2 /var/www/html/Core/Database/Model.php(91): Core\Database\Model->insert(Array)
+#3 /var/www/html/src/Controller/DefaultController.php(32): Core\Database\Model->save()
+#4 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#5 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#6 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#7 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#8 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#9 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#11 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#12 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#13 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#14 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#15 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#16 {main}
+2022-03-04 20:16:04::REQUEST:: GET /test
+2022-03-04 20:16:05::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62226575115cf347247178 AND soft_deleted=:param62226575115e3453415588) OR id=:param62226575115f5194551241
+2022-03-04 20:16:05::DATABASE QUERY:: SELECT * FROM users WHERE email=:param6222657518ece763656618
+2022-03-04 20:16:05::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:05::DATABASE QUERY:: INSERT INTO users SET 0=:param622265751d3f3052216743,1=:param622265751d3ff514086884,2=:param622265751d407405731661,3=:param622265751d40f297959820,4=:param622265751d417767842602,5=:param622265751d41e908923439,created_at='2022-03-04 20:16:05',updated_at='2022-03-04 20:16:05'
+2022-03-04 20:16:05::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:12::REQUEST:: GET /test
+2022-03-04 20:16:13::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param6222657d4b303864926868 AND soft_deleted=:param6222657d4b317039470798) OR id=:param6222657d4b329855712200
+2022-03-04 20:16:13::DATABASE QUERY:: SELECT * FROM users WHERE email=:param6222657d53027170337927
+2022-03-04 20:16:13::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:13::DATABASE QUERY:: INSERT INTO users SET 0=:param6222657d57413552826410,1=:param6222657d574aa515003534,2=:param6222657d574b8435829943,3=:param6222657d574bd040476816,4=:param6222657d574c2111072169,5=:param6222657d574c8957319723,created_at='2022-03-04 20:16:13',updated_at='2022-03-04 20:16:13'
+2022-03-04 20:16:13::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:15::REQUEST:: GET /test
+2022-03-04 20:16:16::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param6222658008701948724213 AND soft_deleted=:param6222658008714551649555) OR id=:param6222658008726420070267
+2022-03-04 20:16:16::DATABASE QUERY:: SELECT * FROM users WHERE email=:param622265800f63e809911460
+2022-03-04 20:16:16::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:16::DATABASE QUERY:: INSERT INTO users SET 0=:param6222658012e3d930398545,1=:param6222658012e48892532192,2=:param6222658012e50231777916,3=:param6222658012e58755949789,4=:param6222658012e61288703319,5=:param6222658012e69138422153,created_at='2022-03-04 20:16:16',updated_at='2022-03-04 20:16:16'
+2022-03-04 20:16:16::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:18::REQUEST:: GET /test
+2022-03-04 20:16:18::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62226582d510d190393240 AND soft_deleted=:param62226582d5127679807431) OR id=:param62226582d513b416419543
+2022-03-04 20:16:18::DATABASE QUERY:: SELECT * FROM users WHERE email=:param62226582dc22f538821125
+2022-03-04 20:16:18::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:18::DATABASE QUERY:: INSERT INTO users SET 0=:param62226582e07dd939969097,1=:param62226582e07e4508110355,2=:param62226582e07e8541670110,3=:param62226582e07ed318897025,4=:param62226582e07f1648570673,5=:param62226582e07f5350266505,created_at='2022-03-04 20:16:18',updated_at='2022-03-04 20:16:18'
+2022-03-04 20:16:18::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:21::REQUEST:: GET /test
+2022-03-04 20:16:21::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62226585cad8a743383743 AND soft_deleted=:param62226585cada0675892014) OR id=:param62226585cadb2619824389
+2022-03-04 20:16:21::DATABASE QUERY:: SELECT * FROM users WHERE email=:param62226585d17fd157890735
+2022-03-04 20:16:21::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:21::DATABASE QUERY:: INSERT INTO users SET 0=:param62226585d57a9879083830,1=:param62226585d57b1078376842,2=:param62226585d57b7528332580,3=:param62226585d57bc776490213,4=:param62226585d57c1864337425,5=:param62226585d57c5365811346,created_at='2022-03-04 20:16:21',updated_at='2022-03-04 20:16:21'
+2022-03-04 20:16:21::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:24::REQUEST:: GET /test
+2022-03-04 20:16:24::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param622265888c59b682595919 AND soft_deleted=:param622265888c5b0047473227) OR id=:param622265888c5c2008663864
+2022-03-04 20:16:24::DATABASE QUERY:: SELECT * FROM users WHERE email=:param6222658893245083725879
+2022-03-04 20:16:24::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:16:24::DATABASE QUERY:: INSERT INTO users SET 0=:param6222658896d8d134541054,1=:param6222658896d95638883528,2=:param6222658896d9b323496107,3=:param6222658896da0701737382,4=:param6222658896da4924814968,5=:param6222658896da9610333670,created_at='2022-03-04 20:16:24',updated_at='2022-03-04 20:16:24'
+2022-03-04 20:16:24::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:18:29::REQUEST:: GET /test
+2022-03-04 20:18:29::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62226605eff28638329452 AND soft_deleted=:param62226605eff3c523076838) OR id=:param62226605eff4c545976971
+2022-03-04 20:18:30::DATABASE QUERY:: SELECT * FROM users WHERE email=:param6222660604260340569842
+2022-03-04 20:18:30::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:18:30::DATABASE QUERY:: INSERT INTO users SET 0=:param62226606095d2249176410,1=:param62226606095e0950200122,2=:param62226606095e8394806411,3=:param62226606095ef895293634,4=:param62226606095f6071213197,5=:param62226606095fe026008437,created_at='2022-03-04 20:18:30',updated_at='2022-03-04 20:18:30'
+2022-03-04 20:18:30::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:18:53::REQUEST:: GET /test
+2022-03-04 20:18:54::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param6222661e233e1283516719 AND soft_deleted=:param6222661e233f5721544712) OR id=:param6222661e23408867338485
+2022-03-04 20:18:54::DATABASE QUERY:: SELECT * FROM users WHERE email=:param6222661e2ca07633241368
+2022-03-04 20:18:54::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:19:43::DATABASE QUERY:: INSERT INTO users SET 0=:param6222664fbf182624167874,1=:param6222664fbf1ab223950255,2=:param6222664fbf1b7318643941,3=:param6222664fbf1c1542243039,4=:param6222664fbf1ca091766057,5=:param6222664fbf1d3287016036,created_at='2022-03-04 20:19:43',updated_at='2022-03-04 20:19:43'
+2022-03-04 20:19:43::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:20:36::REQUEST:: GET /test
+2022-03-04 20:20:37::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param6222668557589053377018 AND soft_deleted=:param62226685575a5572341752) OR id=:param62226685575c3544834435
+2022-03-04 20:20:37::DATABASE QUERY:: SELECT * FROM users WHERE email=:param6222668560497290885440
+2022-03-04 20:20:37::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:20:41::DATABASE QUERY:: INSERT INTO users SET name=:param62226689dd493650689509,email=:param62226689dd4d2179222856,password=:param62226689dd4de295587245,is_admin=:param62226689dd4e5327259911,roles=:param62226689dd4ea776084217,nb_connexion=:param62226689dd4f0796789173,created_at='2022-03-04 20:20:41',updated_at='2022-03-04 20:20:41'
+2022-03-04 20:20:41::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:21:04::REQUEST:: GET /test
+2022-03-04 20:21:04::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param622266a076cb7384131632 AND soft_deleted=:param622266a076cd1077021754) OR id=:param622266a076e65638710565
+2022-03-04 20:21:04::DATABASE QUERY:: SELECT * FROM users WHERE email=:param622266a080fea266479976
+2022-03-04 20:21:04::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:22:09::DATABASE QUERY:: INSERT INTO users SET name=:param622266b2e52b9567625582,email=:param622266b4ef3e4737776729,password=:param622266b98a9b8882581578,is_admin=:param622266bb8c100815613503,roles=:param622266bb8c127318336355,nb_connexion=:param622266bb8c135216465910,created_at='2022-03-04 20:21:31',updated_at='2022-03-04 20:21:31'
+2022-03-04 20:23:02::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:23:17::REQUEST:: GET /test
+2022-03-04 20:23:17::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62226725e2322075096860 AND soft_deleted=:param62226725e2336295352751) OR id=:param62226725e234a255130854
+2022-03-04 20:23:17::DATABASE QUERY:: SELECT * FROM users WHERE email=:param62226725ebccc484547100
+2022-03-04 20:23:17::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:23:21::DATABASE QUERY:: INSERT INTO users SET name=:param6222672854b95001727440, email=:param6222672854bb1469789849, password=:param6222672854bb9090050419, is_admin=:param6222672854bc0775001595, roles=:param6222672854bc7651300423, nb_connexion=:param6222672854bce616058478, created_at='2022-03-04 20:23:20', updated_at='2022-03-04 20:23:20'
+2022-03-04 20:23:21::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:24:22::REQUEST:: GET /test
+2022-03-04 20:24:23::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62226767010b9200576001 AND soft_deleted=:param62226767010cd527345866) OR id=:param62226767010e0970761692
+2022-03-04 20:24:23::DATABASE QUERY:: SELECT * FROM users WHERE email=:param622267670a340557856413
+2022-03-04 20:24:23::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:24:26::DATABASE QUERY:: INSERT INTO users SET name=:param6222676aeced2442284992, email=:param6222676aecef8333012180, password=:param6222676aecf00846063674, is_admin=:param6222676aecf06041192578, roles=:param6222676aecf0c518683205, nb_connexion=:param6222676aecf13706568627, created_at='2022-03-04 20:24:26', updated_at='2022-03-04 20:24:26'
+2022-03-04 20:24:26::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:25:10::REQUEST:: GET /test
+2022-03-04 20:25:10::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62226796e1974901254523 AND soft_deleted=:param62226796e19b1218383275) OR id=:param62226796e19c7462674720
+2022-03-04 20:25:10::DATABASE QUERY:: SELECT * FROM users WHERE email=:param62226796eb348013051919
+2022-03-04 20:25:10::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:25:10::DATABASE QUERY:: INSERT INTO users SET name=:param62226796f0a15830496446, email=:param62226796f0a28701852260, password=:param62226796f0a2e682987943, is_admin=:param62226796f0a34369710372, roles=:param62226796f0a38567940906, nb_connexion=:param62226796f0a3e069302782, created_at='2022-03-04 20:25:10', updated_at='2022-03-04 20:25:10'
+2022-03-04 20:25:10::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:25:31::REQUEST:: GET /test
+2022-03-04 20:25:31::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param622267ab86747167011195 AND soft_deleted=:param622267ab86853537196099) OR id=:param622267ab86947048343561
+2022-03-04 20:25:31::DATABASE QUERY:: SELECT * FROM users WHERE email=:param622267ab8fa68678773689
+2022-03-04 20:25:31::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:25:31::DATABASE QUERY:: INSERT INTO users SET name=:param622267ab9387c794173104, email=:param622267ab93898072670518, password=:param622267ab938a4497814444, is_admin=:param622267ab938ae447587852, roles=:param622267ab938b7966190021, nb_connexion=:param622267ab938c0371607210, created_at='2022-03-04 20:25:31', updated_at='2022-03-04 20:25:31'
+2022-03-04 20:25:31::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:27:25::REQUEST:: GET /test
+2022-03-04 20:27:26::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param6222681e3bddf957915674 AND soft_deleted=:param6222681e3bdf7794509494) OR id=:param6222681e3be0b808168716
+2022-03-04 20:27:26::DATABASE QUERY:: SELECT * FROM users WHERE email=:param6222681e43a89125733926
+2022-03-04 20:27:26::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:27:26::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 282==>0
+2022-03-04 20:27:26::ERROR:: #0 /var/www/html/Core/Database/Model.php(312): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:28:06::REQUEST:: GET /test
+2022-03-04 20:28:06::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param62226846a9b18065006618 AND soft_deleted=:param62226846a9c85463597113) OR id=:param62226846a9ca6358717375
+2022-03-04 20:28:06::DATABASE QUERY:: SELECT * FROM users WHERE email=:param62226846b2b0f165448309
+2022-03-04 20:28:26::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:28:26::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 282==>0
+2022-03-04 20:28:26::ERROR:: #0 /var/www/html/Core/Database/Model.php(312): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:28:50::REQUEST:: GET /test
+2022-03-04 20:28:50::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:param6222687288895048343989 AND soft_deleted=:param62226872888aa381453190) OR id=:param62226872888c5692633934
+2022-03-04 20:28:50::DATABASE QUERY:: SELECT * FROM users WHERE email=:param622268729214c721619439
+2022-03-04 20:29:01::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:29:01::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 282==>0
+2022-03-04 20:29:01::ERROR:: #0 /var/www/html/Core/Database/Model.php(312): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:29:25::REQUEST:: GET /test
+2022-03-04 20:29:26::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:p622268962bdb4 AND soft_deleted=:p622268962bdc5) OR id=:p622268962bdda
+2022-03-04 20:29:26::DATABASE QUERY:: SELECT * FROM users WHERE email=:p62226896354b6
+2022-03-04 20:29:28::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:29:28::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 282==>0
+2022-03-04 20:29:28::ERROR:: #0 /var/www/html/Core/Database/Model.php(312): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:30:18::REQUEST:: GET /test
+2022-03-04 20:30:18::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:p622268cac112d AND soft_deleted=:p622268cac113b) OR id=:p622268cac114e
+2022-03-04 20:30:18::DATABASE QUERY:: SELECT * FROM users WHERE email=:p622268cacad98
+2022-03-04 20:30:25::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:30:25::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 282==>0
+2022-03-04 20:30:25::ERROR:: #0 /var/www/html/Core/Database/Model.php(312): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:32:03::REQUEST:: GET /test
+2022-03-04 20:32:03::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:p62226933efaa0 AND soft_deleted=:p62226933efaaf) OR id=:p62226933efac1
+2022-03-04 20:32:04::DATABASE QUERY:: SELECT * FROM users WHERE email=:p6222693404459
+2022-03-04 20:32:16::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:32:16::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 288==>0
+2022-03-04 20:32:16::ERROR:: #0 /var/www/html/Core/Database/Model.php(321): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:33:32::REQUEST:: GET /test
+2022-03-04 20:33:33::DATABASE QUERY:: SELECT * FROM users  WHERE (email=:p6222698d57777 AND soft_deleted=:p6222698d57785) OR id=:p6222698d57807
+2022-03-04 20:33:33::DATABASE QUERY:: SELECT * FROM users WHERE email=:p6222698d5f2cb
+2022-03-04 20:33:41::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:33:41::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 288==>0
+2022-03-04 20:33:41::ERROR:: #0 /var/www/html/Core/Database/Model.php(321): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:34:43::REQUEST:: GET /test
+2022-03-04 20:34:44::DATABASE QUERY:: SELECT * FROM users  WHERE (email= :p622269d403d97  AND soft_deleted= :p622269d403da9 ) OR id= :p622269d403dc2 
+2022-03-04 20:34:44::DATABASE QUERY:: SELECT * FROM users WHERE email= :p622269d40c413 
+2022-03-04 20:34:44::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:34:44::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 288==>0
+2022-03-04 20:34:44::ERROR:: #0 /var/www/html/Core/Database/Model.php(321): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:35:23::REQUEST:: GET /test
+2022-03-04 20:35:23::DATABASE QUERY:: SELECT * FROM users  WHERE (email= :p622269fb83c6b  AND soft_deleted= :p622269fb83c78 ) OR id= :p622269fb83c8b 
+2022-03-04 20:35:23::DATABASE QUERY:: SELECT * FROM users WHERE email= :p622269fb8c9fc 
+2022-03-04 20:35:23::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:35:23::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 288==>0
+2022-03-04 20:35:23::ERROR:: #0 /var/www/html/Core/Database/Model.php(321): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:38:45::REQUEST:: GET /test
+2022-03-04 20:38:45::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p62226ac5ee404  AND soft_deleted = :p62226ac5ee412 ) OR id = :p62226ac5ee425 
+2022-03-04 20:38:46::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62226ac607ea8 
+2022-03-04 20:38:46::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:38:46::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 288==>0
+2022-03-04 20:38:46::ERROR:: #0 /var/www/html/Core/Database/Model.php(321): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:39:57::REQUEST:: GET /test
+2022-03-04 20:40:00::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p62226b1080135  AND soft_deleted = :p62226b108014c ) OR id = :p62226b10801cb 
+2022-03-04 20:40:07::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62226b172cd43 
+2022-03-04 20:40:07::DATABASE ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens
+2022-03-04 20:40:10::ERROR:: SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens in /var/www/html/Core/Database/Model.php on line 288==>0
+2022-03-04 20:40:10::ERROR:: #0 /var/www/html/Core/Database/Model.php(321): Core\Database\Model->execOne()
+#1 /var/www/html/Core/Database/Model.php(134): Core\Database\Model->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(26): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:41:45::REQUEST:: GET /test
+2022-03-04 20:41:51::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p62226b7f5ae63  AND soft_deleted = :p62226b7f5ae7a ) OR id = :p62226b7f5ae91 
+2022-03-04 20:41:53::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62226b81357fa 
+2022-03-04 20:41:58::DATABASE QUERY:: INSERT INTO users SET name = :p62226b8615e19 , email = :p62226b8615ee9 , password = :p62226b8615f65 , is_admin = :p62226b8615f98 , roles = :p62226b8615fa7 , nb_connexion = :p62226b8615fb0 , created_at='2022-03-04 20:41:58', updated_at='2022-03-04 20:41:58'
+2022-03-04 20:41:58::DATABASE ERROR:: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'is_admin' in 'field list'
+2022-03-04 20:41:58::ERROR:: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'is_admin' in 'field list' in /var/www/html/Core/Database/Model.php on line 311==>0
+2022-03-04 20:41:58::ERROR:: #0 /var/www/html/Core/Database/Model.php(166): Core\Database\Model->execSilent()
+#1 /var/www/html/Core/Database/Model.php(86): Core\Database\Model->insert(Array)
+#2 /var/www/html/src/Controller/DefaultController.php(32): Core\Database\Model->save()
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:45:41::REQUEST:: GET /test
+2022-03-04 20:45:48::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p62226c6c20ca1  AND soft_deleted = :p62226c6c20cb7 ) OR id = :p62226c6c20cce 
+2022-03-04 20:45:48::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62226c6c29953 
+2022-03-04 20:46:26::DATABASE QUERY:: INSERT INTO users SET name = :p62226c922cae4 , email = :p62226c922caf4 , password = :p62226c922cafb , is_admin = :p62226c922cb00 , roles = :p62226c922cb06 , nb_connexion = :p62226c922cb0b , created_at='2022-03-04 20:46:26', updated_at='2022-03-04 20:46:26'
+2022-03-04 20:46:26::DATABASE ERROR:: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'is_admin' in 'field list'
+2022-03-04 20:46:30::ERROR:: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'is_admin' in 'field list' in /var/www/html/Core/Database/Model.php on line 302==>0
+2022-03-04 20:46:30::ERROR:: #0 /var/www/html/Core/Database/Model.php(166): Core\Database\Model->execSilent()
+#1 /var/www/html/Core/Database/Model.php(86): Core\Database\Model->insert(Array)
+#2 /var/www/html/src/Controller/DefaultController.php(32): Core\Database\Model->save()
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:47:15::REQUEST:: GET /test
+2022-03-04 20:47:19::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p62226cc783873  AND soft_deleted = :p62226cc78388a ) OR id = :p62226cc7838a2 
+2022-03-04 20:47:19::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62226cc78d65d 
+2022-03-04 20:47:21::DATABASE QUERY:: INSERT INTO users SET name = :p62226cc992956 , email = :p62226cc992976 , password = :p62226cc99297d , roles = :p62226cc992982 , nb_connexion = :p62226cc992988 , created_at='2022-03-04 20:47:21', updated_at='2022-03-04 20:47:21'
+2022-03-04 20:47:21::DATABASE ERROR:: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'nb_connexion' in 'field list'
+2022-03-04 20:47:21::ERROR:: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'nb_connexion' in 'field list' in /var/www/html/Core/Database/Model.php on line 302==>0
+2022-03-04 20:47:21::ERROR:: #0 /var/www/html/Core/Database/Model.php(166): Core\Database\Model->execSilent()
+#1 /var/www/html/Core/Database/Model.php(86): Core\Database\Model->insert(Array)
+#2 /var/www/html/src/Controller/DefaultController.php(32): Core\Database\Model->save()
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-04 20:47:49::REQUEST:: GET /test
+2022-03-04 20:47:53::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p62226ce9d024b  AND soft_deleted = :p62226ce9d0292 ) OR id = :p62226ce9d02b7 
+2022-03-04 20:47:53::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62226ce9d8c0c 
+2022-03-04 20:47:56::DATABASE QUERY:: INSERT INTO users SET name = :p62226cec8a577 , email = :p62226cec8a585 , password = :p62226cec8a58b , roles = :p62226cec8a590 , created_at='2022-03-04 20:47:56', updated_at='2022-03-04 20:47:56'
+2022-03-04 20:56:26::REQUEST:: GET /test
+2022-03-04 20:56:27::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p62226eeb148f9  AND soft_deleted = :p62226eeb1490a ) OR id = :p62226eeb1491e 
+2022-03-04 20:56:29::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62226eede13bc 
+2022-03-04 21:00:05::REQUEST:: GET /test
+2022-03-04 21:00:06::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p62226fc66df84  AND soft_deleted = :p62226fc66df92 ) OR id = :p62226fc66dfa5 
+2022-03-04 21:00:09::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62226fc9a6695 
+2022-03-04 21:01:47::REQUEST:: GET /test
+2022-03-04 21:01:47::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p6222702ba2f35  AND soft_deleted = :p6222702ba2f44 ) OR id = :p6222702ba2f57 
+2022-03-04 21:01:50::DATABASE QUERY:: SELECT * FROM users WHERE email= :p6222702e38f5f 
+2022-03-04 21:03:11::ERROR:: 2
+2022-03-04 21:03:11::ERROR:: Use of undefined constant retrun - assumed 'retrun' (this will throw an Error in a future version of PHP)
+2022-03-04 21:03:11::ERROR:: xdebug://debug-eval(1) : eval()'d code
+2022-03-04 21:03:11::ERROR:: 1
+2022-03-04 21:03:16::ERROR:: Error#Cannot modify header information - headers already sent by (output started at /var/www/html/Core/Bootstrap.php:39)<br>
+2022-03-04 21:03:16::ERROR:: Line#148<br>
+2022-03-04 21:03:16::ERROR:: File#/var/www/html/Core/Http/Response.php<br>
+2022-03-04 21:03:21::REQUEST:: GET /test
+2022-03-04 21:03:21::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p622270897dea9  AND soft_deleted = :p622270897dec4 ) OR id = :p622270897deda 
+2022-03-04 21:03:24::DATABASE QUERY:: SELECT * FROM users WHERE email= :p6222708c91bcf 
+2022-03-04 21:04:07::REQUEST:: GET /test
+2022-03-04 21:04:08::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p622270b824b89  AND soft_deleted = :p622270b824b97 ) OR id = :p622270b824ba9 
+2022-03-04 21:04:10::DATABASE QUERY:: SELECT * FROM users WHERE email= :p622270bacfa26 
+2022-03-04 21:05:31::REQUEST:: GET /test
+2022-03-04 21:05:31::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p6222710bd3d56  AND soft_deleted = :p6222710bd3d63 ) OR id = :p6222710bd3d75 
+2022-03-04 21:05:34::DATABASE QUERY:: SELECT * FROM users WHERE email= :p6222710e1ff3d 
+2022-03-04 21:10:13::REQUEST:: GET /test
+2022-03-04 21:10:14::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p622272267798d  AND soft_deleted = :p62227226779a1 ) OR id = :p62227226779b8 
+2022-03-04 21:10:16::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62227228b7b76 
+2022-03-04 21:11:21::REQUEST:: GET /test
+2022-03-04 21:11:22::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p6222726a5930a  AND soft_deleted = :p6222726a59319 ) OR id = :p6222726a5932d 
+2022-03-04 21:11:25::DATABASE QUERY:: SELECT * FROM users WHERE email= :p6222726d31208 
+2022-03-04 21:12:07::REQUEST:: GET /test
+2022-03-04 21:12:07::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p62227297bf79f  AND soft_deleted = :p62227297bf7b0 ) OR id = :p62227297bf7c5 
+2022-03-04 21:12:10::DATABASE QUERY:: SELECT * FROM users WHERE email= :p6222729a494de 
+2022-03-04 21:12:19::DATABASE QUERY:: DELETE FROM 'users' WHERE id = :p622272a059042 
+2022-03-04 21:12:19::DATABASE ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''users' WHERE id = '4'' at line 1
+2022-03-04 21:12:19::ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''users' WHERE id = '4'' at line 1 in /var/www/html/Core/Database/Model.php on line 327==>0
+2022-03-04 21:12:19::ERROR:: #0 /var/www/html/Core/Database/Model.php(105): Core\Database\Model->execSilent()
+#1 /var/www/html/src/Controller/DefaultController.php(35): Core\Database\Model->delete()
+#2 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#3 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#4 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#5 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#6 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#7 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#8 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#10 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#11 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#12 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#13 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#14 {main}
+2022-03-04 21:13:12::REQUEST:: GET /test
+2022-03-04 21:13:13::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p622272d93452a  AND soft_deleted = :p622272d93453c ) OR id = :p622272d934550 
+2022-03-04 21:13:18::DATABASE QUERY:: SELECT * FROM users WHERE email= :p622272deaf2e3 
+2022-03-04 21:13:27::DATABASE QUERY:: DELETE FROM users WHERE id = :p622272e547393 
+2022-03-04 21:14:20::REQUEST:: GET /test
+2022-03-04 21:14:21::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p6222731d79ba9  AND soft_deleted = :p6222731d79bb8 ) OR id = :p6222731d79be0 
+2022-03-04 21:14:25::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62227321bb346 
+2022-03-04 21:14:32::DATABASE QUERY:: INSERT INTO users SET name = :p6222732897546 , email = :p6222732897555 , password = :p622273289755c , roles = :p6222732897562 , created_at='2022-03-04 21:14:32', updated_at='2022-03-04 21:14:32'
+2022-03-04 21:14:32::ERROR:: 2
+2022-03-04 21:14:32::ERROR:: Illegal string offset 'name'
+2022-03-04 21:14:32::ERROR:: /var/www/html/Core/Database/Model.php
+2022-03-04 21:14:32::ERROR:: 93
+2022-03-04 21:17:15::REQUEST:: GET /test
+2022-03-04 21:17:16::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p622273cc547b2  AND soft_deleted = :p622273cc547c0 ) OR id = :p622273cc547d4 
+2022-03-04 21:17:20::DATABASE QUERY:: SELECT * FROM users WHERE email= :p622273d04510a 
+2022-03-04 21:17:26::DATABASE QUERY:: DELETE FROM users WHERE id = :p622273d66a2c1 
+2022-03-04 21:17:40::REQUEST:: GET /test
+2022-03-04 21:17:41::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p622273e51868b  AND soft_deleted = :p622273e51869f ) OR id = :p622273e5186bc 
+2022-03-04 21:17:45::DATABASE QUERY:: SELECT * FROM users WHERE email= :p622273e92eee0 
+2022-03-04 21:17:45::DATABASE QUERY:: INSERT INTO users SET name = :p622273e931c1a , email = :p622273e931c28 , password = :p622273e931c2e , roles = :p622273e931c35 , created_at='2022-03-04 21:17:45', updated_at='2022-03-04 21:17:45'
+2022-03-04 21:17:54::REQUEST:: GET /test
+2022-03-04 21:17:55::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p622273f3794c2  AND soft_deleted = :p622273f3794d2 ) OR id = :p622273f3794e6 
+2022-03-04 21:17:58::DATABASE QUERY:: SELECT * FROM users WHERE email= :p622273f677bd9 
+2022-03-04 21:18:02::DATABASE QUERY:: DELETE FROM users WHERE id = :p622273fa0824a 
+2022-03-04 21:18:05::REQUEST:: GET /test
+2022-03-04 21:18:06::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p622273fe5288b  AND soft_deleted = :p622273fe52897 ) OR id = :p622273fe528a7 
+2022-03-04 21:18:06::DATABASE QUERY:: SELECT * FROM users WHERE email= :p622273fe5c5b7 
+2022-03-04 21:18:06::DATABASE QUERY:: INSERT INTO users SET name = :p622273fe5f64a , email = :p622273fe5f658 , password = :p622273fe5f65e , roles = :p622273fe5f662 , created_at='2022-03-04 21:18:06', updated_at='2022-03-04 21:18:06'
+2022-03-04 21:18:09::REQUEST:: GET /test
+2022-03-04 21:18:10::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p6222740219606  AND soft_deleted = :p6222740219618 ) OR id = :p6222740219782 
+2022-03-04 21:18:10::DATABASE QUERY:: SELECT * FROM users WHERE email= :p62227402213da 
+2022-03-04 21:18:10::DATABASE QUERY:: DELETE FROM users WHERE id = :p62227402239e3 
+2022-03-04 21:19:59::REQUEST:: GET /test
+2022-03-04 21:19:59::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p6222746febc9b  AND soft_deleted = :p6222746febcad ) OR id = :p6222746febcc5 
+2022-03-04 21:20:00::DATABASE QUERY:: SELECT * FROM users WHERE email= :p6222747000452 
+2022-03-04 21:20:00::DATABASE QUERY:: INSERT INTO users SET name = :p6222747004bac , email = :p6222747004bc3 , password = :p6222747004bcd , roles = :p6222747004bd6 , created_at='2022-03-04 21:20:00', updated_at='2022-03-04 21:20:00'
+2022-03-04 21:20:03::REQUEST:: GET /test
+2022-03-04 21:20:04::DATABASE QUERY:: SELECT * FROM users  WHERE (email = :p622274741fe60  AND soft_deleted = :p622274741fe78 ) OR id = :p622274741fe94 
+2022-03-04 21:20:04::DATABASE QUERY:: SELECT * FROM users WHERE email= :p6222747427a30 
+2022-03-04 21:20:04::DATABASE QUERY:: DELETE FROM users WHERE id = :p622274742a85a 
+2022-03-07 08:31:30::REQUEST:: GET /test
+2022-03-07 08:31:31::ERROR:: Call to undefined method App\Model\User::orWhere() in /var/www/html/src/Controller/DefaultController.php on line 24==>0
+2022-03-07 08:31:31::ERROR:: #0 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#1 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#2 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#3 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#4 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#5 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#6 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#7 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#8 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#9 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#10 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#11 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#12 {main}
+2022-03-07 08:34:33::REQUEST:: GET /test
+2022-03-07 08:34:34::DATABASE QUERY:: SELECT * FROM  WHERE email= :p6225b58abbeff 
+2022-03-07 08:34:34::DATABASE ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email= 'tsiresymila@gmail.com'' at line 1
+2022-03-07 08:34:34::ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email= 'tsiresymila@gmail.com'' at line 1 in /var/www/html/Core/Database/DB.php on line 230==>0
+2022-03-07 08:34:34::ERROR:: #0 /var/www/html/Core/Database/DB.php(263): Core\Database\DB->execOne()
+#1 /var/www/html/Core/Database/Model.php(156): Core\Database\DB->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(25): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-07 11:27:27::REQUEST:: GET /test
+2022-03-07 11:28:22::DATABASE QUERY:: SELECT * FROM  WHERE email= :p6225de1036ed1 
+2022-03-07 11:29:11::DATABASE ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email= 'tsiresymila@gmail.com'' at line 1
+2022-03-07 11:29:11::ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email= 'tsiresymila@gmail.com'' at line 1 in /var/www/html/Core/Database/DB.php on line 230==>0
+2022-03-07 11:29:11::ERROR:: #0 /var/www/html/Core/Database/DB.php(263): Core\Database\DB->execOne()
+#1 /var/www/html/Core/Database/Model.php(156): Core\Database\DB->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(25): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-07 11:30:38::REQUEST:: GET /test
+2022-03-07 11:33:11::DATABASE QUERY:: SELECT * FROM  WHERE email=:p6225decf16756 
+2022-03-07 11:33:11::DATABASE ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email='tsiresymila@gmail.com'' at line 1
+2022-03-07 11:33:50::ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email='tsiresymila@gmail.com'' at line 1 in /var/www/html/Core/Database/DB.php on line 230==>0
+2022-03-07 11:33:50::ERROR:: #0 /var/www/html/Core/Database/DB.php(263): Core\Database\DB->execOne()
+#1 /var/www/html/Core/Database/Model.php(156): Core\Database\DB->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(25): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-07 12:08:39::REQUEST:: GET /test
+2022-03-07 12:08:45::DATABASE QUERY:: SELECT * FROM  WHERE email=:p6225e7b88b759 
+2022-03-07 12:08:45::DATABASE ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email='tsiresymila@gmail.com'' at line 1
+2022-03-07 12:08:52::ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email='tsiresymila@gmail.com'' at line 1 in /var/www/html/Core/Database/DB.php on line 230==>0
+2022-03-07 12:08:52::ERROR:: #0 /var/www/html/Core/Database/DB.php(263): Core\Database\DB->execOne()
+#1 /var/www/html/Core/Database/Model.php(156): Core\Database\DB->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(25): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-07 12:09:34::REQUEST:: GET /test
+2022-03-07 12:09:39::DATABASE QUERY:: SELECT * FROM  WHERE email=:p6225e7ef0f8c1 
+2022-03-07 12:09:39::DATABASE ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email='tsiresymila@gmail.com'' at line 1
+2022-03-07 12:09:53::ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email='tsiresymila@gmail.com'' at line 1 in /var/www/html/Core/Database/DB.php on line 230==>0
+2022-03-07 12:09:53::ERROR:: #0 /var/www/html/Core/Database/DB.php(263): Core\Database\DB->execOne()
+#1 /var/www/html/Core/Database/Model.php(156): Core\Database\DB->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(25): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}
+2022-03-07 13:23:50::REQUEST:: GET /test
+2022-03-07 13:23:51::DATABASE QUERY:: SELECT * FROM  WHERE email=:p6225f9573ef94 
+2022-03-07 13:23:51::DATABASE ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email='tsiresymila@gmail.com'' at line 1
+2022-03-07 13:23:51::ERROR:: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE email='tsiresymila@gmail.com'' at line 1 in /var/www/html/Core/Database/DB.php on line 230==>0
+2022-03-07 13:23:51::ERROR:: #0 /var/www/html/Core/Database/DB.php(263): Core\Database\DB->execOne()
+#1 /var/www/html/Core/Database/Model.php(156): Core\Database\DB->getOne()
+#2 /var/www/html/src/Controller/DefaultController.php(25): Core\Database\Model->findOneBy(Array)
+#3 [internal function]: App\Controller\DefaultController->index(Object(App\Model\User))
+#4 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\DefaultController), Object(App\Model\User))
+#5 /var/www/html/Core/Http/Router.php(259): Core\Container\Container->resolve('App\\Controller\\...', 'index', Array)
+#6 /var/www/html/Core/Http/Router.php(284): Core\Http\Router->invokeSuccess()
+#7 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#8 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#9 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#10 /var/www/html/Core/Http/Security/UserAuthenticator.php(198): Core\Http\Security\UserAuthenticator->pass()
+#11 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#12 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#13 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#14 /var/www/html/public/index.php(13): Core\Bootstrap::boot()
+#15 {main}

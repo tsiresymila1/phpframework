@@ -4,7 +4,7 @@ return [
     "authenticator" => "App\Security\LoginAuthenticator",
     "url" => ["/api"],
     "excludes" => ["/api/docs"],
-    "model" => "App\Model\UserModel",
+    "model" => "App\Model\User",
     "config" => [
         "username" => "username",
         "password" => "password",

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Core\Http\CoreControllers\Controller;
 use Core\Utils\Encryption;
-use App\Model\UserModel;
+use App\Model\User;
 use Core\Http\Response;
 
 class DefaultController extends Controller
@@ -19,21 +19,22 @@ class DefaultController extends Controller
         parent::__construct();
     }
 
-    public  function index(UserModel $user)
+    public  function index(User $user)
     {
-        $result = $user->findAll()->orWhere(array('email' => "tsiresymila@gmail.com", 'soft_deleted' => 0))->where(array('id' => 1))->get();
         $encrypt = new Encryption();
         $userm = $user->findOneBy(["email" => "tsiresymila@gmail.com"]);
         if (!$userm) {
-            $user->insert(array(
-                "name" => "Tsiresy",
-                "email" => "tsiresymila@gmail.com",
-                "password" => $encrypt->encode("Tsiresy_wp1"),
-                "roles" => "ROLE_ADMIN"
-            ));
+            $user->name = "tsiresy";
+            $user->email = "tsiresymila@gmail.com";
+            $user->password = $encrypt->encode("Tsiresy_wp1");
+            $user->roles = "ROLE_ADMIN";
+            $user->save();
         }
-        $user->set(array('password' => $encrypt->encode("Tsiresy_wp1")))->where(['email' => 'tsiresymila@gmail.com'])->update();
-        return Response::Json($result);
+        else{
+            $userm->delete();
+        }
+        //$user->set(array('password' => $encrypt->encode("Tsiresy_wp1")))->where(['email' => 'tsiresymila@gmail.com'])->update();
+        return Response::Json($userm);
     }
 
     public  function admin()

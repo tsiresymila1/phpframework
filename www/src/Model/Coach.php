@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Core\Database\Model;
 
-class CoachModel extends Model {
+class Coach extends Model {
     public $id;
     public $username;
     public $name;

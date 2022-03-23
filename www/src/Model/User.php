@@ -5,9 +5,15 @@ namespace App\Model;
 use Core\Database\Model;
 use Core\Http\Security\AuthenticatorModelInterface;
 
-class UserModel extends Model  implements AuthenticatorModelInterface
+class User extends Model  implements AuthenticatorModelInterface
 {
 
+    /**
+     * @type varchar(250)
+     * @default tsiresymila@gmail.com
+     * @notnull true
+     */
+    public  $name;
     /**
      * @type varchar(250)
      * @default tsiresymila@gmail.com
@@ -19,21 +25,21 @@ class UserModel extends Model  implements AuthenticatorModelInterface
      * @notnull true
      */
     public  $password;
-    /**
-     * @type tinyint(1)
-     * @notnull true
-     * 
-     */
-    public  $isAdmin;
+//    /**
+//     * @type tinyint(1)
+//     * @notnull true
+//     *
+//     */
+//    public  $isAdmin;
     /**
      * @type json
      * @notnull true
      */
     public   $roles;
-    /**
-     * @type int(11)
-     */
-    public  $nb_connexion;
+//    /**
+//     * @type int(11)
+//     */
+//    public  $nb_connexion;
 
     public function getRoles()
     {

@@ -1,278 +1,172 @@
 <?php
 
 namespace Core\Database;
-
-use Core\Utils\Logger;
 use DateTime;
-use PDO;
-use PDOException;
 use ReflectionClass;
 
 class Model
 {
 
-    protected  $table;
-    protected static  $tablename;
-    protected  $query = "";
-    protected  $conditions = [];
-    protected  $db;
+    protected $table = null;
 
-    public DateTime $createdAt;
-    public DateTime $updatedAt;
-    public DateTime $deletedAt;
-    public $useSoftDeletes = true;
+    protected ?DateTime $createdAt;
+    protected ?DateTime $updatedAt;
+    protected ?DateTime $deletedAt;
 
-    public function __construct()
+    //ORM
+    protected $primary_key = 'id';
+
+    private function snakeCase($string, $us = "_")
     {
-        $class = $this->endc(explode('\\', get_class($this)));
-        self::$tablename = str_replace(["model", "\\", "models"], "", strtolower($class)) . "s";
-        $this->db = DB::instance();
-
-        $reflect = new ReflectionClass(get_class($this));
-        // $sql = "CREATE TABLE " . self::$tablename . " IF NOT EXISTS ( id INT(11) PRIMARY KEY , ";
-        // foreach ($reflect->getProperties(ReflectionProperty::IS_PUBLIC) as $p) {
-        //     $name = $p->getName();
-        //     $document = $p->getDocComment();
-        //     if ($document) {
-        //         try {
-        //             $parser = new DocBlock($document);
-        //             $parser->parse_block();
-        //             $column = $parser->getColumn();
-        //         } catch (\Exception $e) {
-        //         }
-        //     } else if ($p->getType()) {
-        //         $column  = $p->getType()->getName();
-        //     } else {
-        //         $column = "text";
-        //     }
-        //     $sql .= $name . " " . $column . ",";
-        // }
-        // $sql .= ")";
+        return strtolower(preg_replace('/(?<=\d)(?=[A-Za-z])|(?<=[A-Za-z])(?=\d)|(?<=[a-z])(?=[A-Z])/', $us, $string));
     }
 
-    protected function endc($array)
+    private function endc($array)
     {
         return end($array);
     }
 
-
-    public  function query($query)
+    public function save()
     {
-        $this->query = $query;
-        return  $this;
-    }
-
-    public  function find($ids)
-    {
-        $this->conditions = [];
-        if (gettype($ids) == 'array') {
-            $conditionsString = "id=";
-            $conditionsString .= implode(' AND id=', $ids);
+        $class = new ReflectionClass($this);
+        $propsToImplode = [];
+        foreach ($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
+            $propertyName = $property->getName();
+            $propsToImplode[$this->snakeCase($propertyName)] = $this->{$propertyName};
+        }
+        DB::load($this);
+        if (property_exists(static::class, $this->primary_key)) {
+            $data = DB::instance()->update($this->${$this->primary_key});
         } else {
-            $conditionsString = "id=" . $ids;
+            $data = DB::instance()->insert($propsToImplode);
+            $this->{$this->primary_key} = $data;
         }
-        $this->query = "SELECT * FROM " . self::$tablename . " WHERE " . $conditionsString;
-        return $this->get();
+
+        return $data;
     }
 
-    public function findOneBy($key, $value = null, $comparator = "=")
+    public function delete()
     {
-        if (gettype($key) == 'array') {
-            $conditionsString = implode(" AND ", array_map(function ($k, $v) {
-                return $k . '=\'' . $v . '\'';
-            }, array_keys($key), $key));
-        } else {
-            $conditionsString = $key . $comparator . $value;
-        }
-        $this->conditions = [];
-        $this->query = "SELECT * FROM " . self::$tablename . " WHERE " . $conditionsString;
-        return $this->getOne();
-    }
-
-    public function findBy($key, $value, $comparator = "=")
-    {
-        $this->conditions = [];
-        $this->query = "SELECT * FROM " . self::$tablename . " WHERE " . $key . $comparator . $value;
-        return $this->get();
-    }
-    public  function findAll()
-    {
-        $this->query = "SELECT * FROM " . self::$tablename . " ";
-        return  $this;
-    }
-
-    public  function insert(array $data)
-    {
-        $this->query = "INSERT INTO " . self::$tablename . " SET ";
-        $stringValue = [];
-        foreach ($data as $k => $v) {
-            $stringValue[] = $k . "='" . $v . "'";
-        }
-        $date = date("Y-m-d H:i:s");
-        $this->query .= implode(',', $stringValue);
-
-        if (!array_key_exists('createdAt', $data)) {
-            $this->query .= "," . "created_at='" . $date . '\'';
-        }
-        if (!array_key_exists('updatedAt', $data)) {
-            $this->query .= "," . "updated_at='" . $date . '\'';
-        }
-        return $this->execSilent();
-    }
-
-    public  function update($id = null)
-    {
-
-        if (!is_null($id)) {
-            $this->groupedCondition(false);
-            $this->query .= " WHERE id=" . $id . " AND ";
-        } else {
-            $this->groupedCondition();
-        }
-        return $this->execSilent();
-    }
-
-    public function set($key, $value = null)
-    {
-        $this->conditions = [];
-        $this->query = "UPDATE " . self::$tablename;
-        if (gettype($key) == "array") {
-            $stringValue = [];
-            foreach ($key as $k => $v) {
-                $stringValue[] = $k . "='" . $v . "'";
-            }
-        } else {
-            $stringValue = array($key => $value);
-        }
-        $this->query .= " SET " . implode(',', $stringValue);
-        return $this;
-    }
-
-    public  function innerJoin(int $id = null)
-    {
-    }
-
-    public  function leftJoin(int $id = null)
-    {
-    }
-    public  function withDeleted()
-    {
-    }
-
-    public  function where($key, $value = null, $comparator = "=")
-    {
-        if (gettype($key) == "array") {
-            $where = array();
-            foreach ($key as $k => $v) {
-                array_push($where, $k . $comparator . '\'' . $v . '\'');
-            }
-            $where = implode(' AND ', $where);
-        } else {
-            if (!is_null($value)) {
-                $where = $key . $comparator . '\'' . $value . '\'';
-            } else {
-                $where = $key;
-            }
-        }
-        array_push($this->conditions, array('AND' => $where));
-
-        return  $this;
-    }
-
-    public  function orWhere($key, $value = null, $comparator = "=")
-    {
-
-        if (gettype($key) == "array") {
-            $where = array();
-            foreach ($key as $k => $v) {
-                array_push($where, $k . $comparator . '\'' . $v . '\'');
-            }
-            $where = '(' . implode(' AND ', $where) . ')';
-        } else {
-            if (!is_null($value)) {
-                $where = $key . $comparator . '\'' . $value . '\'';
-            } else {
-                $where = $key;
-            }
-        }
-        array_push($this->conditions, array('OR' => $where));
-        return  $this;
-    }
-
-    protected function execSilent()
-    {
-        $qr = $this->db->getPDO()->prepare($this->query);
-        Logger::log($this->query, "DATABASE QUERY");
-        try {
-            return $qr->execute();
-        } catch (PDOException  $e) {
-            Logger::error($e->getMessage(), "DATABASE ERROR");
+        if (property_exists($this, $this->primary_key)) {
+            $key = DB::addParams($this->{$this->primary_key});
+            DB::setQuery("DELETE FROM " . $this->table . " WHERE " . $this->primary_key . '=' . $key);
+            return DB::instance()->execSilent();
         }
         return false;
     }
 
-    protected function exec()
+    /**
+     * @return null
+     */
+    public function getTable()
     {
-        $qr = $this->db->getPDO()->prepare($this->query);
-        Logger::log($this->query, "DATABASE QUERY");
-        try {
-            $qr->execute();
-            return $qr->fetchAll(PDO::FETCH_CLASS, get_class($this));
-        } catch (PDOException  $e) {
-            Logger::error($e->getMessage(), "DATABASE ERROR");
-            return false;
+        return $this->table;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrimaryKey()
+    {
+        return $this->primary_key;
+    }
+
+    protected function hasOne($model, $foreign_key = null, $local_key = null)
+    {
+        if (is_null($foreign_key)) {
+            $foreign_key = strtolower($model) . '_' . $this->primary_key;
         }
-    }
-
-    protected function execOne()
-    {
-        $qr = $this->db->getPDO()->prepare($this->query);
-        Logger::log($this->query, "DATABASE QUERY");
-        try {
-            $qr->execute();
-            $data = $qr->fetchObject(get_class($this));
-            return $data;
-        } catch (PDOException  $e) {
-            Logger::error($e->getMessage(), "DATABASE ERROR");
-            return false;
+        if (is_null($local_key)) {
+            $local_key = $this->primary_key;
         }
+        $m = new $model;
+        return $m->findOneBy($local_key, $this->{$foreign_key});
     }
 
-    public  function get()
+    protected function hasMany($model, $foreign_key = null, $local_key = null, $through = null)
     {
-        $this->groupedCondition();
-        return $this->exec();
-    }
-
-    public  function getOne()
-    {
-        $this->groupedCondition();
-        return $this->execOne();
-    }
-
-    public function count()
-    {
-        $this->groupedCondition();
-        return count($this->exec());
-    }
-
-    protected function groupedCondition($withClause = true)
-    {
-        $conditionsString = "";
-        foreach ($this->conditions as $index => $value) {
-            foreach ($value as $k => $v) {
-                $conditionsString .= $v;
-                if ($index + 1 != sizeof($this->conditions)) {
-                    $conditionsString .= " " . $k . " ";
+        if (is_null($foreign_key)) {
+            $foreign_key = strtolower($model) . '_' . $this->primary_key;
+        }
+        if (is_null($local_key)) {
+            $local_key = $this->primary_key;
+        }
+        $m = new $model;
+        if (!is_null($through)) {
+            $throughModel = new $through;
+            $data = $throughModel->findBy($local_key, $this->{$local_key});
+            $localKeys = array_reduce($data, function ($prev, $val) use ($foreign_key) {
+                if (isset($val[$foreign_key])) {
+                    $prev[] = $val[$foreign_key];
                 }
-            }
+                return $prev;
+            }, []);
+            return $m->find($localKeys, $foreign_key);
+        } else {
+            return $m->findBy($foreign_key, $this->{$local_key});
         }
-        if ($conditionsString != "") {
-            if ($withClause) {
-                $this->query .= " WHERE " . $conditionsString;
-            } else {
-                $this->query .= " " . $conditionsString;
-            }
-        };
     }
+
+    //END ORM
+
+    public function find($ids, $primary = null)
+    {
+        if (is_null($primary)) {
+            $primary = $this->primary_key;
+        }
+        DB::setConditions([]);
+        if (is_array($ids)) {
+            $whereQuery = $primary . "=";
+            foreach ($ids as $id) {
+                $key = DB::addParams($id);
+                if ($id == $this->endc($ids)) {
+                    $whereQuery .= ' ' . $primary . ' =' . $key . ' OR ';
+                } else {
+                    $whereQuery .= ' ' . $primary . ' =' . $key . ' ';
+                }
+
+            }
+        } else {
+            $key = DB::addParams($ids);
+            $whereQuery = "'.$primary.' =" . $key;
+        }
+        DB::setQuery("SELECT * FROM " . $this->table . " WHERE " . $whereQuery);
+        return DB::instance()->get();
+    }
+
+    private function _find($key, $value = null, $comparator = " =")
+    {
+        if (is_array($key)) {
+            $whereQuery = implode(" AND ", array_map(function ($k, $v) {
+                $key = DB::addParams($v);
+                return $k . '=' . $key . '';
+            }, array_keys($key), $key));
+        } else {
+
+            $k = DB::addParams($value);
+            $whereQuery = $key . $comparator . $k;
+        }
+        DB::setConditions([]);
+        DB::setQuery("SELECT * FROM " . $this->table . " WHERE " . $whereQuery);
+    }
+
+    public function findOneBy($key, $value = null, $comparator = "=")
+    {
+        $this->_find($key, $value, $comparator);
+        return DB::instance()->getOne();
+    }
+
+    public function findBy($key, $value, $comparator = "=")
+    {
+        $this->_find($key, $value, $comparator);
+        return DB::instance()->get();
+    }
+
+    public function findAll()
+    {
+        DB::setQuery("SELECT * FROM " . $this->table . " ");
+        return $this;
+    }
+
+
 }
