@@ -144,14 +144,6 @@ class DB
         return $this;
     }
 
-    public function innerJoin(int $id = null)
-    {
-    }
-
-    public function leftJoin(int $id = null)
-    {
-    }
-
 
     public function where($key, $value = null, $comparator = " =")
     {

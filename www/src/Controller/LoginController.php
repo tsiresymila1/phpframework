@@ -11,7 +11,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $data = $request->input();
-        return Response::Json("login", $data);
+        // $data = $request->post();
+        return Response::Json(['error'=>null, 'auth' => true]);
     }
 }

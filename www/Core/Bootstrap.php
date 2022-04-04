@@ -37,8 +37,8 @@ class Bootstrap
                 $strace = debug_backtrace();
                 $withcode = array_key_exists(strval($errno),ErrorRender::$code);
                 echo ErrorRender::showErrorDetails($errstr . ' in ' . $errfile . ' on line ' . $errline, $strace, $withcode ? $errno : '500');
-                exit();
             }
+            exit();
         }, E_ALL | E_STRICT | E_ERROR | E_WARNING | E_NOTICE);
 
         set_exception_handler(function($e) {
@@ -49,21 +49,32 @@ class Bootstrap
             );
             Logger::error( $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(). '==>'.$e->getCode());
             Logger::error($e->getTraceAsString());
+            if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+                header('Access-Control-Allow-Origin: *');
+                header('Access-Control-Allow-Headers: X-Requested-With');
+                header("HTTP/1.1 200 OK");
+                die();
+            }
             if(!defined('DEBUG') || DEBUG == true) {
                 $withcode = array_key_exists(strval($e->getCode()),ErrorRender::$code);
                 echo ErrorRender::showErrorDetails($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $e->getTrace(), $withcode ? $e->getCode() : '500');
             };
+            exit(200);
         });
 
         register_shutdown_function(function () {
+
             $err = error_get_last();
             if (!is_null($err)) {
                 Logger::error('Error#' . $err['message'] . '<br>');
                 Logger::error('Line#' . $err['line'] . '<br>');
                 Logger::error('File#' . $err['file'] . '<br>');
-            }
-            if(defined('DEBUG') && DEBUG == false) {
-                echo ErrorRender::showError();
+                if(defined('DEBUG') && DEBUG == false) {
+                    echo ErrorRender::showError();
+                }
+                else{
+                    echo json_encode(array('message' => "Error"));
+                }
             }
         });
     }

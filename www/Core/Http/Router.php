@@ -3,7 +3,6 @@
 namespace Core\Http;
 
 use Core\Container\Container;
-use Core\Http\CoreControllers\Controller;
 use Core\Http\CoreControllers\Controller as CoreController;
 use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
 use Core\OpenAPI\OAIParameter;
@@ -226,21 +225,26 @@ class Router
         $method = Request::getMethod();
         $ins = self::instance();
         $ins->container = Container::instance();
-        $routes = self::$routes[$method];
-        foreach ($routes as $route) {
-            if (trim($route->path, '/') == "*" || $ins->matches(trim($route->path, '/'))) {
-                $ins::$isFound = true;
-                $ins::$current = $route;
-                return $ins->execute();
-                break;
+        if(key_exists($method,self::$routes)){
+            $routes = self::$routes[$method];
+            foreach ($routes as $route) {
+                if (trim($route->path, '/') == "*" || $ins->matches(trim($route->path, '/'))) {
+                    $ins::$isFound = true;
+                    $ins::$current = $route;
+                    return $ins->execute();
+                }
+            }
+            if (defined('DEBUG') && DEBUG == false) {
+                $controller = new CoreController();
+                return $controller->url404NotFound();
+            } else {
+                throw new Exception('Route /' . self::$path . ' not found', 404);
             }
         }
-        if (defined('DEBUG') && DEBUG == false) {
-            $controller = new CoreController();
-            return $controller->url404NotFound();
-        } else {
-            throw new Exception('Route /' . self::$path . ' not found', 404);
+        else{
+            throw new Exception('Method not allowed for /' . self::$path . ' ', 404);
         }
+
     }
 
     /**

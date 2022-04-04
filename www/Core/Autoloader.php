@@ -15,7 +15,7 @@ class Autoloader
             "App\\" => "src/"
         );
         $filepath = str_replace("\\", DIRECTORY_SEPARATOR, DIR . $file);
-        $filepath = file_exists($filepath) ? $filepath : str_replace("\\", DIRECTORY_SEPARATOR, DIR . "libs\\" . $file);
+        //$filepath = file_exists($filepath) ? $filepath : str_replace("\\", DIRECTORY_SEPARATOR, DIR . "libs\\" . $file);
         if (!file_exists($filepath)) {
             foreach ($psr as $key => $value) {
                 $filepath = str_replace($key, $value, DIR . $file);

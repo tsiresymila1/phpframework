@@ -14,8 +14,8 @@ export const Home = () => {
         <div className={`d-flex adminWidget ${hideNav ? 'toggled' : ''}`}  id="wrapper">
             <Sidenav toggle={toggle} />
             <div id="page-content-wrapper">
-                <NavBar toggleSidenav={toggle} />
                 <div id="admin-content" style={{marginTop: '65px'}}>
+                    <NavBar toggleSidenav={toggle} />
                     <Container fluid>
                         <Outlet />
                     </Container>

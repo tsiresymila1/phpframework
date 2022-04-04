@@ -39,4 +39,4 @@ Route::Group('/api', function () use ($userParameter, $passParameter, $response,
 
 })->name('api')->asApi()->addResponse($response);
 
-//Route::Get("/*", "ReactController@index")->name("react_route");
+Route::Get("/*", "ReactController@index")->name("react_route");
