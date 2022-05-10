@@ -2,7 +2,6 @@
 
 namespace Core\Command;
 
-use Core\Command\CommandContainer;
 
 class CommandHandler
 {
@@ -16,7 +15,7 @@ class CommandHandler
             $ins->handle($args);
         } else {
             echo "Command not found\n";
-                exit();
+            exit();
         }
         return $ins;
     }

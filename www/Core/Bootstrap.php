@@ -4,7 +4,7 @@ namespace Core;
 
 use ArgumentCountError;
 use Core\Command\CommandContainer;
-use Core\Database\DB;
+use Core\Database\DBAdapter;
 use Core\Http\Exception\ErrorRender;
 use Core\Http\Handler;
 use Core\Session\Session;
@@ -16,14 +16,14 @@ class Bootstrap
     {
         static::handleError();
         Session::Init();
-        DB::Init();
+        DBAdapter::Init();
         Handler::handle();
     }
 
     public static function load()
     {
         CommandContainer::Init();
-        DB::Init();
+        DBAdapter::Init();
     }
 
     public static function handleError()
@@ -71,9 +71,6 @@ class Bootstrap
                 Logger::error('File#' . $err['file'] . '<br>');
                 if(defined('DEBUG') && DEBUG == false) {
                     echo ErrorRender::showError();
-                }
-                else{
-                    echo json_encode(array('message' => "Error"));
                 }
             }
         });

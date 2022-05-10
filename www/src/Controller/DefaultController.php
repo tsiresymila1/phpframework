@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Core\Database\DB;
 use Core\Http\CoreControllers\Controller;
 use Core\Utils\Encryption;
 use App\Model\User;
@@ -19,10 +20,10 @@ class DefaultController extends Controller
         parent::__construct();
     }
 
-    public  function index(User $user)
+    public  function index()
     {
         $encrypt = new Encryption();
-        $userm = $user->findOneBy(["email" => "tsiresymila@gmail.com"]);
+        $userm = DB::table('users')->get();
         if (!$userm) {
             $user->name = "tsiresy";
             $user->email = "tsiresymila@gmail.com";
@@ -40,10 +41,6 @@ class DefaultController extends Controller
     public  function admin()
     {
         return Response::Json(['data' => "okey"]);
-    }
-    public  function webpack()
-    {
-        return Response::Render('test.html.twig', ['name' => 'Tsiresy Milà', 'occupation' => 'Developper']);
     }
 
     public  function json()

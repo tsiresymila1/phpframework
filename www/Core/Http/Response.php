@@ -110,7 +110,6 @@ class Response
             $ins->setContent($content);
             $ins->setStatus(302);
             return $ins;
-            die();
         } else {
             throw new Exception('Route not found',404);
         }

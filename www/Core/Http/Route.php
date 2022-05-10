@@ -233,7 +233,7 @@ class Route
      * @param array|OAIParameter $p
      * @return $this
      */
-    public function addParameter($p)
+    public function addOAIParameter($p)
     {
         if (!$this->isGroup) {
             foreach ($this->names as $n) {
@@ -251,7 +251,7 @@ class Route
      * @param array|OAIResponse $r
      * @return $this
      */
-    public function addResponse($r)
+    public function addOAIResponse($r)
     {
         if (!$this->isGroup) {
             foreach ($this->names as $n) {

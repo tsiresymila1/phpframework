@@ -120,6 +120,7 @@ class Container implements ContainerInterface
      * @param mixed params
      *
      * @return mixed
+     * @throws Exception
      */
     public function make($class, $parents = [], $params = [])
     {
@@ -163,6 +164,7 @@ class Container implements ContainerInterface
      * @param mixed classes
      *
      * @return void
+     * @throws Exception
      */
     public function handleCircularReference($className, $classes)
     {
