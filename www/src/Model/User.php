@@ -2,11 +2,12 @@
 
 namespace App\Model;
 
-use Core\Database\Model;
-use Core\Http\Security\AuthenticatorModelInterface;
+use Core\Database\UserAuthenticatorModel;
 
-class User extends Model  implements AuthenticatorModelInterface
+class User extends UserAuthenticatorModel
 {
+
+    protected $_table = "users";
 
     /**
      * @type varchar(250)
@@ -44,5 +45,9 @@ class User extends Model  implements AuthenticatorModelInterface
     public function getRoles()
     {
         return explode(',', $this->roles);
+    }
+
+    public function files(){
+        return $this->hasMany(File::class,'user_id');
     }
 }

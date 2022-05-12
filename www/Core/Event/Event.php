@@ -6,11 +6,19 @@ class Event
 {
     private static $events = [];
 
+    /**
+     * @param $name
+     * @param $callback
+     */
     public static function listen($name, $callback)
     {
         self::$events[$name][] = $callback;
     }
 
+    /**
+     * @param $name
+     * @param null $argument
+     */
     public static function trigger($name, $argument = null)
     {
         foreach (self::$events[$name] as $_event => $callback) {

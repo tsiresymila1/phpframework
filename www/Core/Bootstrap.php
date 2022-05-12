@@ -2,11 +2,11 @@
 
 namespace Core;
 
-use ArgumentCountError;
 use Core\Command\CommandContainer;
 use Core\Database\DBAdapter;
 use Core\Http\Exception\ErrorRender;
 use Core\Http\Handler;
+use Core\Http\Request;
 use Core\Session\Session;
 use Core\Utils\Logger;
 
@@ -35,8 +35,20 @@ class Bootstrap
             Logger::error($errline);
             if(!defined('DEBUG') || DEBUG == true) {
                 $strace = debug_backtrace();
-                $withcode = array_key_exists(strval($errno),ErrorRender::$code);
-                echo ErrorRender::showErrorDetails($errstr . ' in ' . $errfile . ' on line ' . $errline, $strace, $withcode ? $errno : '500');
+                $withCode = array_key_exists(strval($errno),ErrorRender::$code);
+                if(Request::isAPI()){
+                    header('Content-type:application/json;charset=utf-8');
+                    echo json_encode(array(
+                        "code" =>$errno,
+                        "error" => $errstr,
+                        "file" => $errfile,
+                        "line" => $errline
+                    ));
+                }
+                else{
+                    echo ErrorRender::showErrorDetails($errstr . ' in ' . $errfile . ' on line ' . $errline, $strace, $withCode ? $errno : '500');
+                }
+
             }
             exit();
         }, E_ALL | E_STRICT | E_ERROR | E_WARNING | E_NOTICE);
@@ -56,8 +68,8 @@ class Bootstrap
                 die();
             }
             if(!defined('DEBUG') || DEBUG == true) {
-                $withcode = array_key_exists(strval($e->getCode()),ErrorRender::$code);
-                echo ErrorRender::showErrorDetails($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $e->getTrace(), $withcode ? $e->getCode() : '500');
+                $withCode = array_key_exists(strval($e->getCode()),ErrorRender::$code);
+                echo ErrorRender::showErrorDetails($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $e->getTrace(), $withCode ? $e->getCode() : '500');
             };
             exit(200);
         });

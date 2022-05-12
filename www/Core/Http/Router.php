@@ -185,7 +185,7 @@ class Router
     public function matches(string $url)
     {
         $this->variables = [];
-        $pathrepalced = preg_replace_callback('/\/\\\\{([^}]*)\}+/', function ($match) {
+        $pathReplaced = preg_replace_callback('/\/\\\\{([^}]*)\}+/', function ($match) {
             $exp = '/([a-zA-Z0-9\-\_]+)';
             if (strpos($match[1], '?') !== false) {
                 $exp = '([/\\\\]{1,1}[a-zA-Z0-9\-\_]+)?';
@@ -194,9 +194,9 @@ class Router
             return $exp;
         }, preg_quote($url));
 
-        $pathToMatch = "@^" . $pathrepalced . "$@D";
-        $tomatch = self::$path;
-        if (preg_match($pathToMatch, $tomatch, $matches)) {
+        $pathToMatch = "@^" . $pathReplaced . "$@D";
+        $toMatch = self::$path;
+        if (preg_match($pathToMatch, $toMatch, $matches)) {
             $this->matches = $matches;
             array_shift($matches);
             $matches = array_map(function ($m) {
@@ -257,9 +257,9 @@ class Router
         if ($this->isFunction(self::$current->action)) {
             return $this->container->resolve(self::$current->action, null, $this->params, true);
         } else {
-            $cparams = explode("@", self::$current->action);
-            $ControllerClass = $this->namespace . $cparams[0];
-            $method = $cparams[1];
+            $cParams = explode("@", self::$current->action);
+            $ControllerClass = $this->namespace . $cParams[0];
+            $method = $cParams[1];
             return $this->container->resolve($ControllerClass, $method, $this->params);
         }
 
@@ -277,10 +277,10 @@ class Router
                 if ($this->isFunction($middleware)) {
                     $this->container->resolve($middleware, null, $this->params, true);
                 } else {
-                    $MiddlewareClass = "App\Middleware\\" . $middleware;
-                    $middleins = $this->container->make($MiddlewareClass, [], $this->params);
-                    if ($middleins instanceof BaseAuthMiddleware) {
-                        $middleins->handle();
+                    $MiddlewareClass = "App\Middleware\\{$middleware}";
+                    $middleIns = $this->container->make($MiddlewareClass, [], $this->params);
+                    if ($middleIns instanceof BaseAuthMiddleware) {
+                        $middleIns->handle();
                     }
                 }
             }

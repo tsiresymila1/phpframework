@@ -5,7 +5,6 @@ namespace Core\Http;
 use Core\Container\Container;
 use Core\Utils\Logger;
 use Utils\File;
-use function PHPUnit\Framework\isNull;
 
 /**
  * Request
@@ -198,7 +197,7 @@ class Request
      *
      * @param $key = null
      *
-     * @return void
+     * @return array
      */
     public function input($key = null)
     {
@@ -217,7 +216,7 @@ class Request
      *
      * @param mixed $params
      *
-     * @return void
+     * @return Request|null
      */
     public static function setParams($params)
     {
@@ -231,7 +230,7 @@ class Request
      *
      * @param $key = null
      *
-     * @return void
+     * @return array
      */
     public static function Headers($key = null)
     {
@@ -311,6 +310,15 @@ class Request
     {
         $ins = self::instance();
         return $ins->auth;
+    }
+
+    /**
+     * @return Boolean
+     */
+    public static function isAPI()
+    {
+        $ins = self::instance();
+        return startsWith($ins->path,API_PREFIX);
     }
 
     /**

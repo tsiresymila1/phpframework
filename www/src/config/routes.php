@@ -25,8 +25,8 @@ Route::Get(['/function/{id}/get/{path?}', '/get/{id?}'], function (Request $requ
 Route::Group('/api', function () use ($userParameter, $passParameter, $response, $secParameter) {
 
     Route::Get('/docs', function (Response $response) {
-        $response::AddHeader('Content-type', 'text/html');
-        return $response::Send(SwaggerUI::renderer());
+        $response->AddHeader('Content-type', 'text/html');
+        return $response->Send(SwaggerUI::renderer());
     })->name('swagger')->asApi(false);
 
     Route::Group('/admin', function () use ($response, $secParameter) {

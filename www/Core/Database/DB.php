@@ -25,15 +25,4 @@ class DB
         return static::instance()->queryBuilder->into($table);
     }
 
-    public static function where($key, $value=null,$operator=null){
-        return static::instance()->queryBuilder->where($key, $value,$operator);
-    }
-
-    public static function orWhere($key, $value=null,$operator=null){
-        return static::instance()->queryBuilder->orWhere($key, $value,$operator);
-    }
-
-    public static function andWhere($key, $value=null,$operator=null){
-        return static::instance()->queryBuilder->andWhere($key, $value,$operator);
-    }
 }

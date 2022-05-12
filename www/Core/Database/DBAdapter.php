@@ -43,23 +43,32 @@ class DBAdapter {
         }
     }
 
+    /**
+     * @return PDO
+     */
     protected function getPDO()
     {
         return $this->pdo;
     }
 
+    /**
+     * @param $query
+     * @param $params
+     * @param array $model
+     * @return array
+     */
     public function exec($query, &$params, $model = [])
     {
-        $qr = $this->getPDO()->prepare($query);
-        Logger::log($query, "DATABASE QUERY");
+        $stmt = $this->getPDO()->prepare($query);
+        Logger::log($query, "QUERY");
         try {
-            $qr->execute($params);
+            $stmt->execute($params);
             $params = [];
             if(is_array($model)){
-                return $qr->fetchAll(PDO::FETCH_BOTH);
+                return $stmt->fetchAll(PDO::FETCH_BOTH);
             }
             else{
-                return $qr->fetchAll(PDO::FETCH_CLASS, get_class($model));
+                 return $stmt->fetchAll(PDO::FETCH_CLASS, $model);
             }
 
         } catch (PDOException  $e) {
@@ -71,14 +80,20 @@ class DBAdapter {
         }
     }
 
-    protected function execOne($query,&$params, $model = [])
+    /**
+     * @param $query
+     * @param $params
+     * @param array $model
+     * @return false|mixed
+     */
+    protected function execOne($query, &$params, $model = [])
     {
-        $qr = $this->getPDO()->prepare($query);
-        Logger::log($query, "DATABASE QUERY");
+        $stmt = $this->getPDO()->prepare($query);
+        Logger::log($query, "QUERY");
         try {
-            $qr->execute($params);
+            $stmt->execute($params);
             $params = [];
-            return $qr->fetchObject(is_array($model) ? PDO::FETCH_COLUMN : get_class($model));
+                return $stmt->fetchObject(is_array($model) ? PDO::FETCH_COLUMN : $model);
         } catch (PDOException  $e) {
             Logger::error($e->getMessage(), "DATABASE ERROR");
             if (defined('DEBUG') && DEBUG == true) {
@@ -88,12 +103,17 @@ class DBAdapter {
         }
     }
 
-    public function execSilent($query, &$params, $model = [])
+    /**
+     * @param $query
+     * @param $params
+     * @return bool
+     */
+    public function execSilent($query, &$params)
     {
-        $qr = $this->getPDO()->prepare($query);
-        Logger::log($query, "DATABASE QUERY");
+        $stmt = $this->getPDO()->prepare($query);
+        Logger::log($query, "QUERY");
         try {
-            $r = $qr->execute($params);;
+            $r = $stmt->execute($params);
             $params = [];
             return $r;
 

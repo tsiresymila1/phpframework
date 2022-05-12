@@ -38,4 +38,7 @@ require APP_PATH . 'config/config.php';
 if (file_exists(APP_PATH . 'config/autoload.php')) {
     require APP_PATH . 'config/autoload.php';
 }
+// load helper
+
+include dirname(__FILE__).'/Helpers/loader.php';
 Autoloader::register();

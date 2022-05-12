@@ -1,124 +1,101 @@
-2022-05-10 14:47:04::REQUEST:: POST /api/login
-2022-05-10 14:47:13::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 AND email=:p627a5ecee9e4d 
-2022-05-10 14:47:13::ERROR:: 2
-2022-05-10 14:47:13::ERROR:: get_class() expects parameter 1 to be object, array given
-2022-05-10 14:47:13::ERROR:: /var/www/html/Core/Database/DBAdapter.php
-2022-05-10 14:47:13::ERROR:: 58
-2022-05-10 14:47:13::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 14:47:13::ERROR:: Line#0<br>
-2022-05-10 14:47:13::ERROR:: File#Unknown<br>
-2022-05-10 14:47:20::REQUEST:: POST /api/login
-2022-05-10 14:47:23::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 AND email=:p627a5edb0a5c7 
-2022-05-10 14:47:23::ERROR:: 2
-2022-05-10 14:47:23::ERROR:: get_class() expects parameter 1 to be object, array given
-2022-05-10 14:47:23::ERROR:: /var/www/html/Core/Database/DBAdapter.php
-2022-05-10 14:47:23::ERROR:: 58
-2022-05-10 14:47:23::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 14:47:23::ERROR:: Line#0<br>
-2022-05-10 14:47:23::ERROR:: File#Unknown<br>
-2022-05-10 14:47:24::REQUEST:: POST /api/login
-2022-05-10 14:47:27::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 AND email=:p627a5edf0775c 
-2022-05-10 14:47:27::ERROR:: 2
-2022-05-10 14:47:27::ERROR:: get_class() expects parameter 1 to be object, array given
-2022-05-10 14:47:27::ERROR:: /var/www/html/Core/Database/DBAdapter.php
-2022-05-10 14:47:27::ERROR:: 58
-2022-05-10 14:47:27::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 14:47:27::ERROR:: Line#0<br>
-2022-05-10 14:47:27::ERROR:: File#Unknown<br>
-2022-05-10 14:48:14::REQUEST:: POST /api/login
-2022-05-10 14:48:18::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 AND email=:p627a5f1238678 
-2022-05-10 14:48:38::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 14:48:38::ERROR:: Line#0<br>
-2022-05-10 14:48:38::ERROR:: File#Unknown<br>
-2022-05-10 14:51:30::REQUEST:: POST /api/login
-2022-05-10 14:51:33::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 AND email=:p627a5fd58e790 
-2022-05-10 14:52:23::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 14:52:23::ERROR:: Line#0<br>
-2022-05-10 14:52:23::ERROR:: File#Unknown<br>
-2022-05-10 14:53:49::REQUEST:: POST /api/login
-2022-05-10 14:54:00::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 AND email=:p627a606765f08 
-2022-05-10 14:54:11::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 14:54:11::ERROR:: Line#0<br>
-2022-05-10 14:54:11::ERROR:: File#Unknown<br>
-2022-05-10 14:55:16::REQUEST:: POST /api/login
-2022-05-10 14:55:20::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 AND email=:p627a60b72122a 
-2022-05-10 14:55:50::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 14:55:50::ERROR:: Line#0<br>
-2022-05-10 14:55:50::ERROR:: File#Unknown<br>
-2022-05-10 14:55:54::REQUEST:: POST /api/login
-2022-05-10 14:59:06::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 AND email=:p627a60de45bac 
-2022-05-10 14:59:28::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 14:59:28::ERROR:: Line#0<br>
-2022-05-10 14:59:28::ERROR:: File#Unknown<br>
-2022-05-10 15:00:44::REQUEST:: POST /api/login
-2022-05-10 15:00:50::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 AND email=:p627a61ff8fe93 
-2022-05-10 15:01:16::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 15:01:16::ERROR:: Line#0<br>
-2022-05-10 15:01:16::ERROR:: File#Unknown<br>
-2022-05-10 15:01:37::REQUEST:: POST /api/login
-2022-05-10 15:01:41::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 
-2022-05-10 15:01:50::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 15:01:50::ERROR:: Line#0<br>
-2022-05-10 15:01:50::ERROR:: File#Unknown<br>
-2022-05-10 15:02:31::REQUEST:: POST /api/login
-2022-05-10 15:02:37::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 
-2022-05-10 15:02:47::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 15:02:47::ERROR:: Line#0<br>
-2022-05-10 15:02:47::ERROR:: File#Unknown<br>
-2022-05-10 15:21:48::REQUEST:: POST /api/login
-2022-05-10 15:21:53::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 
-2022-05-10 15:21:56::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 15:21:56::ERROR:: Line#0<br>
-2022-05-10 15:21:56::ERROR:: File#Unknown<br>
-2022-05-10 15:33:56::REQUEST:: POST /api/login
-2022-05-10 15:34:02::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 
-2022-05-10 15:34:05::ERROR:: 2
-2022-05-10 15:34:05::ERROR:: array_merge(): Expected parameter 1 to be an array, object given
-2022-05-10 15:34:05::ERROR:: /var/www/html/src/Controller/LoginController.php
-2022-05-10 15:34:05::ERROR:: 17
-2022-05-10 15:34:05::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 15:34:05::ERROR:: Line#0<br>
-2022-05-10 15:34:05::ERROR:: File#Unknown<br>
-2022-05-10 15:34:12::REQUEST:: POST /api/login
-2022-05-10 15:34:12::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 
-2022-05-10 15:34:12::ERROR:: 2
-2022-05-10 15:34:12::ERROR:: array_merge(): Expected parameter 1 to be an array, object given
-2022-05-10 15:34:12::ERROR:: /var/www/html/src/Controller/LoginController.php
-2022-05-10 15:34:12::ERROR:: 17
-2022-05-10 15:34:12::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 15:34:12::ERROR:: Line#0<br>
-2022-05-10 15:34:12::ERROR:: File#Unknown<br>
-2022-05-10 15:34:18::REQUEST:: POST /api/login
-2022-05-10 15:34:18::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 
-2022-05-10 15:34:18::ERROR:: 2
-2022-05-10 15:34:18::ERROR:: array_merge(): Expected parameter 1 to be an array, object given
-2022-05-10 15:34:18::ERROR:: /var/www/html/src/Controller/LoginController.php
-2022-05-10 15:34:18::ERROR:: 17
-2022-05-10 15:34:18::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 15:34:18::ERROR:: Line#0<br>
-2022-05-10 15:34:18::ERROR:: File#Unknown<br>
-2022-05-10 15:35:42::REQUEST:: POST /api/login
-2022-05-10 15:35:42::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 
-2022-05-10 15:35:42::ERROR:: 2
-2022-05-10 15:35:42::ERROR:: array_merge(): Expected parameter 1 to be an array, object given
-2022-05-10 15:35:42::ERROR:: /var/www/html/src/Controller/LoginController.php
-2022-05-10 15:35:42::ERROR:: 17
-2022-05-10 15:35:42::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 15:35:42::ERROR:: Line#0<br>
-2022-05-10 15:35:42::ERROR:: File#Unknown<br>
-2022-05-10 15:36:13::REQUEST:: POST /api/login
-2022-05-10 15:36:14::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 
-2022-05-10 15:36:14::ERROR:: 2
-2022-05-10 15:36:14::ERROR:: Cannot modify header information - headers already sent by (output started at /var/www/html/src/Controller/LoginController.php:17)
-2022-05-10 15:36:14::ERROR:: /var/www/html/Core/Http/Response.php
-2022-05-10 15:36:14::ERROR:: 147
-2022-05-10 15:36:14::ERROR:: Error#Cannot modify header information - headers already sent by (output started at /var/www/html/src/Controller/LoginController.php:17)<br>
-2022-05-10 15:36:14::ERROR:: Line#320<br>
-2022-05-10 15:36:14::ERROR:: File#/var/www/html/Core/Http/Exception/ErrorRender.php<br>
-2022-05-10 15:36:53::REQUEST:: POST /api/login
-2022-05-10 15:36:53::DATABASE QUERY:: SELECT * FROM users WHERE 1+1 
-2022-05-10 15:36:53::ERROR:: Error#Missing boundary in multipart/form-data POST data<br>
-2022-05-10 15:36:53::ERROR:: Line#0<br>
-2022-05-10 15:36:53::ERROR:: File#Unknown<br>
-2022-05-10 15:36:55::REQUEST:: GET /static/assets/profile/%7B%7B%20request.session.user.image%7D%7D
-2022-05-10 15:37:25::REQUEST:: GET /static/assets/profile/%7B%7B%20request.session.user.image%7D%7D
+2022-05-12 14:16:40::REQUEST:: POST /api/login
+2022-05-12 14:16:41::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627cfaa928338 
+2022-05-12 14:16:44::QUERY:: SELECT * FROM files WHERE 1=1 AND user_id=:p627cfaacb5fae 
+2022-05-12 14:18:35::ERROR:: 2
+2022-05-12 14:18:35::ERROR:: Use of undefined constant varchar - assumed 'varchar' (this will throw an Error in a future version of PHP)
+2022-05-12 14:18:35::ERROR:: xdebug://debug-eval(1) : eval()'d code
+2022-05-12 14:18:35::ERROR:: 1
+2022-05-12 14:19:32::QUERY:: SELECT * FROM users WHERE 1=1 AND ( name=:p627cfb54d9d3a OR email=:p627cfb54d9d73 ) AND password=:p627cfb54d9dd5 
+2022-05-12 14:19:32::ERROR:: Error#Cannot modify header information - headers already sent by (output started at /var/www/html/Core/Bootstrap.php:39)<br>
+2022-05-12 14:19:32::ERROR:: Line#147<br>
+2022-05-12 14:19:32::ERROR:: File#/var/www/html/Core/Http/Response.php<br>
+2022-05-12 14:19:38::REQUEST:: POST /api/login
+2022-05-12 14:19:39::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627cfb5b816f4 
+2022-05-12 14:19:41::ERROR:: 2
+2022-05-12 14:19:41::ERROR:: get_class() expects parameter 1 to be object, string given
+2022-05-12 14:19:41::ERROR:: /var/www/html/Core/Database/BaseModel.php
+2022-05-12 14:19:42::ERROR:: 92
+2022-05-12 14:20:24::REQUEST:: POST /api/login
+2022-05-12 14:20:24::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627cfb88a07d1 
+2022-05-12 14:20:28::ERROR:: 2
+2022-05-12 14:20:28::ERROR:: get_class() expects parameter 1 to be object, string given
+2022-05-12 14:20:28::ERROR:: /var/www/html/Core/Database/BaseModel.php
+2022-05-12 14:20:28::ERROR:: 92
+2022-05-12 14:21:09::REQUEST:: POST /api/login
+2022-05-12 14:21:09::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627cfbb53fbcd 
+2022-05-12 14:21:17::QUERY:: SELECT * FROM file WHERE 1=1 AND user_id=:p627cfbbd540a0 
+2022-05-12 14:21:17::DATABASE ERROR:: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'phpframework.file' doesn't exist
+2022-05-12 14:21:17::ERROR:: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'phpframework.file' doesn't exist in /var/www/html/Core/Database/DBAdapter.php on line 77==>0
+2022-05-12 14:21:17::ERROR:: #0 /var/www/html/Core/Database/QueryBuilder.php(314): Core\Database\DBAdapter->exec('SELECT * FROM f...', Array, 'App\\Model\\File')
+#1 /var/www/html/Core/Database/BaseModel.php(157): Core\Database\QueryBuilder->get()
+#2 /var/www/html/Core/Database/BaseModel.php(335): Core\Database\BaseModel::findBy('user_id', '1')
+#3 /var/www/html/src/Model/User.php(51): Core\Database\BaseModel->hasMany('App\\Model\\File', 'user_id')
+#4 /var/www/html/Core/Database/BaseModel.php(33): App\Model\User->files()
+#5 /var/www/html/src/Controller/LoginController.php(18): Core\Database\BaseModel->__get('files')
+#6 [internal function]: App\Controller\LoginController->login(Object(Core\Http\Request))
+#7 /var/www/html/Core/Container/Container.php(111): ReflectionMethod->invoke(Object(App\Controller\LoginController), Object(Core\Http\Request))
+#8 /var/www/html/Core/Http/Router.php(263): Core\Container\Container->resolve('App\\Controller\\...', 'login', Array)
+#9 /var/www/html/Core/Http/Router.php(288): Core\Http\Router->invokeSuccess()
+#10 /var/www/html/Core/Http/Router.php(234): Core\Http\Router->execute()
+#11 /var/www/html/Core/Http/Handler.php(59): Core\Http\Router::find()
+#12 /var/www/html/Core/Http/Security/UserAuthenticator.php(115): Core\Http\Handler::DoRouting()
+#13 /var/www/html/Core/Http/Security/UserAuthenticator.php(144): Core\Http\Security\UserAuthenticator->pass()
+#14 /var/www/html/Core/Http/Handler.php(50): Core\Http\Security\UserAuthenticator->authenticate()
+#15 /var/www/html/Core/Http/Handler.php(40): Core\Http\Handler->auth()
+#16 /var/www/html/Core/Bootstrap.php(20): Core\Http\Handler::handle()
+#17 /var/www/html/public/index.php(12): Core\Bootstrap::boot()
+#18 {main}
+2022-05-12 14:21:53::REQUEST:: POST /api/login
+2022-05-12 14:21:53::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627cfbe197cb5 
+2022-05-12 14:21:56::QUERY:: SELECT * FROM files WHERE 1=1 AND user_id=:p627cfbe4be612 
+2022-05-12 14:22:07::QUERY:: SELECT * FROM users WHERE 1=1 AND ( name=:p627cfbef9caa8 OR email=:p627cfbef9cbb3 ) AND password=:p627cfbef9cbf9 
+2022-05-12 14:22:26::REQUEST:: POST /api/login
+2022-05-12 14:22:26::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627cfc02e027f 
+2022-05-12 14:22:28::QUERY:: SELECT * FROM files WHERE 1=1 AND user_id=:p627cfc042f506 
+2022-05-12 14:22:28::QUERY:: SELECT * FROM users WHERE 1=1 AND ( name=:p627cfc04d2eaf OR email=:p627cfc04d2ed7 ) AND password=:p627cfc04d2f05 
+2022-05-12 14:22:35::ERROR:: 2
+2022-05-12 14:22:35::ERROR:: array_merge(): Expected parameter 1 to be an array, object given
+2022-05-12 14:22:35::ERROR:: /var/www/html/src/Controller/LoginController.php
+2022-05-12 14:22:35::ERROR:: 20
+2022-05-12 14:27:35::REQUEST:: GET /api/docs
+2022-05-12 14:29:51::REQUEST:: POST /api/login
+2022-05-12 14:29:51::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627cfdbfef8e7 
+2022-05-12 14:29:52::QUERY:: SELECT * FROM files WHERE 1=1 AND user_id=:p627cfdc002358 
+2022-05-12 14:29:52::QUERY:: SELECT * FROM users WHERE 1=1 AND ( name=:p627cfdc00581f OR email=:p627cfdc005840 ) AND password=:p627cfdc0058e7 
+2022-05-12 14:40:37::REQUEST:: POST /api/login
+2022-05-12 14:40:38::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627d004668b09 
+2022-05-12 14:40:38::QUERY:: SELECT * FROM files WHERE 1=1 AND user_id=:p627d00467055d 
+2022-05-12 14:40:38::QUERY:: SELECT * FROM users WHERE 1=1 AND ( name=:p627d004672756 OR email=:p627d004672784 ) AND password=:p627d0046728b8 
+2022-05-12 14:40:38::ERROR:: 2
+2022-05-12 14:40:38::ERROR:: array_merge(): Expected parameter 1 to be an array, bool given
+2022-05-12 14:40:38::ERROR:: /var/www/html/src/Controller/LoginController.php
+2022-05-12 14:40:38::ERROR:: 20
+2022-05-12 14:42:56::REQUEST:: POST /api/login
+2022-05-12 14:42:56::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627d00d08307a 
+2022-05-12 14:42:56::QUERY:: SELECT * FROM files WHERE 1=1 AND user_id=:p627d00d08b724 
+2022-05-12 14:42:56::QUERY:: SELECT * FROM users WHERE 1=1 AND ( name=:p627d00d08de16 OR email=:p627d00d08de3d ) AND password=:p627d00d08de84 
+2022-05-12 14:42:56::ERROR:: 2
+2022-05-12 14:42:56::ERROR:: array_merge(): Expected parameter 1 to be an array, bool given
+2022-05-12 14:42:56::ERROR:: /var/www/html/src/Controller/LoginController.php
+2022-05-12 14:42:56::ERROR:: 20
+2022-05-12 14:43:51::REQUEST:: POST /api/login
+2022-05-12 14:43:51::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627d0107a5323 
+2022-05-12 14:43:51::QUERY:: SELECT * FROM files WHERE 1=1 AND user_id=:p627d0107ae73d 
+2022-05-12 14:43:51::QUERY:: SELECT * FROM users WHERE 1=1 AND ( name=:p627d0107b03d9 OR email=:p627d0107b03fd ) AND password=:p627d0107b042e 
+2022-05-12 14:43:51::ERROR:: 2
+2022-05-12 14:43:51::ERROR:: array_merge(): Expected parameter 1 to be an array, bool given
+2022-05-12 14:43:51::ERROR:: /var/www/html/src/Controller/LoginController.php
+2022-05-12 14:43:51::ERROR:: 20
+2022-05-12 14:44:23::REQUEST:: POST /api/login
+2022-05-12 14:44:23::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627d0127838b9 
+2022-05-12 14:44:23::QUERY:: SELECT * FROM files WHERE 1=1 AND user_id=:p627d01278ab40 
+2022-05-12 14:44:23::QUERY:: SELECT * FROM users WHERE 1=1 AND ( name=:p627d01278da16 OR email=:p627d01278da3f ) AND password=:p627d01278dc78 
+2022-05-12 14:44:23::ERROR:: 2
+2022-05-12 14:44:23::ERROR:: array_merge(): Expected parameter 1 to be an array, bool given
+2022-05-12 14:44:23::ERROR:: /var/www/html/src/Controller/LoginController.php
+2022-05-12 14:44:23::ERROR:: 20
+2022-05-12 14:46:47::REQUEST:: POST /api/login
+2022-05-12 14:46:48::QUERY:: SELECT * FROM users WHERE 1=1 AND id=:p627d01b8186fc 
+2022-05-12 14:46:48::QUERY:: SELECT * FROM files WHERE 1=1 AND user_id=:p627d01b81ec2b 
+2022-05-12 14:46:48::QUERY:: SELECT * FROM users WHERE 1=1 AND ( name=:p627d01b821989 OR email=:p627d01b8219b1 ) AND password=:p627d01b8219e4 
+2022-05-12 14:49:27::REQUEST:: GET /api/admin/dashboard
