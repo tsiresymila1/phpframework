@@ -343,34 +343,34 @@ class QueryBuilder {
 
     /**
      * @param $column1
-     * @param $colums2
+     * @param $column2
      * @return $this
      */
-    public function innerJoin($column1, $colums2)
+    public function innerJoin($column1, $column2)
     {
-        $joins[] = " INNER JOIN ON {$column1}={$colums2} ";
+        $joins[] = " INNER JOIN ON {$column1}={$column2} ";
         return $this;
     }
 
     /**
      * @param $column1
-     * @param $colums2
+     * @param $column2
      * @return $this
      */
-    public function leftJoin($column1, $colums2)
+    public function leftJoin($column1, $column2)
     {
-        $joins[] = " LEFT JOIN ON {$column1}={$colums2} ";
+        $joins[] = " LEFT JOIN ON {$column1}={$column2} ";
         return $this;
     }
 
     /**
      * @param $column1
-     * @param $colums2
+     * @param $column2
      * @return $this
      */
-    public function rightJoin($column1, $colums2)
+    public function rightJoin($column1, $column2)
     {
-        $joins[] = " RIGHT JOIN ON {$column1}={$colums2} ";
+        $joins[] = " RIGHT JOIN ON {$column1}={$column2} ";
         return $this;
     }
 

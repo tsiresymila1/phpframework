@@ -4,7 +4,10 @@ namespace Core\Event;
 
 class Event
 {
-    private static $events = [];
+    /**
+     * @var array
+     */
+    private static  $events = [];
 
     /**
      * @param $name
