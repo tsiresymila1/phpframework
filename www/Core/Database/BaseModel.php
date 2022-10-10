@@ -273,7 +273,7 @@ class BaseModel extends ModelAbstract{
     // ORM
 
     /**
-     * @param $model
+     * @param  $model
      * @param null $foreign_key
      * @param null $local_key
      * @return mixed
@@ -281,9 +281,9 @@ class BaseModel extends ModelAbstract{
     protected function hasOne($model, $foreign_key = null, $local_key = null)
     {
 
-        $m = new $model;
+        $m = new $model();
         if (is_null($foreign_key)) {
-            $foreign_key = strtolower($m-->getTable()) . '_' . $m->primaryKey;
+            $foreign_key = strtolower($m->getTable()) . '_' . $m->primaryKey;
         }
         if (is_null($local_key)) {
             $local_key = $m->primaryKey;
@@ -315,7 +315,7 @@ class BaseModel extends ModelAbstract{
     {
         $m = new $model;
         if (is_null($foreign_key)) {
-            $foreign_key = strtolower($m-->getTable()) . '_' . $m->primaryKey;
+            $foreign_key = strtolower($m->getTable()) . '_' . $m->primaryKey;
         }
         if (is_null($local_key)) {
             $local_key = $this->primaryKey;
