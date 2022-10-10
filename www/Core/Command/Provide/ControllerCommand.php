@@ -11,6 +11,8 @@ class ControllerCommand extends Command
     public $template = APP_PATH . 'templates' . DIRECTORY_SEPARATOR;
     public  $routepath = APP_PATH . 'config' . DIRECTORY_SEPARATOR . 'routes.php';
 
+    public $description = " Generate controller ";
+
     public function handle($args)
     {
         if (sizeof($args) > 0) {

@@ -2,6 +2,8 @@
 
 namespace Core\Command;
 
+use Core\Command\Provide\ControllerCommand;
+use Core\Command\Provide\ServerCommand;
 use Core\Container\Container;
 use Exception;
 use RuntimeException;
@@ -36,7 +38,11 @@ class CommandContainer
         }
         $ins = self::instance();
         $command = require APP_PATH . 'config/command.php';
-        foreach ($command as $c) {
+        $default = [
+            ControllerCommand::class,
+            ServerCommand::class, 
+        ];
+        foreach (array_merge($default,$command) as $c) {
             $ins->register($c);
         }
     }
