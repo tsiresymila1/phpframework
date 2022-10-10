@@ -69,7 +69,18 @@ class Bootstrap
             }
             if(!defined('DEBUG') || DEBUG == true) {
                 $withCode = array_key_exists(strval($e->getCode()),ErrorRender::$code);
-                echo ErrorRender::showErrorDetails($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $e->getTrace(), $withCode ? $e->getCode() : '500');
+                if(Request::isAPI()){
+                    header('Content-type:application/json;charset=utf-8');
+                    echo json_encode(array(
+                        "code" =>$e->getCode(),
+                        "error" => $e->getMessage(),
+                        "file" => $e->getFile(),
+                        "line" => $e->getLine(),
+                    ));
+                }else{
+                   
+                    echo ErrorRender::showErrorDetails($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $e->getTrace(), $withCode ? $e->getCode() : '500');
+                }
             };
             exit(200);
         });
