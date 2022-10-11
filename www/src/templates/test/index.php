@@ -8,11 +8,11 @@
     <title>
     {{ name }}
     </title>
-    {{ vite('index.tsx') }}
+    
 </head>
 
 <body>
-    <div id="root"></div>
+    <div>Hello from {{ name }}</div>
 </body>
 
 </html>

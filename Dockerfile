@@ -22,13 +22,14 @@ RUN docker-php-ext-install gd
 RUN docker-php-ext-enable xdebug
 RUN docker-php-ext-install zip
 
-RUN  docker-php-ext-install hash iconv \
-&& pecl install raphf propro \
-&& docker-php-ext-enable raphf propro \
-&& pecl install pecl_http \
-&& echo -e "extension=raphf.so\nextension=propro.so\nextension=http.so" > /usr/local/etc/php/conf.d/docker-php-ext-http.ini \
-&& rm -rf /usr/local/etc/php/conf.d/docker-php-ext-raphf.ini \
-&& rm -rf /usr/local/etc/php/conf.d/docker-php-ext-propro.ini
+# RUN  docker-php-ext-install hash 
+RUN  docker-php-ext-install iconv
+RUN pecl install raphf propro 
+RUN docker-php-ext-enable raphf propro
+# RUN pecl install pecl_http 
+RUN  echo -e "extension=raphf.so\nextension=propro.so\nextension=http.so" > /usr/local/etc/php/conf.d/docker-php-ext-http.ini 
+RUN rm -rf /usr/local/etc/php/conf.d/docker-php-ext-raphf.ini 
+RUN rm -rf /usr/local/etc/php/conf.d/docker-php-ext-propro.ini
 
 RUN a2enmod rewrite
 RUN chown -R www-data:www-data /var/www/html

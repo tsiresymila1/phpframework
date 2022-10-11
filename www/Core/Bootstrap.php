@@ -28,57 +28,66 @@ class Bootstrap
 
     public static function handleError()
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline,$errcontext) {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline, $errcontext) {
             Logger::error($errno);
             Logger::error($errstr);
             Logger::error($errfile);
             Logger::error($errline);
-            if(!defined('DEBUG') || DEBUG == true) {
+            if (!defined('DEBUG') || DEBUG == true) {
                 $strace = debug_backtrace();
-                $withCode = array_key_exists(strval($errno),ErrorRender::$code);
-                if(Request::isAPI()){
+                $withCode = array_key_exists(strval($errno), ErrorRender::$code);
+                if (Request::isAPI()) {
                     header('Content-type:application/json;charset=utf-8');
                     echo json_encode(array(
-                        "code" =>$errno,
+                        "code" => $errno,
                         "error" => $errstr,
                         "file" => $errfile,
                         "line" => $errline
                     ));
-                }
-                else{
+                } else {
                     echo ErrorRender::showErrorDetails($errstr . ' in ' . $errfile . ' on line ' . $errline, $strace, $withCode ? $errno : '500');
                 }
-
             }
             exit();
         }, E_ALL | E_STRICT | E_ERROR | E_WARNING | E_NOTICE);
 
-        set_exception_handler(function($e) {
+        set_exception_handler(function ($e) {
             $errors = array(
                 E_USER_ERROR        => "User Error",
                 E_USER_WARNING      => "User Warning",
                 E_USER_NOTICE       => "User Notice",
             );
-            Logger::error( $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(). '==>'.$e->getCode());
+            Logger::error($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine() . '==>' . $e->getCode());
             Logger::error($e->getTraceAsString());
-            if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+            // enable cors :
+            if (isset($_SERVER['HTTP_ORIGIN'])) {
                 header('Access-Control-Allow-Origin: *');
-                header('Access-Control-Allow-Headers: X-Requested-With');
-                header("HTTP/1.1 200 OK");
-                die();
+                header('Access-Control-Allow-Credentials: true');
+                header('Access-Control-Max-Age: 1000');
             }
-            if(!defined('DEBUG') || DEBUG == true) {
-                $withCode = array_key_exists(strval($e->getCode()),ErrorRender::$code);
-                if(Request::isAPI()){
+            if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+                if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
+                    header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
+                }
+                if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
+                    header("Access-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization");
+                }
+                header("HTTP/1.1 200 OK");
+                exit(0);
+            }
+            if (!defined('DEBUG') || DEBUG == true) {
+                $withCode = array_key_exists(strval($e->getCode()), ErrorRender::$code);
+                if (Request::isAPI()) {
                     header('Content-type:application/json;charset=utf-8');
                     echo json_encode(array(
-                        "code" =>$e->getCode(),
+                        "code" => $e->getCode(),
                         "error" => $e->getMessage(),
                         "file" => $e->getFile(),
                         "line" => $e->getLine(),
                     ));
-                }else{
-                   
+                } else {
+
                     echo ErrorRender::showErrorDetails($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $e->getTrace(), $withCode ? $e->getCode() : '500');
                 }
             };
@@ -92,7 +101,7 @@ class Bootstrap
                 Logger::error('Error#' . $err['message'] . '<br>');
                 Logger::error('Line#' . $err['line'] . '<br>');
                 Logger::error('File#' . $err['file'] . '<br>');
-                if(defined('DEBUG') && DEBUG == false) {
+                if (defined('DEBUG') && DEBUG == false) {
                     echo ErrorRender::showError();
                 }
             }

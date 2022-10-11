@@ -1,8 +1,8 @@
 <?php
 namespace App\Model;
 
-use Core\Database\Model;
+use Core\Database\BaseModel;
 
-class Student extends Model {
+class Student extends BaseModel {
 
 }

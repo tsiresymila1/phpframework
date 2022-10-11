@@ -4,6 +4,7 @@ namespace Core\Http;
 
 use Core\Container\Container;
 use Core\Renderer\Template;
+use Core\Utils\Vite;
 use Exception;
 
 class Response
@@ -23,6 +24,9 @@ class Response
         self::$renderer = new Template(APP_PATH . "templates" . DIRECTORY_SEPARATOR);
         self::$renderer->addFunction("uppercase", function ($data) {
             return strtolower($data);
+        });
+        self::$renderer->addFunction("vite", function ($entry) {
+            return Vite::vite($entry);
         });
 //        self::$HEADER['Access-Control-Allow-Origin'] = '*';
 //        self::$HEADER['Access-Control-Allow-Methods'] = 'GET, POST, PUT';

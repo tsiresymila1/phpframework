@@ -1,9 +1,11 @@
 <?php
 
 use App\Model\File;
-use Core\Database\Model;
+use Core\Database\BaseModel;
 
-class Program extends Model{
+class Program extends BaseModel{
+
+    protected $_table = "programs";
 
     public function files(){
         $this->hasMany(File::class);

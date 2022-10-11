@@ -31,6 +31,9 @@ class Autoloader
 }
 define('DIR', dirname(dirname(__FILE__)) . '/');
 define('APP_PATH', dirname(dirname(__FILE__)) . '/src' . '/');
+// require global ;
+require DIR.'Core/Utils/global.php';
+
 if (!file_exists(APP_PATH . 'config/config.php')) {
     throw new Exception('config.php file not found');
 }

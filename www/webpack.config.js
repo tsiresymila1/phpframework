@@ -13,7 +13,8 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".css"],
   },
-  devServer: { contentBase: path.join(__dirname, "src") },
+  devServer: { contentBase: path.join(__dirname, "src") , hot: true,
+  watchContentBase: true},
   module: {
     rules: [
       {

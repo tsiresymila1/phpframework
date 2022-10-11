@@ -2,9 +2,12 @@
 
 namespace App\Model;
 
-use Core\Database\Model;
+use Core\Database\BaseModel;
 
-class Coach extends Model {
+class Coach extends BaseModel {
+
+    protected $_table = "caochs";
+    
     public $id;
     public $username;
     public $name;

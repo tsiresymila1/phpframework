@@ -1,11 +1,11 @@
 import React from 'react';
 import { Image, Row,Col,ListGroup } from 'react-bootstrap';
-import { Link,useLocation } from "react-router-dom";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUsers, faServer, faCreditCard, faFileAlt, faMap, faUser, faFolderOpen, faChalkboardTeacher } from "@fortawesome/free-solid-svg-icons";
+import { Link,useLocation } from "react-router-dom"; 
+import * as fontawesome from "@fortawesome/fontawesome";
+import {faUsers, faServer,faCreditCard,faFileAlt,faMap, faUser,faFolderOpen,faChalkboardTeacher} from "@fortawesome/free-solid-svg-icons";
 import logo from '../images/logo.jpg';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-library.add(faUsers,faServer,faCreditCard,faFileAlt,faMap, faUser,faFolderOpen,faChalkboardTeacher);
+fontawesome.library.add(faUsers, faServer,faCreditCard,faFileAlt,faMap, faUser,faFolderOpen,faChalkboardTeacher);
 export const Sidenav = ({toggle}:{toggle?:()=>void}) => {
     const classList = "p-3 list-group-item list-group-item-action mb-1";
     const location = useLocation();
@@ -14,12 +14,12 @@ export const Sidenav = ({toggle}:{toggle?:()=>void}) => {
     },[location])
     return (
         <div className="border-right bg-white" id="sidebar-wrapper" style={{ marginTop: '60px'}}>
-            <div className="sidebar-heading primary-white ">
+            <div className="sidebar-heading primary-white "> 
                 <Row>
                     <Col xs={12} className=" mt-4" style={{height:'150px'}} >
                         <Image src={logo} className="rounded-circle img-fluid" width="150" height="80" alt="" />
                     </Col>
-                </Row>
+                </Row> 
             </div>
             <ListGroup variant="flush" as={"div"}>
                 <Link to="/admin" className={`${classList} ${location.pathname === '/admin' ? 'active' : ''}`} >

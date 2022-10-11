@@ -111,7 +111,7 @@ class QueryBuilder {
     /**
      * @return string|string[]|null
      */
-    private function toQueryString(){
+    public function toQueryString(){
         switch ($this->type){
             case 'SELECT':
                 $relation = $this->joinRelation();
@@ -346,9 +346,9 @@ class QueryBuilder {
      * @param $column2
      * @return $this
      */
-    public function innerJoin($column1, $column2)
+    public function innerJoin($table,$column1, $column2)
     {
-        $joins[] = " INNER JOIN ON {$column1}={$column2} ";
+        $joins[] = " INNER JOIN {$table} ON {$column1}={$column2} ";
         return $this;
     }
 
@@ -357,9 +357,9 @@ class QueryBuilder {
      * @param $column2
      * @return $this
      */
-    public function leftJoin($column1, $column2)
+    public function leftJoin($table,$column1, $column2)
     {
-        $joins[] = " LEFT JOIN ON {$column1}={$column2} ";
+        $joins[] = " LEFT JOIN {$table} ON {$column1}={$column2} ";
         return $this;
     }
 
@@ -368,9 +368,9 @@ class QueryBuilder {
      * @param $column2
      * @return $this
      */
-    public function rightJoin($column1, $column2)
+    public function rightJoin($table, $column1, $column2)
     {
-        $joins[] = " RIGHT JOIN ON {$column1}={$column2} ";
+        $joins[] = " RIGHT JOIN {$table} ON {$column1}={$column2} ";
         return $this;
     }
 
