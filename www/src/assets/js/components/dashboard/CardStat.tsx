@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card, Col, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {FaUserGraduate, FaArrowRight} from 'react-icons/fa'
 export const CardStat = (
     {title,count,link,color}:
         {title:string,count:string,link:string,color:string}
@@ -18,15 +19,15 @@ export const CardStat = (
                         </Col>
                         <Col className={"justify-content-center"}>
                             <span className="hvr-grow">
-                                <i className="fa fa-4x fa-user-graduate"/>
+                                <FaUserGraduate  size={40} color={'white'}/>
                             </span>
                         </Col>
                     </Row>
                 </Card.Body>
                 <Card.Footer>
                     <small className=" text-white">Plus d'infos<Link to={link}>
-                        <span className="badge bg-theme-color badge-pill p-2 ml-2">
-                            <i className="fa fa-2x fa-arrow-right text-white" aria-hidden="true"/>
+                        <span className="badge bg-theme-color badge-pill p-2 px-2">
+                            <FaArrowRight  color={'white'} />
                         </span>
                     </Link>
                 </small>

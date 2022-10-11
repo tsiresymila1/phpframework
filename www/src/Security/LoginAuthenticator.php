@@ -4,6 +4,7 @@ namespace App\Security;
 
 use Core\Http\Response;
 use Core\Http\Security\UserAuthenticator;
+use Core\Utils\JWT;
 
 class LoginAuthenticator extends UserAuthenticator
 {

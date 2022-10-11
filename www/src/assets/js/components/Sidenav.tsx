@@ -1,11 +1,11 @@
 import React from 'react';
 import { Image, Row,Col,ListGroup } from 'react-bootstrap';
 import { Link,useLocation } from "react-router-dom"; 
-import * as fontawesome from "@fortawesome/fontawesome";
-import {faUsers, faServer,faCreditCard,faFileAlt,faMap, faUser,faFolderOpen,faChalkboardTeacher} from "@fortawesome/free-solid-svg-icons";
+
+import { FaServer, FaUser, FaFileAlt, FaCreditCard, FaMap, FaUsers, FaFolderOpen, FaChalkboard } from "react-icons/fa";
+// <-- import styles to be used
 import logo from '../images/logo.jpg';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-fontawesome.library.add(faUsers, faServer,faCreditCard,faFileAlt,faMap, faUser,faFolderOpen,faChalkboardTeacher);
+
 export const Sidenav = ({toggle}:{toggle?:()=>void}) => {
     const classList = "p-3 list-group-item list-group-item-action mb-1";
     const location = useLocation();
@@ -23,35 +23,35 @@ export const Sidenav = ({toggle}:{toggle?:()=>void}) => {
             </div>
             <ListGroup variant="flush" as={"div"}>
                 <Link to="/admin" className={`${classList} ${location.pathname === '/admin' ? 'active' : ''}`} >
-                    <FontAwesomeIcon icon={faServer} />
+                    <FaServer />
                     <span className="ml-4"> Dashboard</span>
                 </Link>
                 <Link to="/admin/student" className={`${classList}  ${location.pathname === '/admin/student' ? 'active' : ''}`}>
-                    <FontAwesomeIcon icon={faUsers} />
+                    <FaUsers  />
                     <span className="ml-4" > Etudiants</span>
                 </Link>
                 <Link to="/admin/transcription" className={`${classList}  ${location.pathname === '/admin/transcription' ? 'active' : ''}`}>
-                    <FontAwesomeIcon icon={faFileAlt} />
+                    <FaFileAlt />
                     <span className="ml-4" > Notes</span>
                 </Link>
                 <Link to="/admin/fee" className={`${classList}  ${location.pathname === '/admin/fee' ? 'active' : ''}`}>
-                    <FontAwesomeIcon icon={faCreditCard} />
+                    <FaCreditCard />
                     <span className="ml-4" > Cotisation</span>
                 </Link>
                 <Link to="/admin/program" className={`${classList}  ${location.pathname === '/admin/program' ? 'active' : ''}`}>
-                    <FontAwesomeIcon icon={faMap} />
+                    <FaMap />
                     <span className="ml-4" > Programmes</span>
                 </Link>
                 <Link to="/admin/account" className={`${classList}  ${location.pathname === '/admin/account' ? 'active' : ''}`}>
-                    <FontAwesomeIcon icon={faUser} />
+                    <FaUser />
                     <span className="ml-4" > Compte</span>
                 </Link>
                 <Link to="/admin/document" className={`${classList}  ${location.pathname === '/admin/document' ? 'active' : ''}`}>
-                    <FontAwesomeIcon icon={faFolderOpen} />
+                    <FaFolderOpen />
                     <span className="ml-4" > Documents</span>
                 </Link>
                 <Link to="/admin/coach" className={`${classList}  ${location.pathname === '/admin/coach' ? 'active' : ''}`}>
-                    <FontAwesomeIcon icon={faChalkboardTeacher} />
+                    <FaChalkboard />
                     <span className="ml-4" > Coachs</span>
                 </Link>
             </ListGroup>

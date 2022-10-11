@@ -9,8 +9,11 @@ class File extends BaseModel {
     protected $_table = "files";
 
     public $name;
+
     public $size;
+
     public $secure_name;
+    
     public $type;
 
     public function user(){

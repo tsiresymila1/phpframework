@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form,Image,Row,Col,Card,Container,Spinner,Alert } from "react-bootstrap";
+import { Button, Form,Image,Row,Col,Card,Container,Spinner,Alert, InputGroup } from "react-bootstrap";
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import logo from '../images/logo.jpg';
 import validator from 'validator';
@@ -36,7 +36,7 @@ export const Login = () => {
     }
 
     const signUp = () => {
-        const data : AuthUserInput = {
+        const data : AuthUserInput = { 
             email,
             password
         }
