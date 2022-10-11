@@ -31,17 +31,18 @@ class Autoloader
 }
 define('DIR', dirname(dirname(__FILE__)) . '/');
 define('APP_PATH', dirname(dirname(__FILE__)) . '/src' . '/');
-// require global ;
-require DIR.'Core/Utils/global.php';
 
+// load helper
+include dirname(__FILE__).'/Helpers/loader.php';
+
+//load config
 if (!file_exists(APP_PATH . 'config/config.php')) {
     throw new Exception('config.php file not found');
 }
 require APP_PATH . 'config/config.php';
+//load autoload 
 if (file_exists(APP_PATH . 'config/autoload.php')) {
     require APP_PATH . 'config/autoload.php';
 }
-// load helper
 
-include dirname(__FILE__).'/Helpers/loader.php';
 Autoloader::register();

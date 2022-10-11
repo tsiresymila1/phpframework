@@ -14,33 +14,21 @@ class Vite
             . "\n" . self::cssTag($entry);
     }
 
-    static function URL(){
-        if(!file_exists(APP_PATH.'config/vite.php')){
+    static function URL()
+    {
+        if (!file_exists(APP_PATH . 'config/vite.php')) {
             throw new Exception('Vite file config not found ');
         }
-        $config = require APP_PATH.'config/vite.php';
-        $host = isset($config ['host'] ) ? $config ['host'] : "localhost";
-        $port = isset($config ['port'] ) ? $config ['port'] : 5133;
+        $config = require APP_PATH . 'config/vite.php';
+        $host = isset($config['host']) ? $config['host'] : "localhost";
+        $port = isset($config['port']) ? $config['port'] : 5133;
 
         return "http://{$host}:{$port}";
     }
 
-    static function isDev(string $entry): bool
+    static function isDev(): bool
     {
-        static $exists = null;
-        if ($exists !== null) {
-            return $exists;
-        }
-        $handle = curl_init(self::URL() . '/' . $entry);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_NOBODY, true);
-
-        curl_exec($handle);
-        $error = curl_errno($handle);
-        curl_close($handle);
-
-        // return $exists = !$error;
-        return true;
+        return env('APP_ENV') != "production";
     }
 
 
@@ -49,33 +37,33 @@ class Vite
     static function jsTag(string $entry): string
     {
 
-        if(self::isDev($entry)){
+        if (self::isDev()) {
             $refresh = '
             <script>
                 window.$RefreshReg$ = () => {}
                 window.$RefreshSig$ = () => (type) => type
                 window.__vite_plugin_react_preamble_installed__= true
             </script>
+            ' . "\n" . '
             <script type="module">
-                import RefreshRuntime from "'.self::URL().'/@react-refresh"
+                import RefreshRuntime from "' . self::URL() . '/@react-refresh"
                 RefreshRuntime.injectIntoGlobalHook(window)
             </script>';
             // $vite_client =  $refresh.'<script type="module" src="'.self::URL().'/@vite/client "></script>';
-            return  $refresh.'
+            return  $refresh . "\n" . '
             <script type="module" crossorigin src="'
                 . self::URL() . '/' . $entry
-            . '"></script>';
-        }else{
+                . '"></script>';
+        } else {
             return  '<script type="module" crossorigin src="'
-            . self::assetUrl($entry)  
-            . '"></script>';
+                . self::assetUrl($entry)
+                . '"></script>';
         }
-        
     }
 
     static function jsPreloadImports(string $entry): string
     {
-        if (self::isDev($entry)) {
+        if (self::isDev()) {
             return '';
         }
 
@@ -91,7 +79,7 @@ class Vite
     static function cssTag(string $entry): string
     {
         // not needed on dev, it's inject by Vite
-        if (self::isDev($entry)) {
+        if (self::isDev()) {
             return '';
         }
 

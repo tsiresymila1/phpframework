@@ -9,12 +9,14 @@ use Core\Http\Handler;
 use Core\Http\Request;
 use Core\Session\Session;
 use Core\Utils\Logger;
+use Core\Utils\Dotenv;
 
 class Bootstrap
 {
     public static function boot()
     {
         static::handleError();
+        (new DotEnv(DIR . '/.env'))->load();
         Session::Init();
         DBAdapter::Init();
         Handler::handle();

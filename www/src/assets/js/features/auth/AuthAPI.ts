@@ -3,16 +3,14 @@ import { AxiosResponse } from "axios";
 import { AuthUserInput } from "../../types/auth";
 import { axiosAPI } from "../../data/constant";
 export async function postLogin(data: AuthUserInput) {
+  console.log(data)
   return axiosAPI.post<
     Record<string, any>,
     AxiosResponse<any, any>,
     AuthUserInput
-  >("/api/login", data, {
+  >("/api/login",data, {
     headers: {
-      "Content-Type": "multipart/form-data",
-      "Access-Control-Allow-Origin": "*",
-      'Access-Control-Allow-Credentials':true,
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    },
+      "Content-Type" :  "multipart/form-data"
+    }
   });
 }

@@ -46,7 +46,7 @@ class Request
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->get = $_GET;
         if (is_null($_POST) || sizeof($_POST) == 0) {
-            $_POST = json_decode(file_get_contents('php://input'), true, 512);
+            $_POST = json_decode(file_get_contents('php://input'), true, 512) ?? [];
         }
         $this->post = $_POST;
         $this->params = [];
