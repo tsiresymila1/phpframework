@@ -3,14 +3,15 @@ import { join, resolve } from "path";
 import { loadEnv, PluginOption, ResolvedConfig } from "vite";
 import FullReload from 'vite-plugin-full-reload'
 
-export default function VitePhpPlugin(config?: {
+export default function VitePhpPlugin(config?: { 
     root: string;
     public: string;
     entry: string;
     output: string;
     port: number,
     host: string,
-    apiServer: string
+    apiServer: string,
+    isHttps: boolean
 }): PluginOption {
     var pluginConfig = config ?? {
         root: "src/assets/js",
@@ -19,7 +20,8 @@ export default function VitePhpPlugin(config?: {
         output: "public/js/bundle",
         port: 5133,
         host: "localhost",
-        apiServer: "http://localhost:4444"
+        apiServer: "http://localhost:4444",
+        isHttps: false
     };
     let resolvedConfig: ResolvedConfig;
     return {
@@ -38,7 +40,7 @@ export default function VitePhpPlugin(config?: {
                     host: pluginConfig.host,
                     strictPort: true,
                     middlewareMode: false,
-                    open: resolve(pluginConfig.root, 'index.html'),
+                    open: join(__dirname, 'dev-server-index.html'),
                     proxy: {
                         "/api": {
                             target : pluginConfig.apiServer
@@ -53,11 +55,6 @@ export default function VitePhpPlugin(config?: {
                     emptyOutDir: true,
                     assetsInlineLimit: 0,
                     outDir: resolve(pluginConfig.output),
-                    lib: {
-                        entry: resolve(pluginConfig.root, pluginConfig.entry),
-                        fileName: "app",
-                        name: "app",
-                    },
                     rollupOptions: {
                         external: ["React"],
                         input: resolve(pluginConfig.root, pluginConfig.entry),
@@ -83,7 +80,7 @@ export default function VitePhpPlugin(config?: {
         },
         transform(code) {
             if (resolvedConfig.command === 'serve') {
-                return code.replace(/__php_vite_placeholder__/g, `http://${pluginConfig.host}:${pluginConfig.port}`)
+                return code.replace(/__php_vite_placeholder__/g, `${pluginConfig.isHttps? 'https': 'http'}://${pluginConfig.host}:${pluginConfig.port}`)
             }
         },
         configureServer(server){
@@ -92,12 +89,11 @@ export default function VitePhpPlugin(config?: {
                 console.log("Address : ",address)
             });
             const envDir = resolvedConfig.envDir || process.cwd()
-            // const appUrl = loadEnv(resolvedConfig.mode, envDir, 'APP_URL').APP_URL ?? 'undefined'
             return () => server.middlewares.use((req, res, next) => {
                 if (req.url === '/index.html') {
                     res.statusCode = 404
                     res.end(
-                        fs.readFileSync(join(__dirname, 'dev-server-index.html'))
+                        fs.readFileSync(join(__dirname, 'dev-server-index.html')) 
                     )
                 }
                 next()

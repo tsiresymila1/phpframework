@@ -1,14 +1,11 @@
 import React from 'react';
-import {Navbar, Nav, Container, Button, Image,Dropdown} from 'react-bootstrap';
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Navbar,  Container, Button, Image,Dropdown} from 'react-bootstrap';
+import {FaBars} from 'react-icons/fa'
 import {Link} from "react-router-dom";
-library.add(faBars);
 function NavBar({toggleSidenav}: {toggleSidenav?: ()=>void}){
     return(
         <Navbar bg="primary" variant="light" fixed={'top'}  className={'shadow p-2 mb-5 bg-white'} style={{height: "60px"}}>
-            <Button id="menu-toggle" onClick={toggleSidenav} variant="link"  ><FontAwesomeIcon icon={"bars"} className={"text-theme-color font-weight-bold"}/></Button>
+            <Button id="menu-toggle" onClick={toggleSidenav} variant="link"  ><FaBars className={"text-theme-color font-weight-bold"}/></Button>
             <Container fluid>
                 <Navbar.Brand >CRM</Navbar.Brand>
             </Container>
