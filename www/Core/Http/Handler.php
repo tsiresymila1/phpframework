@@ -24,19 +24,24 @@ class Handler
     {
         $route = $this->request_path();
         $this->path = "/" . $route;
-        Request::Init($this->path);
+    }
+
+    public static function Init()
+    {
+        $route = self::request_path();
+        Request::Init("/" . $route);
         Response::Init();
-        Router::Config($this->path);
-        if (!file_exists(APP_PATH . 'config/routes.php')) {
-            throw new Exception('routes.php file not found');
-        }
-        require APP_PATH . 'config/routes.php';
-        $spec = OpenApi::getSPec();
     }
 
     public static function handle()
     {
         $ins = self::instance();
+        Router::Config($ins->path);
+        if (!file_exists(APP_PATH . 'config/routes.php')) {
+            throw new Exception('routes.php file not found');
+        }
+        require APP_PATH . 'config/routes.php';
+        $spec = OpenApi::getSPec();
         $ins->auth();
     }
 
@@ -69,7 +74,7 @@ class Handler
     /**
      * @return string
      */
-    public function request_path()
+    public static function request_path()
     {
         $request_uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         $script_name = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));

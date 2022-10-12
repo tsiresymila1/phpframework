@@ -23,18 +23,21 @@ class DefaultController extends Controller
     public  function index()
     {
         $encrypt = new Encryption();
-        $userm = DB::table('users')->get();
-        if (!$userm) {
-            $user->name = "tsiresy";
-            $user->email = "tsiresymila@gmail.com";
-            $user->password = $encrypt->encode("Tsiresy_wp1");
-            $user->roles = "ROLE_ADMIN";
-            $user->save();
-        }
-        else{
-            $userm->delete();
-        }
-        //$user->set(array('password' => $encrypt->encode("Tsiresy_wp1")))->where(['email' => 'tsiresymila@gmail.com'])->update();
+        $user = new User();
+        // get all 
+        $userm = DB::table('users')->get()->first();
+
+        //insert 
+        $user->name = "tsiresy";
+        $user->email = "tsiresymila@gmail.com";
+        $user->password = $encrypt->encode("Tsiresy_wp1");
+        $user->roles = "ROLE_ADMIN";
+        $user->save();
+        $user->name = "mila";
+        // update 
+        User::update(['name'=>"Update"])->where('id', 1)->save();
+        //delete
+        User::delete()->whereNull('name')->save();
         return Response::Json($userm);
     }
 

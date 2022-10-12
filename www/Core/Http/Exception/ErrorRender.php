@@ -215,6 +215,7 @@ class ErrorRender
                     #error .error {
                         left: 50%;
                         top: 50%;
+                        background: #030005;
                     }
             
                     .error {

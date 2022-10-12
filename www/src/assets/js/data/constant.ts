@@ -4,6 +4,7 @@ export const axiosAPI: AxiosInstance  = axios.create({
     headers: { 
         'Access-Control-Allow-Origin': '*',
         withCredentials: true,
-        mode: 'no-cors'
+        mode: 'no-cors',
+        'Content-Type': "application/json"
     }
 })

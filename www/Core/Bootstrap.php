@@ -15,9 +15,11 @@ class Bootstrap
 {
     public static function boot()
     {
+        error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_PARSE & ~E_DEPRECATED);
         static::handleError();
         (new DotEnv(DIR . '/.env'))->load();
         Session::Init();
+        Handler::Init();
         DBAdapter::Init();
         Handler::handle();
     }
@@ -51,7 +53,7 @@ class Bootstrap
                 }
             }
             exit();
-        }, E_ALL | E_STRICT | E_ERROR | E_WARNING | E_NOTICE);
+        }, E_ALL | E_STRICT | E_ERROR | E_WARNING | E_NOTICE | E_DEPRECATED | E_USER_ERROR | E_USER_WARNING);
 
         set_exception_handler(function ($e) {
             $errors = array(
@@ -59,14 +61,15 @@ class Bootstrap
                 E_USER_WARNING      => "User Warning",
                 E_USER_NOTICE       => "User Notice",
             );
-            Logger::error($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine() . '==>' . $e->getCode());
+            $message = $e->getMessage();
+            Logger::error($message . ' in ' . $e->getFile() . ' on line ' . $e->getLine() . '==>' . $e->getCode());
             Logger::error($e->getTraceAsString());
 
             // enable cors :
             if (isset($_SERVER['HTTP_ORIGIN'])) {
                 header('Access-Control-Allow-Origin: *');
                 header('Access-Control-Allow-Credentials: true');
-                header('Access-Control-Max-Age: 1000');
+                header('Access-Control-Max-Age: 856000');
             }
             if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
                 if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
@@ -82,15 +85,18 @@ class Bootstrap
                 $withCode = array_key_exists(strval($e->getCode()), ErrorRender::$code);
                 if (Request::isAPI()) {
                     header('Content-type:application/json;charset=utf-8');
+                    ob_start();
                     echo json_encode(array(
                         "code" => $e->getCode(),
-                        "error" => $e->getMessage(),
+                        "error" => $message,
                         "file" => $e->getFile(),
                         "line" => $e->getLine(),
                     ));
+                    ob_flush();
                 } else {
-
-                    echo ErrorRender::showErrorDetails($e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $e->getTrace(), $withCode ? $e->getCode() : '500');
+                    ob_start();
+                    echo ErrorRender::showErrorDetails($message . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $e->getTrace(), $withCode ? $e->getCode() : '500');
+                    ob_flush();
                 }
             };
             exit(200);

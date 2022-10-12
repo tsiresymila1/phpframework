@@ -2,6 +2,7 @@
 
 namespace Core\Database;
 use DateTime;
+use ReflectionObject, ReflectionProperty;
 
 class BaseModel extends ModelAbstract{
 
@@ -218,12 +219,29 @@ class BaseModel extends ModelAbstract{
         $values = array_merge(array_diff($data, $times), array_diff($times, $data));
         return static::instance()->queryBuilder->into(static::instance()->getTable())->insert($values);
     }
+    
+
+    public  function save(){
+        $data = get_object_vars($this);
+        $reflectdata = array_reduce((new ReflectionObject($this))->getProperties(ReflectionProperty::IS_PUBLIC), function($data, $elm){
+            $data[] = $elm->name;
+            return $data;
+        },[]);
+
+        $values = array_reduce(array_keys($data), function($d, $e) use($reflectdata, $data){
+            if(in_array($e,$reflectdata)){
+                $d[$e] =  $data[$e];
+            }
+            return $d;
+        },[]);
+        return static::insert($values)->get();
+    }
 
     /**
      * @param $data
-     * @return bool
+     * @return QueryBuilder
      */
-    public static function update($data)
+    public static function update($data=null)
     {
         static::destruct();
         $now = (new DateTime())->format('Y-m-d H:i:s');
@@ -232,9 +250,9 @@ class BaseModel extends ModelAbstract{
         ];
         if(is_array($data)){
             $values = array_merge(array_diff($data, $times), array_diff($times, $data));
-            return static::instance()->queryBuilder->update(static::instance()->getTable())->set($values)->save();
+            return static::instance()->queryBuilder->update(static::instance()->getTable())->set($values);
         }else{
-            return static::instance()->queryBuilder->update(static::instance()->getTable())->save();
+            return static::instance()->queryBuilder->update(static::instance()->getTable());
         }
 
     }
@@ -246,10 +264,10 @@ class BaseModel extends ModelAbstract{
     public static function delete($id=null){
         static::destruct();
         if(!is_null($id)){
-            return static::instance()->queryBuilder->delete()->where(static::instance()->primaryKey, $id);
+            return static::instance()->queryBuilder->delete()->into(static::instance()->getTable())->where(static::instance()->primaryKey, $id);
         }
         else{
-            return static::instance()->queryBuilder->delete();
+            return static::instance()->queryBuilder->delete()->into(static::instance()->getTable());
         }
     }
 

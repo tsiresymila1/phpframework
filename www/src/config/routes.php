@@ -34,6 +34,7 @@ Route::Group('/api', function () use ($userParameter, $passParameter, $response,
         Route::Get('/student', "DefaultController@admin");
     })->addOAIParameter($secParameter)->name('admin')->asApi();
 
+    Route::Get('/test',"DefaultController@index");
     //Route::Get('/login', "LoginController@login")->name('login_get');
     Route::Post('/login', "LoginController@login")->addOAIParameter([$userParameter, $passParameter])->addOAIResponse($response)->name('login_post');
 
@@ -41,3 +42,4 @@ Route::Group('/api', function () use ($userParameter, $passParameter, $response,
 
 Route::Get("/*", "ReactController@index")->name("react_route");
 // Route::Get("/test", "TestController@index")->name("test")->asApi();
+Route::Get("/api", "ApiController@index")->name("api")->asApi();

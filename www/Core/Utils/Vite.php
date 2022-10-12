@@ -31,33 +31,31 @@ class Vite
         return env('APP_ENV') != "production";
     }
 
-
     // Helpers to print tags
 
     static function jsTag(string $entry): string
     {
 
         if (self::isDev()) {
-            $refresh = '
-            <script>
-                window.$RefreshReg$ = () => {}
-                window.$RefreshSig$ = () => (type) => type
-                window.__vite_plugin_react_preamble_installed__= true
-            </script>
-            ' . "\n" . '
-            <script type="module">
-                import RefreshRuntime from "' . self::URL() . '/@react-refresh"
-                RefreshRuntime.injectIntoGlobalHook(window)
-            </script>';
-            // $vite_client =  $refresh.'<script type="module" src="'.self::URL().'/@vite/client "></script>';
-            return  $refresh . "\n" . '
-            <script type="module" crossorigin src="'
-                . self::URL() . '/' . $entry
-                . '"></script>';
+           $url = self::URL();
+            $tag = <<<HTML
+                <script>
+                    window.\$RefreshReg$ = () => {}
+                    window.\$RefreshSig$ = () => (type) => type
+                    window.__vite_plugin_react_preamble_installed__= true
+                </script>
+                <script type="module">
+                    import RefreshRuntime from "{$url}/@react-refresh"
+                    RefreshRuntime.injectIntoGlobalHook(window)
+                </script>
+                <script type="module" crossorigin src="{$url}/{$entry}"></script>
+            HTML;
+            return  $tag;;
         } else {
-            return  '<script type="module" crossorigin src="'
-                . self::assetUrl($entry)
-                . '"></script>';
+            $url =  self::assetUrl($entry);
+            return  <<<HTML
+                <script type="module" crossorigin src="{$url}"></script>
+            HTML;
         }
     }
 
@@ -66,7 +64,6 @@ class Vite
         if (self::isDev()) {
             return '';
         }
-
         $res = '';
         foreach (self::importsUrls($entry) as $url) {
             $res .= '<link rel="modulepreload" href="'
@@ -82,12 +79,11 @@ class Vite
         if (self::isDev()) {
             return '';
         }
-
         $tags = '';
         foreach (self::cssUrls($entry) as $url) {
-            $tags .= '<link rel="stylesheet" href="'
-                . $url
-                . '">';
+            $tags .= <<<HTML
+                    <link rel="stylesheet" href="{$url}">
+                HTML;
         }
         return $tags;
     }

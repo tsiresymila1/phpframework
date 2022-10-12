@@ -8,9 +8,5 @@ export async function postLogin(data: AuthUserInput) {
     Record<string, any>,
     AxiosResponse<any, any>,
     AuthUserInput
-  >("/api/login",data, {
-    headers: {
-      "Content-Type" :  "multipart/form-data"
-    }
-  });
+  >("/api/login",data);
 }

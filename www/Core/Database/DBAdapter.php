@@ -2,6 +2,7 @@
 namespace Core\Database;
 use Core\Container\Container;
 use Core\Utils\Logger;
+use Exception;
 use PDO;
 use PDOException;
 use RuntimeException;
@@ -30,7 +31,7 @@ class DBAdapter {
     public static function Init()
     {
         $ins = self::instance();
-        try {
+        // try {
             $ins->pdo = new PDO($ins->config['DRIVER'] . ':host=' . $ins->config['HOST'] . ';dbname=' . $ins->config['DATABASE'], $ins->config['USER'], $ins->config['PASSWORD'], array(
                 PDO::ATTR_PERSISTENT => true,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
@@ -38,9 +39,10 @@ class DBAdapter {
             $container = Container::instance();
             $container->register(static::class, static::class);
             $container->register(DB::class, DB::class);
-        } catch (PDOException $e) {
-            Logger::error("Error : " . $e->getMessage() . "");
-        }
+        // } catch (PDOException $e) {
+        //     Logger::error("Error : " . $e->getMessage() . "");
+        //     throw new Exception($e->getMessage());
+        // }
     }
 
     /**
@@ -65,7 +67,7 @@ class DBAdapter {
             $stmt->execute($params);
             $params = [];
             if(is_array($model)){
-                return $stmt->fetchAll(PDO::FETCH_BOTH);
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             else{
                  return $stmt->fetchAll(PDO::FETCH_CLASS, $model);
