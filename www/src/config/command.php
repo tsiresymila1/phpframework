@@ -1,10 +1,8 @@
 <?php
 
 use App\Command\HelloCommand;
-use Core\Command\Provide\ControllerCommand;
-
+use App\Command\MigrationCommand;
 return [
-    ControllerCommand::class,
-    // provide your custom command here
-    HelloCommand::class
+    HelloCommand::class,
+    MigrationCommand::class
 ];

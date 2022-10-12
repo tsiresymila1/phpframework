@@ -13,5 +13,11 @@
                 "/var/www/html": "${workspaceRoot}/www/"
             },
         },
+        {
+            "name": "Listen for Xdebug Local",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+        },
     ]
 }

@@ -10,6 +10,8 @@ abstract class Command
     {
         if (!isset($this->name))
             throw new LogicException(get_class($this) . ' must a command $name');
+        if (!isset($this->description))
+            $this->description = "Command ".$this->name;
     }
 
     abstract public function handle($args);

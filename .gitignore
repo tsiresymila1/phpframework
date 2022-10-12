@@ -1,4 +1,4 @@
-data
+./data
 _bdd/*
 !_bdd/.gitkeep
 .env
@@ -8,8 +8,9 @@ www/node_modules
 www/package-lock.json
 www/storage/session/*
 www/storage/logs/*
+www/storage/cache/*
 www/vendor
-www/public/js/*
+www/public/js/bundle/*
 /test
 .idea
 .vscode

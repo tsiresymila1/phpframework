@@ -9,5 +9,5 @@ notifications:
   failingTests: false
   
 phpunit:
-  binaryPath: vendor/bin/phpunit
-  arguments: '--colors=always'
+  binaryPath: C:\Users\Acer\AppData\Roaming\Composer\vendor\bin\phpunit.bat
+  arguments: ' --bootstrap .\Core\Autoloader.php --testdox --colors=always '

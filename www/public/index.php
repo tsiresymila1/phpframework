@@ -9,5 +9,4 @@
 use Core\Bootstrap;
 
 require '../Core/Autoloader.php';
-// using composer, 
 Bootstrap::boot();

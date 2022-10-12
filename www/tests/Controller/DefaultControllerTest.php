@@ -4,7 +4,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 
-class DefaultControllerTest extends TestCase
+class DefaultControllerTest extends TestCase 
 {
     public function test_if_i_get_json()
     {

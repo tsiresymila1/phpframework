@@ -4,6 +4,7 @@ namespace App\Security;
 
 use Core\Http\Response;
 use Core\Http\Security\UserAuthenticator;
+use Core\Utils\JWT;
 
 class LoginAuthenticator extends UserAuthenticator
 {
@@ -18,6 +19,6 @@ class LoginAuthenticator extends UserAuthenticator
     }
     public function  onApiAuthenticateFail()
     {
-        return Response::Json(['message api' => 'Not authentified']);
+        return Response::Json(['error' => 'Not authenticated', 'auth'=>false]);
     }
 }

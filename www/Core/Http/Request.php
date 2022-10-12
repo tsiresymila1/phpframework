@@ -16,15 +16,15 @@ class Request
      * @var static $_instance
      */
     protected static $_instance = null;
-    protected  $method;
-    protected  $path;
-    protected  $get;
-    protected  $post;
-    protected  $files = [];
-    protected  $params;
-    protected  $headers;
+    protected $method;
+    protected $path;
+    protected $get;
+    protected $post;
+    protected $files = [];
+    protected $params;
+    protected $headers;
     protected $request_data;
-    public static  $AJAX_HEADERS = [];
+    public static $AJAX_HEADERS = [];
     protected $auth = false;
 
     public static function instance()
@@ -34,6 +34,7 @@ class Request
         }
         return self::$_instance;
     }
+
     /**
      * construct
      *
@@ -44,10 +45,13 @@ class Request
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->get = $_GET;
+        if (is_null($_POST) || sizeof($_POST) == 0) {
+            $_POST = json_decode(file_get_contents('php://input'), true, 512) ?? [];
+        }
         $this->post = $_POST;
         $this->params = [];
         $this->request_data = $_REQUEST;
-        $this->headers = $this->getallheaders();
+        $this->headers = $this->getAllHeaders();
         foreach ($_FILES as $key => $file) {
             $this->files[$key] = new File($file);
         }
@@ -63,7 +67,16 @@ class Request
      */
     public function set($key, $value)
     {
-        $this->$key = $value;
+        $this->{$key} = $value;
+    }
+
+    /**
+     * @param $key
+     * @param $value
+     */
+    public function setRequestData($key, $value)
+    {
+        $this->request_data[$key] = $value;
     }
 
     /**
@@ -85,7 +98,7 @@ class Request
     /**
      * Init
      *
-     * @param mixed $path="/"
+     * @param mixed $path ="/"
      *
      * @return void
      */
@@ -102,8 +115,8 @@ class Request
     /**
      * Get
      *
-     * @param mixed $key=null
-     * @param mixed $default=null
+     * @param mixed $key =null
+     * @param mixed $default =null
      *
      * @return void
      */
@@ -111,10 +124,15 @@ class Request
     {
         $ins = self::instance();
         if (!is_null($key)) {
-            return $ins->get[$key];
+            if (array_key_exists($key, $ins->get)) {
+                return $ins->get[$key];
+            } else {
+                return null;
+            }
         }
         return $ins->get;
     }
+
     /**
      * Post
      *
@@ -126,7 +144,11 @@ class Request
     {
         $ins = self::instance();
         if (!is_null($key)) {
-            return $ins->post[$key];
+            if (array_key_exists($key, $ins->post)) {
+                return $ins->post[$key];
+            } else {
+                return null;
+            }
         }
         return $ins->post;
     }
@@ -142,7 +164,11 @@ class Request
     {
         $ins = self::instance();
         if (!is_null($key)) {
-            return $ins->file[$key];
+            if (array_key_exists($key, $ins->file)) {
+                return $ins->file[$key];
+            } else {
+                return null;
+            }
         }
         return $ins->file;
     }
@@ -154,10 +180,14 @@ class Request
      *
      * @return void
      */
-    public  function files($key = null)
+    public function files($key = null)
     {
         if (!is_null($key)) {
-            return $this->file[$key];
+            if (array_key_exists($key, $this->file)) {
+                return $this->file[$key];
+            } else {
+                return null;
+            }
         }
         return $this->file;
     }
@@ -167,12 +197,16 @@ class Request
      *
      * @param $key = null
      *
-     * @return void
+     * @return array
      */
-    public  function input($key = null)
+    public function input($key = null)
     {
         if (!is_null($key)) {
-            return $this->request_data[$key];
+            if (array_key_exists($key, $this->request_data)) {
+                return $this->request_data[$key];
+            } else {
+                return null;
+            }
         }
         return $this->request_data;
     }
@@ -182,7 +216,7 @@ class Request
      *
      * @param mixed $params
      *
-     * @return void
+     * @return Request|null
      */
     public static function setParams($params)
     {
@@ -196,13 +230,17 @@ class Request
      *
      * @param $key = null
      *
-     * @return void
+     * @return array
      */
     public static function Headers($key = null)
     {
         $ins = self::instance();
         if (!is_null($key)) {
-            return $ins->headers[$key];
+            if (array_key_exists($key, $ins->headers)) {
+                return $ins->headers[$key];
+            } else {
+                return null;
+            }
         }
         return $ins->headers;
     }
@@ -217,8 +255,8 @@ class Request
     public static function GetToken($key = "Authorization")
     {
         $ins = self::instance();
-        if (isset($ins->headers[$key])) {
-            return str_replace('Bearer ', '', $ins->headers[$key]);
+        if (isset($ins->headers[ucfirst($key)])) {
+            return str_replace('Bearer ', '', $ins->headers[ucfirst($key)]);
         }
         return '';
     }
@@ -239,7 +277,7 @@ class Request
         return $ins->params;
     }
 
-    /** 
+    /**
      * @return Boolean
      */
     public static function isGet()
@@ -247,7 +285,8 @@ class Request
         $ins = self::instance();
         return $ins->method === "GET";
     }
-    /** 
+
+    /**
      * @return Boolean
      */
     public static function isAjax()
@@ -255,7 +294,7 @@ class Request
         return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
 
-    /** 
+    /**
      * @return Boolean
      */
     public static function isPost()
@@ -263,7 +302,8 @@ class Request
         $ins = self::instance();
         return $ins->method === "POST";
     }
-    /** 
+
+    /**
      * @return Boolean
      */
     public static function isAuth()
@@ -272,19 +312,28 @@ class Request
         return $ins->auth;
     }
 
-    /** 
+    /**
+     * @return Boolean
+     */
+    public static function isAPI()
+    {
+        $ins = self::instance();
+        return startsWith($ins->path,API_PREFIX);
+    }
+
+    /**
      * @return String
      */
-    public static  function getMethod()
+    public static function getMethod()
     {
         $ins = self::instance();
         return $ins->method;
     }
 
-    /** 
+    /**
      * @return String
      */
-    public static  function getPath()
+    public static function getPath()
     {
         $ins = self::instance();
         return $ins->path;

@@ -2,13 +2,14 @@
 
 namespace Core\Http;
 
-use Core\Http\CoreControllers\Controller as CoreController;
+use Core\OpenAPI\OpenApi;
 use Exception;
 
 class Handler
 {
 
     private static $_instance = null;
+    private string $path;
 
     public static function instance()
     {
@@ -21,24 +22,26 @@ class Handler
 
     public function __construct()
     {
-        $route =  $this->request_path();
+        $route = $this->request_path();
         $this->path = "/" . $route;
-        Request::Init($this->path);
+    }
+
+    public static function Init()
+    {
+        $route = self::request_path();
+        Request::Init("/" . $route);
         Response::Init();
-        Router::Config($this->path);
-        if (!file_exists(APP_PATH . 'config/config.php')) {
-            throw new Exception('config.php file not found');
-        }
-        require APP_PATH . 'config/config.php';
-        if (!file_exists(APP_PATH . 'config/routes.php')) {
-            throw new Exception('routes.php file not found');
-        }
-        require APP_PATH . 'config/routes.php';
     }
 
     public static function handle()
     {
         $ins = self::instance();
+        Router::Config($ins->path);
+        if (!file_exists(APP_PATH . 'config/routes.php')) {
+            throw new Exception('routes.php file not found');
+        }
+        require APP_PATH . 'config/routes.php';
+        $spec = OpenApi::getSPec();
         $ins->auth();
     }
 
@@ -51,20 +54,14 @@ class Handler
             $autheticator = new $Athenticator();
             $autheticator->authenticate();
         } else {
-            $this->doRouting();
+            self::DoRouting();
         }
     }
 
-    public function doRouting()
+    public static function DoRouting()
     {
         Router::$isFound = false;
         $response = Router::find();
-        if (!isset($response)) {
-            throw new Exception('Controller must return response ');
-        } else if (!Router::$isFound) {
-            $controller = new CoreController();
-            $response = $controller->url404NotFound();
-        }
         self::renderViewContent($response);
     }
 
@@ -74,7 +71,10 @@ class Handler
         exit($response->getStatus());
     }
 
-    public  function request_path()
+    /**
+     * @return string
+     */
+    public static function request_path()
     {
         $request_uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         $script_name = explode('/', trim($_SERVER['SCRIPT_NAME'], '/'));

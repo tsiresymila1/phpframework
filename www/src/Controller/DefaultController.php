@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
+use Core\Database\DB;
 use Core\Http\CoreControllers\Controller;
 use Core\Utils\Encryption;
-use App\Model\UserModel;
-use Core\Database\DB;
-use Core\Http\Request;
+use App\Model\User;
 use Core\Http\Response;
 
 class DefaultController extends Controller
@@ -21,31 +20,30 @@ class DefaultController extends Controller
         parent::__construct();
     }
 
-    public  function index(UserModel $user)
+    public  function index()
     {
-        $result = $user->findAll()->orWhere(array('email' => "tsiresymila@gmail.com", 'soft_deleted' => 0))->where(array('id' => 1))->get();
         $encrypt = new Encryption();
-        $userm = $user->findOneBy(["email" => "tsiresy@gmail.com"]);
-        if (!$userm) {
-            $user->insert(array(
-                "name" => "Tsiresy",
-                "email" => "tsiresy@gmail.com",
-                "password" => $encrypt->encode("Tsiresy_wp1"),
-                "roles" => "ROLE_ADMIN"
-            ));
-        }
-        $user->set(array('password' => $encrypt->encode("Tsiresy_wp1")))->where(['email' => 'tsiresymila@gmail.com'])->update();
-        return Response::Json($result);
+        $user = new User();
+        // get all 
+        $userm = DB::table('users')->get()->first();
+
+        //insert 
+        $user->name = "tsiresy";
+        $user->email = "tsiresymila@gmail.com";
+        $user->password = $encrypt->encode("Tsiresy_wp1");
+        $user->roles = "ROLE_ADMIN";
+        $user->save();
+        $user->name = "mila";
+        // update 
+        User::update(['name'=>"Update"])->where('id', 1)->save();
+        //delete
+        User::delete()->whereNull('name')->save();
+        return Response::Json($userm);
     }
 
     public  function admin()
     {
         return Response::Json(['data' => "okey"]);
-        // Response::Render('admin',['name' => 'Tsiresy Milà','occupation' => 'Developper']);
-    }
-    public  function webpack()
-    {
-        return Response::Render('test.html.twig', ['name' => 'Tsiresy Milà', 'occupation' => 'Developper']);
     }
 
     public  function json()

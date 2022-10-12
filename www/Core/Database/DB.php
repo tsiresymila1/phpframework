@@ -2,55 +2,27 @@
 
 namespace Core\Database;
 
-use Core\Container\Container;
-use Core\Utils\Logger;
-use Exception;
-use PDO;
-use PDOException;
-use RuntimeException;
-
 class DB
 {
+    protected QueryBuilder $queryBuilder;
 
-    protected  $config;
-    protected  PDO $pdo;
-    private static ?DB $_instance = null;
+    private static $_instance;
 
-    public function __construct()
+    public function __construct(QueryBuilder $queryBuilder )
     {
-        // loading database config
-        if (!file_exists(APP_PATH . 'config/database.php')) {
-            throw new RuntimeException('File not found');
-        }
-        $this->config = require APP_PATH . 'config/database.php';
+        $this->queryBuilder = $queryBuilder;
     }
 
-    public static function instance()
+    private static function instance()
     {
-
         if (is_null(self::$_instance)) {
-            self::$_instance = new DB();
+            self::$_instance = new static(new QueryBuilder());
         }
         return self::$_instance;
     }
 
-    public  static function Init()
-    {
-        $ins = self::instance();
-        try {
-            $ins->pdo = new PDO($ins->config['DRIVER'] . ':host=' . $ins->config['HOST'] . ';dbname=' . $ins->config['DATABASE'],  $ins->config['USER'],  $ins->config['PASSWORD'], array(
-                PDO::ATTR_PERSISTENT => true,
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ));
-            $container = Container::instance();
-            $container->register(static::class, static::class);
-        } catch (PDOException $e) {
-            Logger::error("Erreur : " . $e->getMessage() . "");
-            die();
-        }
+    public static function table($table){
+        return static::instance()->queryBuilder->into($table);
     }
-    public function getPDO()
-    {
-        return $this->pdo;
-    }
+
 }

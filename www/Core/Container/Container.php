@@ -2,6 +2,8 @@
 
 namespace Core\Container;
 
+use ReflectionException;
+use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionNamedType;
 use Exception;
@@ -36,16 +38,22 @@ class Container implements ContainerInterface
     /**
      * getDependancies
      *
-     * @param mixed class
-     * @param mixed method
-     * @param mixed params
-     *
+     * @param $class
+     * @param null $method
+     * @param array $params
+     * @param bool $isfunction
      * @return array
+     * @throws ReflectionException
      */
-    public function getDependancies($class, $method, $params = [])
+    public function getDependencies($class, $method=null, $params = [],$isfunction=false)
     {
         $dependencies = [];
-        $methodReflection = new ReflectionMethod($class, $method);
+        if($isfunction){
+            $methodReflection = new ReflectionFunction($class);
+        }
+        else{
+            $methodReflection = new ReflectionMethod($class, $method);
+        }
         $methodParams = $methodReflection->getParameters();
         foreach ($methodParams as $param) {
             $type = $param->getType();
@@ -53,6 +61,10 @@ class Container implements ContainerInterface
             if (is_null($type) && array_key_exists($name,$params)) {
                 array_push($dependencies, $params[$name]);
             } else {
+                if(is_null($type)){
+                    array_push($dependencies, null);
+                    continue;
+                }
                 $className = $type->getName();
                 if (array_key_exists($className, $this->container)) {
                     array_push($dependencies, $this->container[$className]::instance());
@@ -64,7 +76,7 @@ class Container implements ContainerInterface
                         array_push($dependencies, $this->container[$name]);
                     } else {
                         if (!$param->isOptional()) {
-                            throw new Exception("Can not resolve parameters");
+                            array_push($dependencies, null);;
                         }
                     }
                 }
@@ -76,22 +88,28 @@ class Container implements ContainerInterface
     /**
      * resolve
      *
-     * @param mixed class
-     * @param mixed method
-     * @param mixed params
-     *
+     * @param $class
+     * @param null $method
+     * @param array $params
+     * @param bool $isfunction
      * @return mixed
+     * @throws ReflectionException
      */
-    public function resolve($class, $method, $params = [])
+    public function resolve($class, $method=null, $params = [],$isfunction=false)
     {
-        $dependencies = $this->getDependancies($class, $method, $params);
-        $methodReflection = new ReflectionMethod($class, $method);
-        if (!is_object($class)) {
-            $initClass = $this->make($class, [], $params);
-        } else {
-            $initClass = $this->callbackClass;
+        $dependencies = $this->getDependencies($class, $method, $params,$isfunction);
+        if($isfunction){
+            return $class(...$dependencies);
         }
-        return $methodReflection->invoke($initClass, ...$dependencies);
+        else{
+            $methodReflection = new ReflectionMethod($class, $method);
+            if (!is_object($class)) {
+                $initClass = $this->make($class, [], $params);
+            } else {
+                $initClass = $this->callbackClass;
+            }
+            return $methodReflection->invoke($initClass, ...$dependencies);
+        }
     }
 
     /**
@@ -102,6 +120,7 @@ class Container implements ContainerInterface
      * @param mixed params
      *
      * @return mixed
+     * @throws Exception
      */
     public function make($class, $parents = [], $params = [])
     {
@@ -145,12 +164,12 @@ class Container implements ContainerInterface
      * @param mixed classes
      *
      * @return void
+     * @throws Exception
      */
     public function handleCircularReference($className, $classes)
     {
         if (in_array($className, $classes)) {
-            throw new Exception("Circular reference found in dependancy injection");
-            exit();
+            throw new Exception("Circular reference found in dependency injection");
         }
     }
 }

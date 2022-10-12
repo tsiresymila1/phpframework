@@ -2,15 +2,15 @@
 
 namespace Core\Http;
 
-use BadMethodCallException;
 use Core\Container\Container;
 use Core\Renderer\Template;
+use Core\Utils\Vite;
 use Exception;
 
 class Response
 {
 
-    private static $HEADER;
+    private static array $HEADER = [];
     /**
      * @var static $_instance
      */
@@ -25,6 +25,12 @@ class Response
         self::$renderer->addFunction("uppercase", function ($data) {
             return strtolower($data);
         });
+        self::$renderer->addFunction("vite", function ($entry) {
+            return Vite::vite($entry);
+        });
+//        self::$HEADER['Access-Control-Allow-Origin'] = '*';
+//        self::$HEADER['Access-Control-Allow-Methods'] = 'GET, POST, PUT';
+//        self::$HEADER['Access-Control-Allow-Headers'] = 'Content-type';
     }
 
     private function setStatus($status = 200)
@@ -108,9 +114,8 @@ class Response
             $ins->setContent($content);
             $ins->setStatus(302);
             return $ins;
-            die();
         } else {
-            throw new BadMethodCallException('Route not found');
+            throw new Exception('Route not found',404);
         }
     }
     
