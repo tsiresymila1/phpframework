@@ -26,7 +26,9 @@ class Autoloader
             }
         }
         $required = str_replace("\\", DIRECTORY_SEPARATOR, $filepath);
-        require $required;
+        if(file_exists($required)){
+            require $required;
+        }
     }
 }
 define('DIR', dirname(dirname(__FILE__)) . '/');
@@ -42,7 +44,10 @@ if (!file_exists(APP_PATH . 'config/config.php')) {
 require APP_PATH . 'config/config.php';
 //load autoload 
 if (file_exists(APP_PATH . 'config/autoload.php')) {
-    require APP_PATH . 'config/autoload.php';
+    $vendor = require APP_PATH . 'config/autoload.php';
+    if($vendor != 1){
+        $vendor->register();
+    }
 }
 
 Autoloader::register();
