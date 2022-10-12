@@ -45,7 +45,8 @@ require APP_PATH . 'config/config.php';
 //load autoload 
 if (file_exists(APP_PATH . 'config/autoload.php')) {
     $vendor = require APP_PATH . 'config/autoload.php';
-    if($vendor != 1){
+    $type = gettype($vendor);
+    if( $type  == "object"){
         $vendor->register();
     }
 }

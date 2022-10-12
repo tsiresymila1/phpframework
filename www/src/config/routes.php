@@ -1,5 +1,6 @@
 <?php
 
+use App\Middleware\AuthMiddleware;
 use Core\Http\Request;
 use Core\Http\Response;
 use Core\Http\Route;
@@ -20,7 +21,7 @@ Route::Get(['/function/{id}/get/{path?}', '/get/{id?}'], function (Request $requ
     return $response::Json(array('data' => $id . '::test function ->' . $path . '->' . $request->input('key')));
 })->addOAIResponse($response)->middleware(function (Request $request, $id) {
     $request->setRequestData('key', 'hello' . $id);
-})->middleware('');
+})->middleware(AuthMiddleware::class);
 
 Route::Group('/api', function () use ($userParameter, $passParameter, $response, $secParameter) {
 

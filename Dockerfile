@@ -31,6 +31,10 @@ RUN  echo -e "extension=raphf.so\nextension=propro.so\nextension=http.so" > /usr
 RUN rm -rf /usr/local/etc/php/conf.d/docker-php-ext-raphf.ini 
 RUN rm -rf /usr/local/etc/php/conf.d/docker-php-ext-propro.ini
 
+RUN docker-php-ext-configure pcntl --enable-pcntl \
+  && docker-php-ext-install \
+    pcntl
+
 RUN a2enmod rewrite
 RUN chown -R www-data:www-data /var/www/html
 
