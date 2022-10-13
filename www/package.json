@@ -29,6 +29,7 @@
     "react-icons": "^4.4.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
+    "react-use-websocket": "^3.0.0",
     "styled-components": "^5.3.3",
     "validator": "^13.7.0"
   },
