@@ -9,14 +9,13 @@ use Workerman\Worker;
 
 class SocketCommand extends Command
 {
-    public $name =  "socket:run";
+    public $name =  "server:socketio";
 
     /**
      * @param $args
      */
     public function handle($args)
     {
-        echo "\nRunning socket server ...\n";
         $this->startServer();
     }
 

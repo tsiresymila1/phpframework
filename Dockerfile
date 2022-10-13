@@ -35,6 +35,9 @@ RUN docker-php-ext-configure pcntl --enable-pcntl \
   && docker-php-ext-install \
     pcntl
 
+RUN docker-php-ext-install sockets
+
+
 RUN a2enmod rewrite
 RUN chown -R www-data:www-data /var/www/html
 
