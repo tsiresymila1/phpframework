@@ -22,6 +22,7 @@ PHP MVC Framework with API SWAGGER and Vite for front
     <li>php script provide:controller => with view</li>
     <li>php script provide:controller --jsbundle $entry => with view and vite entrypoint </li>
     </ul>
+    <li>Websocket server with php script server:websocket</li>
     </li>
 </ul>
 
