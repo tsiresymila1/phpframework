@@ -4,11 +4,10 @@ import AppRouter from "./AppRouter";
 import { Provider as ReduxProvider } from "react-redux";
 import { store } from "./app/store";
 import { BrowserRouter } from "react-router-dom";
-import useWebSocket, { ReadyState } from "react-use-websocket";
-import "../css/App.css";
+import "../css/app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
+function App() { 
   
 
   React.useEffect(() => {

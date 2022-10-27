@@ -13,7 +13,9 @@ PHP MVC Framework with API SWAGGER and Vite for front
     <li>Console command  </li>
     <li>Command for server
     <ul>
-    <li>php script serve $port</li>
+    <li>
+        ```php script serve $port```
+    </li>
     </ul>
     </li>
     <li>Command for generate controller for api , with vue and for js bundle usign from front
@@ -34,7 +36,7 @@ PHP MVC Framework with API SWAGGER and Vite for front
     <li>Event based ( Dispatcher and listener) </li>
     <li>Migration generator </li>
     <li>Email service and template</li>
-    <li>Schedule command</li>
+    <li>Schedule</li>
 </ul>
 <br>
 <br>

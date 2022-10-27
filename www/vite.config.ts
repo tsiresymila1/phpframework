@@ -6,6 +6,8 @@ import VitePhpPlugin from "./vite-php-plugin";
 export default defineConfig({
   plugins: [
     react(),
-    VitePhpPlugin()
+    VitePhpPlugin({
+      apiServer: "http://phpframework.local"
+    })
   ]
 });
