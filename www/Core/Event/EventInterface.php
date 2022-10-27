@@ -4,6 +4,6 @@ namespace Core\Event;
 
 interface EventInterface {
 
-    public function run();
+    public function dispatch();
 
 }

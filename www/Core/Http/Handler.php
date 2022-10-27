@@ -37,11 +37,14 @@ class Handler
     {
         $ins = self::instance();
         Router::Config($ins->path);
-        if (!file_exists(APP_PATH . 'config/routes.php')) {
-            throw new Exception('routes.php file not found');
+        $cache = Router::loadCache();
+        if(is_null($cache) || DEBUG){
+            if (!file_exists(APP_PATH . 'config/routes.php')) {
+                throw new Exception('routes.php file not found');
+            }
+            require APP_PATH . 'config/routes.php';
+            Router::dumpCache();
         }
-        require APP_PATH . 'config/routes.php';
-        $spec = OpenApi::getSPec();
         $ins->auth();
     }
 

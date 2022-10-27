@@ -2,12 +2,15 @@
 
 namespace Core\Http;
 
+use Closure;
 use Core\Container\Container;
 use Core\Http\CoreControllers\Controller as CoreController;
 use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
 use Core\OpenAPI\OAIParameter;
 use Core\OpenAPI\OAIResponse;
 use Exception;
+use ReflectionClass;
+use ReflectionFunction;
 
 class Router
 {
@@ -18,6 +21,7 @@ class Router
     public static $isFound;
     public static $path;
     public static $current;
+    private static $cache_dir = DIR.DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.'routes.cache';
     public $name;
     public $namespace = "App\Controller\\";
     public $container;
@@ -58,6 +62,46 @@ class Router
     {
         return self::$routes;
     }
+    
+    /**
+     * Json
+     *
+     * @return void
+     */
+    public static function dumpCache(){
+        $json_route = [];
+        foreach(self::$routes as $method=>$routes){
+             $method_routes= [];
+            foreach($routes as $name=>$route){
+                $act = $route->action;
+                if($act instanceof Closure){
+                    continue;
+                }else{
+                    $method_routes[$name] = $route;
+                }
+            }
+            $json_route[$method] = $method_routes;
+        }
+        file_put_contents(self::$cache_dir,serialize($json_route));
+    }
+
+    /**
+     * Json
+     *
+     * @return void
+     */
+    public static function loadCache(){
+        if(file_exists(self::$cache_dir)){
+            try{
+                $caches = unserialize(file_get_contents(self::$cache_dir)); 
+                self::$routes = $caches ;
+                return $caches ;
+            }catch(Exception $e){
+                return null;
+            }
+        }
+    }
+
 
     /**
      * @param $route

@@ -16,6 +16,6 @@ class LoginController extends Controller
         $user = User::findOne(1);
         $users = User::orWhere('name', $data['email'])->where('email', $data['email'])->andWhere('password', $data['password'])->get()->rows();
         $all = User::findAll();
-        return json(array_merge($users,$data,['error'=>null, 'auth' => true]));
+        return json(array_merge($users,$data,['error'=>null, 'auth' => true])); 
     }
 }
