@@ -2,10 +2,8 @@
 namespace Core\Database;
 use Core\Container\Container;
 use Core\Utils\Logger;
-use Exception;
 use PDO;
 use PDOException;
-use RuntimeException;
 
 class DBAdapter {
     private static $_instance;
@@ -14,11 +12,15 @@ class DBAdapter {
 
     public function __construct()
     {
-        // loading database config
-        if (!file_exists(APP_PATH . 'config/database.php')) {
-            throw new RuntimeException('File not found');
-        }
-        $this->config = require APP_PATH . 'config/database.php';
+
+        $this->config = [
+            "DB_CONNECTION" => env('DB_CONNECTION','mysql'),
+            "HOST"=> env('DB_HOST','localhost'),
+            "DATABASE" => env('DB_DATABASE'),
+            "USER"=> env('DB_USERNAME'),
+            "PASSWORD" => env('DB_PASSWORD'),
+            "PORT" => env('DB_PORT',3306)
+        ];
     }
 
     public static function instance()
@@ -32,7 +34,7 @@ class DBAdapter {
     {
         $ins = self::instance();
         // try {
-            $ins->pdo = new PDO($ins->config['DRIVER'] . ':host=' . $ins->config['HOST'] . ';dbname=' . $ins->config['DATABASE'], $ins->config['USER'], $ins->config['PASSWORD'], array(
+            $ins->pdo = new PDO($ins->config['DB_CONNECTION'] . ':host=' . $ins->config['HOST'] . ';port='.$ins->config['PORT'].';dbname=' . $ins->config['DATABASE'], $ins->config['USER'], $ins->config['PASSWORD'], array(
                 PDO::ATTR_PERSISTENT => true,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             ));
