@@ -67,9 +67,15 @@ class Container implements ContainerInterface
                 }
                 $className = $type->getName();
                 if (array_key_exists($className, $this->container)) {
-                    array_push($dependencies, $this->container[$className]::instance());
+                    try{
+                        $instance = $this->container[$className]::instance();
+                    }catch(Exception $e){
+                        $instance = $this->make($this->container[$className], [], []);
+                    }
+                    array_push($dependencies,$instance);
                 } else if ($type && $type instanceof ReflectionNamedType) {
-                    array_push($dependencies, $this->make($className));
+                    $instance = $this->make($className, [], []);
+                    array_push($dependencies, $instance);
                 } else {
                     $name = $param->getName();
                     if (array_key_exists($name, $this->container)) {
@@ -137,7 +143,12 @@ class Container implements ContainerInterface
                 if (array_key_exists($className, $this->container)) {
                     $this->handleCircularReference($className, $parents);
                     $parents[] = $className;
-                    array_push($dependencies, $this->container[$className]);
+                    try{
+                        $instance = $this->container[$className]::instance();
+                    }catch(Exception $e){
+                        $instance = $this->make($this->container[$className], [], []);
+                    }
+                    array_push($dependencies, $instance);
                 } else if ($type && $type instanceof ReflectionNamedType) {
                     $className = $constructorParam->getClass();
                     $this->handleCircularReference($className, $parents);
