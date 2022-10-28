@@ -64,7 +64,7 @@ class DBAdapter {
     public function exec($query, &$params, $model = [])
     {
         $stmt = $this->getPDO()->prepare($query);
-        Logger::log($query, "QUERY");
+        Logger::addQuery($query,$params, "QUERY");
         try {
             $stmt->execute($params);
             $params = [];
@@ -93,7 +93,7 @@ class DBAdapter {
     protected function execOne($query, &$params, $model = [])
     {
         $stmt = $this->getPDO()->prepare($query);
-        Logger::log($query, "QUERY");
+        Logger::addQuery($query,$params, "QUERY");
         try {
             $stmt->execute($params);
             $params = [];
@@ -115,7 +115,7 @@ class DBAdapter {
     public function execSilent($query, &$params)
     {
         $stmt = $this->getPDO()->prepare($query);
-        Logger::log($query, "QUERY");
+        Logger::addQuery($query,$params, "QUERY");
         try {
             $r = $stmt->execute($params);
             $params = [];

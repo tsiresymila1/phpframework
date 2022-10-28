@@ -18,7 +18,13 @@ class WebSocketCommand extends Command
     {
         $this->startServer();
     }
-
+    
+    /**
+     * startServer
+     *
+     * @param  mixed $port
+     * @return void
+     */
     public function startServer($port=4445){
         $ws_server = new WebSocketServer($port);
         $ws_server->On("connect",function($socket){

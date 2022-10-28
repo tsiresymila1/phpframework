@@ -4,6 +4,7 @@ namespace Core\Http;
 
 use Core\Container\Container;
 use Core\Renderer\Template;
+use Core\Debugbar\Debugbar;
 use Core\Utils\Vite;
 use Exception;
 
@@ -18,6 +19,8 @@ class Response
     public static $renderer;
     private $content = null;
     private $status = 200;
+    private $type = 200;
+    public static $isRendered = false;
 
     public function __construct()
     {
@@ -55,6 +58,18 @@ class Response
     {
         return self::$HEADER;
     }
+
+    private function setContentType($type = "text/html")
+    {
+        $this->type = $type;
+    }
+
+    public function getContentType()
+    {
+        return $this->type;
+    }
+
+   
 
 
     public static function instance()
@@ -147,10 +162,20 @@ class Response
      */
     public static function Json($data = [], $status = 200)
     {
+        $debugBar = Request::Headers('With-Debugbar');
+        Response::instance()->setContentType('application/json;charset=utf-8');
         ob_start();
         header('Content-type:application/json;charset=utf-8');
         self::loadHeader();
-        echo json_encode($data);
+        if(DEBUG && !is_null($debugBar) ){
+            Debugbar::setResponse(Response::instance()->getStatus(),$data,Response::instance()->getContentType());
+            $ins = Debugbar::load();
+            $rep = ['debugbar' =>$ins->logs, 'response' => $data];
+            echo json_encode($rep);
+        }
+        else{
+            echo json_encode($data);
+        }
         $content = ob_get_contents();
         ob_end_clean();
         $ins = self::instance();
@@ -158,8 +183,6 @@ class Response
         $ins->setStatus($status);
         return $ins;
     }
-
-    
     
     /**
      * Send
@@ -171,9 +194,14 @@ class Response
      */
     public static function Send(String $data = "",$status = 200)
     {
+        Response::instance()->setContentType('text/plain;charset=utf-8');
         ob_start();
         header('Content-type:text/plain;charset=utf-8');
         self::loadHeader();
+        if(DEBUG){
+            Debugbar::setResponse(Response::instance()->getStatus(),$data,Response::instance()->getContentType());
+            Debugbar::show();
+        }
         echo $data;
         $content = ob_get_contents();
         ob_end_clean();
@@ -183,13 +211,19 @@ class Response
         return $ins;
     }
 
-    public static function Render($template, $context = [])
+    public static function Render($template, $context = []) 
     {
         $template = str_replace('.', '/', $template);
+        self::$isRendered = true;
+        Response::instance()->setContentType();
         ob_start();
         header('Content-type: text/html');
         self::loadHeader();
         self::$renderer->view($template, $context);
+        if(DEBUG){
+            Debugbar::setResponse(Response::instance()->getStatus(),$context,Response::instance()->getContentType());
+            Debugbar::show();
+        }
         $content = ob_get_contents();
         ob_end_clean();
         $ins = self::instance();

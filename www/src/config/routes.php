@@ -41,6 +41,6 @@ Route::Group('/api', function () use ($userParameter, $passParameter, $response,
 
 })->name('api')->asApi()->addOAIResponse($response);
 
-Route::Get("/*", "ReactController@index")->name("react_route");
-// Route::Get("/test", "TestController@index")->name("test")->asApi();
+
 Route::Get("/api", "ApiController@index")->name("api")->asApi();
+Route::Get("/*", "ReactController@index")->name("react_route");

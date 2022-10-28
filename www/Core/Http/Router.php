@@ -90,7 +90,8 @@ class Router
      *
      * @return void
      */
-    public static function loadCache(){
+    public static function loadCache($isDebug=false){
+        if($isDebug) return null;
         if(file_exists(self::$cache_dir)){
             try{
                 $caches = unserialize(file_get_contents(self::$cache_dir)); 

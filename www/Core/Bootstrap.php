@@ -7,6 +7,7 @@ use Core\Database\DBAdapter;
 use Core\Http\Exception\ErrorRender;
 use Core\Http\Handler;
 use Core\Http\Request;
+use Core\Http\Response;
 use Core\Session\Session;
 use Core\Utils\Logger;
 use Core\Utils\Dotenv;
@@ -15,6 +16,7 @@ class Bootstrap
 {
     public static function boot()
     {
+        define('__START_TIME', microtime(true));
         error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_PARSE & ~E_DEPRECATED);
         static::handleError();
         (new DotEnv(DIR . '/.env'))->load();
@@ -26,6 +28,7 @@ class Bootstrap
 
     public static function load()
     {
+        (new DotEnv(DIR . '/.env'))->load();
         CommandContainer::Init();
         DBAdapter::Init();
     }
@@ -49,6 +52,7 @@ class Bootstrap
                         "line" => $errline
                     ));
                 } else {
+                    ob_end_clean();
                     echo ErrorRender::showErrorDetails($errstr . ' in ' . $errfile . ' on line ' . $errline, $strace, $withCode ? $errno : '500');
                 }
             }
@@ -94,6 +98,7 @@ class Bootstrap
                     ));
                     ob_flush();
                 } else {
+                    ob_end_clean();
                     ob_start();
                     echo ErrorRender::showErrorDetails($message . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), $e->getTrace(), $withCode ? $e->getCode() : '500');
                     ob_flush();
@@ -110,6 +115,7 @@ class Bootstrap
                 Logger::error('Line#' . $err['line'] . '<br>');
                 Logger::error('File#' . $err['file'] . '<br>');
                 if (defined('DEBUG') && DEBUG == false) {
+                    ob_end_clean();
                     echo ErrorRender::showError();
                 }
             }

@@ -106,7 +106,7 @@ class Request
     {
         $ins = self::instance();
         $ins->set('path', $path);
-        Logger::infos($ins->method . " " . $path, "REQUEST");
+        Logger::log($ins->method . " " . $path, "REQUEST");
         $container = Container::instance();
         $container->register(static::class, static::class);
         return $ins;

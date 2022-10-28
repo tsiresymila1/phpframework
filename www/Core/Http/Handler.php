@@ -37,8 +37,8 @@ class Handler
     {
         $ins = self::instance();
         Router::Config($ins->path);
-        $cache = Router::loadCache();
-        if(is_null($cache) || DEBUG){
+        $cache = Router::loadCache(DEBUG);
+        if(is_null($cache)){
             if (!file_exists(APP_PATH . 'config/routes.php')) {
                 throw new Exception('routes.php file not found');
             }
@@ -70,6 +70,7 @@ class Handler
 
     public static function renderViewContent(Response $response)
     {
+        ob_end_clean();
         echo $response->getContent();
         exit($response->getStatus());
     }

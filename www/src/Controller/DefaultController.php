@@ -7,6 +7,7 @@ use Core\Http\CoreControllers\Controller;
 use Core\Utils\Encryption;
 use App\Model\User;
 use Core\Http\Response;
+use Core\Utils\Logger;
 
 class DefaultController extends Controller
 {
@@ -25,20 +26,25 @@ class DefaultController extends Controller
         $encrypt = new Encryption();
         $user = new User();
         // get all 
-        $userm = DB::table('users')->get()->first();
-
+        DB::table('users')->get()->first();
+        Response::$renderer->addFunction('strtoupper',function($data){
+            return strtoupper($data);
+        });
         //insert 
         $user->name = "tsiresy";
         $user->email = "tsiresymila@gmail.com";
         $user->password = $encrypt->encode("Tsiresy_wp1");
-        $user->roles = "ROLE_ADMIN";
         $user->save();
         $user->name = "mila";
         // update 
         User::update(['name'=>"Update"])->where('id', 1)->save();
         //delete
         User::delete()->whereNull('name')->save();
-        return Response::Json($userm);
+        Logger::error("Error");
+        Logger::success("test print");
+        Logger::warning([1,2,3,4,5]);
+        
+        return view('home.index',[]);
     }
 
     public  function admin()

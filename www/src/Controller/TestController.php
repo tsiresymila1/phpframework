@@ -2,14 +2,13 @@
 namespace App\Controller;
 
 use Core\Http\CoreControllers\Controller;
-use Core\Http\Response;
 
 class TestController extends Controller
 {
 
     public function index()
     {
-        return Response::render("test.index", ["name"=> "TestController"]); 
+        return view("test.index", ["name"=> "TestController"]); 
     }
 }
         
