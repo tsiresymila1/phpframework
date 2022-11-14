@@ -8,5 +8,5 @@
 
 use Core\Bootstrap;
 
-require '../Core/Autoloader.php';
+require '../core/Autoloader.php';
 Bootstrap::boot();

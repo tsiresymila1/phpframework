@@ -7,8 +7,11 @@ _bdd/*
 www/node_modules
 www/package-lock.json
 www/storage/session/*
+!www/storage/session/.gitkeep
 www/storage/logs/*
+!www/storage/logs/.gitkeep
 www/storage/cache/*
+!www/storage/cache/.gitkeep
 www/vendor
 www/public/js/bundle/*
 /test

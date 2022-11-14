@@ -7,7 +7,7 @@ use Core\Database\Migration;
 
 class MigrationCommand extends Command
 {
-    public $name =  "provide:migration";
+    public $name =  "create:migration";
 
     /**
      * @param $args

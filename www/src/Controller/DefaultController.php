@@ -7,6 +7,8 @@ use Core\Http\CoreControllers\Controller;
 use Core\Utils\Encryption;
 use App\Model\User;
 use Core\Http\Response;
+use Core\Renderer\Template;
+use Core\Session\Session;
 use Core\Utils\Logger;
 
 class DefaultController extends Controller
@@ -21,13 +23,12 @@ class DefaultController extends Controller
         parent::__construct();
     }
 
-    public  function index()
+    public  function index(Session $session,Encryption $encrypt)
     {
-        $encrypt = new Encryption();
         $user = new User();
         // get all 
         DB::table('users')->get()->first();
-        Response::$renderer->addFunction('strtoupper',function($data){
+        Template::addFunction('uppercase',function($data){
             return strtoupper($data);
         });
         //insert 
@@ -41,7 +42,7 @@ class DefaultController extends Controller
         //delete
         User::delete()->whereNull('name')->save();
         Logger::error("Error");
-        Logger::success("test print");
+        Logger::success($user);
         Logger::warning([1,2,3,4,5]);
         
         return view('home.index',[]);

@@ -13,6 +13,7 @@ $response = new OAIResponse();
 $secParameter = new OAIParameter('authorization', 'header', 'Authorization key', true);
 $userParameter = new OAIParameter('username', 'formData', 'Username', true);
 $passParameter = new OAIParameter('password', 'formData', 'Password', true);
+$fileParameter = new OAIParameter('file', 'formData', 'File UPload', true,'file','binary');
 //
 
 Route::Get('/test', 'DefaultController@index')->name('test');
@@ -42,5 +43,5 @@ Route::Group('/api', function () use ($userParameter, $passParameter, $response,
 })->name('api')->asApi()->addOAIResponse($response);
 
 
-Route::Get("/api", "ApiController@index")->name("api")->asApi();
+Route::Post("/api/upload", "ApiController@index")->addOAIParameter($fileParameter)->name("api")->asApi();
 Route::Get("/*", "ReactController@index")->name("react_route");
