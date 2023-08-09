@@ -3,7 +3,6 @@
 namespace App\Middleware;
 
 use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
-use Core\Http\Response;
 use Core\Session\Session;
 
 class AuthMiddleware extends BaseAuthMiddleware

@@ -121,9 +121,9 @@ class UserAuthenticator implements UserAuthenticatorInterface
         return false;
     }
 
-    public function pass()
+    public function next()
     {
-        Handler::DoRouting();
+        Handler::DispatchRouting();
     }
 
     /**
@@ -142,7 +142,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
                 $errorcalback();
             }
         } else {
-            $this->pass();
+            $this->next();
         }
     }
 
@@ -153,7 +153,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
         //test excludes
         foreach ($this->excludes as $exclude) {
             if (preg_match("#^" . $exclude . '/$#', $path)) {
-                return $this->pass();
+                return $this->next();
             }
         }
         if (isset($this->urls) && isset($this->authenticator) && isset($this->model) && isset($this->config)) {
@@ -188,7 +188,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
                         $ins = Request::instance();
                         if ($this->IsVerifyToken()) {
                             $ins->Set('auth', true);
-                            $this->pass();
+                            $this->next();
                         } else {
                             $ins->Set('auth', false);
                             Handler::renderViewContent($this->onApiAuthenticateFail());
@@ -199,7 +199,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
                         if ($this->IsverifySession()) {
                             $ins = Request::instance();
                             $ins->Set('auth', true);
-                            $this->pass();
+                            $this->next();
                         } else {
                             Handler::renderViewContent($this->onAuthenticateFail());
                         }
@@ -207,11 +207,11 @@ class UserAuthenticator implements UserAuthenticatorInterface
                     }
                 }
                 if (!$found) {
-                    $this->pass();
+                    $this->next();
                 }
             }
         } else {
-            $this->pass();
+            $this->next();
         }
     }
 

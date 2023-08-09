@@ -22,7 +22,7 @@ class ErrorRender
      * @param bool $iscontent
      * @return false|string
      */
-    public static function showError($code=500, $message="Internal server error", $iscontent=false)
+    public static function showError($code = 500, $message = "Internal server error", $iscontent = false)
     {
 
         $content = <<<HTML
@@ -154,10 +154,9 @@ class ErrorRender
             </body>
             </html>
         HTML;
-        if($iscontent){
+        if ($iscontent) {
             return $content;
-        }
-        else{
+        } else {
             ob_start();
             header('Content-Type: text/html');
             echo $content;
@@ -175,14 +174,14 @@ class ErrorRender
      * @param bool $iscontent
      * @return false|string
      */
-    public static function showErrorDetails($title="", $traces=[], $code=500, $iscontent=false)
+    public static function showErrorDetails($title = "", $traces = [], $code = 500, $iscontent = false)
     {
         $messages_content = '';
-        foreach($traces as $k => $t){
-            $st = isset($t['class'] ) ? $t['class'] : '';
-            $st.= isset($t['class']) ? $t['type']: '';
-            $file = isset($t['file']) ? $t['file'].' on line '.$t['line'] . ': ' : '';
-            $messages_content.='<div style="padding:4px 2px;"><code>#'.$k.' '.$file. $st.$t['function'].'()</code></div>';
+        foreach ($traces as $k => $t) {
+            $st = isset($t['class']) ? $t['class'] : '';
+            $st .= isset($t['class']) ? $t['type'] : '';
+            $file = isset($t['file']) ? $t['file'] . ' on line ' . $t['line'] . ': ' : '';
+            $messages_content .= '<div style="padding:4px 2px;"><code>#' . $k . ' ' . $file . $st . $t['function'] . '()</code></div>';
         }
         $content = <<<HTML
             <!DOCTYPE>
@@ -209,13 +208,12 @@ class ErrorRender
                     #error {
                         position: relative;
                         height: 100vh;
-                        background: #030005
+                        background-color: #e9e7e7
                     }
             
                     #error .error {
                         left: 50%;
                         top: 50%;
-                        background: #030005;
                     }
             
                     .error {
@@ -226,16 +224,20 @@ class ErrorRender
                     .error .error-404 {
                         position: relative;
                         margin-bottom: 20px;
-                        color: white;
+                        color: #3d3b3b;
                         padding-left: 6vw;
-                         padding-right: 6vw;
-                         padding-top: 20px;
+                        padding-right: 6vw;
+                        padding-top: 20px;
+                        text-wrap: wrap; 
+                        word-wrap: break-word;
                     }
                     .error .error-header {
-                        background-color: #d62748;
+                        background-color: #c71453;
                         color: white;
                         padding:20px 60px;
-                        display: flex
+                        display: flex;
+                        box-shadow: 1px 5px 6px 0px rgba(145,140,140,0.71);
+                        overflow-x: clip;
                     }
             
                     .error .error-header h1 {
@@ -245,6 +247,9 @@ class ErrorRender
                         margin-top: 0;
                         margin-bottom: 0;
                         color: white;
+                        text-wrap: wrap;
+                        word-wrap: break-word;
+                        overflow-x: clip;
                     }
                     .error .error-header h2 {
                         font-family: montserrat, sans-serif;                
@@ -253,6 +258,9 @@ class ErrorRender
                         margin-top: 0;
                         margin-bottom: 0;
                         color: white;
+                        text-wrap: wrap;
+                        word-wrap: break-word;
+                        overflow-x: clip;
                     }
             
                     @media only screen and (max-width: 767px) {
@@ -313,10 +321,9 @@ class ErrorRender
             </body>
             </html>
         HTML;
-        if($iscontent){
+        if ($iscontent) {
             return $content;
-        }
-        else{
+        } else {
             ob_start();
             header('Content-Type: text/html');
             echo $content;

@@ -21,9 +21,9 @@ class DB
         $config = [
             "driver" => env("DB_DRIVER", "mysql"),
             "host" => env("DB_HOST", "localhost"),
-            "database" => env("DB_DATABASE"),
-            "username" => env("DB_USERNAME"),
-            "password" => env("DB_PASSWORD"),
+            "database" => env("DB_DATABASE", "phpframework"),
+            "username" => env("DB_USERNAME", "root"),
+            "password" => env("DB_PASSWORD", ""),
             "port" => env("DB_PORT", 3306),
             // "charset" => "utf8",
             // "collation" => "utf8_unicode_ci",
@@ -34,8 +34,8 @@ class DB
         $capsule->getConnection()->enableQueryLog();
         $capsule->setAsGlobal();
         $capsule->getConnection()->setEventDispatcher(new Dispatcher(new Container()));
-        $capsule->getConnection()->listen(function (QueryExecuted $query){
-            Logger::addQuery($query->sql,$query->bindings);
+        $capsule->getConnection()->listen(function (QueryExecuted $query) {
+            Logger::addQuery($query->sql, $query->bindings);
         });
 
         $capsule->bootEloquent();

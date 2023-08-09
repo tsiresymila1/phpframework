@@ -15,8 +15,8 @@ class Response
     /**
      * @var static $_instance
      */
-    private static  $_instance = null;
-    public static $renderer;
+    private static $_instance = null;
+    public static $template;
     private $content = null;
     private $status = 200;
     private $type = 200;
@@ -24,14 +24,14 @@ class Response
 
     public function __construct()
     {
-        self::$renderer = new Template2(APP_PATH . "templates" . DIRECTORY_SEPARATOR);
-        self::$renderer->addFunction("uppercase", function ($data) {
+        self::$template = new Template2(APP_PATH . "templates" . DIRECTORY_SEPARATOR);
+        self::$template->addFunction("uppercase", function ($data) {
             return strtolower($data);
         });
-        self::$renderer->addFunction("vite", function ($entry) {
+        self::$template->addFunction("vite", function ($entry) {
             return Vite::vite($entry);
         });
-//        self::$HEADER['Access-Control-Allow-Origin'] = '*';
+        //        self::$HEADER['Access-Control-Allow-Origin'] = '*';
 //        self::$HEADER['Access-Control-Allow-Methods'] = 'GET, POST, PUT';
 //        self::$HEADER['Access-Control-Allow-Headers'] = 'Content-type';
     }
@@ -69,7 +69,7 @@ class Response
         return $this->type;
     }
 
-   
+
 
 
     public static function instance()
@@ -101,7 +101,7 @@ class Response
      *
      * @return void
      */
-    public static function  AddHeader($key, $value)
+    public static function AddHeader($key, $value)
     {
         self::$HEADER[$key] = $value;
     }
@@ -112,7 +112,8 @@ class Response
                 header($key . ': ' . $header);
         }
     }
-    public function setHeader($key,$value){
+    public function setHeader($key, $value)
+    {
         self::$HEADER[$key] = $value;
     }
 
@@ -130,10 +131,10 @@ class Response
             $ins->setStatus(302);
             return $ins;
         } else {
-            throw new Exception('Route not found',404);
+            throw new Exception('Route not found', 404);
         }
     }
-    
+
     /**
      * RedirectToRoute
      *
@@ -167,13 +168,12 @@ class Response
         ob_start();
         header('Content-type:application/json;charset=utf-8');
         self::loadHeader();
-        if(DEBUG && !is_null($debugBar) ){
-            Debugbar::setResponse(Response::instance()->getStatus(),$data,Response::instance()->getContentType());
+        if (DEBUG && !is_null($debugBar)) {
+            Debugbar::setResponse(Response::instance()->getStatus(), $data, Response::instance()->getContentType());
             $ins = Debugbar::load();
-            $rep = ['debugbar' =>$ins->logs, 'response' => $data];
+            $rep = ['debugbar' => $ins->logs, 'response' => $data];
             echo json_encode($rep);
-        }
-        else{
+        } else {
             echo json_encode($data);
         }
         $content = ob_get_contents();
@@ -183,7 +183,7 @@ class Response
         $ins->setStatus($status);
         return $ins;
     }
-    
+
     /**
      * Send
      *
@@ -192,15 +192,15 @@ class Response
      *
      * @return Response
      */
-    public static function Send(String $data = "",$status = 200)
+    public static function Send(string $data = "", $status = 200)
     {
         Response::instance()->setContentType('text/plain;charset=utf-8');
         ob_start();
         header('Content-type:text/plain;charset=utf-8');
         self::loadHeader();
         echo $data;
-        if(DEBUG){
-            Debugbar::setResponse(Response::instance()->getStatus(),$data,Response::instance()->getContentType());
+        if (DEBUG) {
+            Debugbar::setResponse(Response::instance()->getStatus(), $data, Response::instance()->getContentType());
             Debugbar::show();
         }
         $content = ob_get_contents();
@@ -211,7 +211,7 @@ class Response
         return $ins;
     }
 
-    public static function Render($template, $context = []) 
+    public static function View($template, $context = [])
     {
         $template = str_replace('.', '/', $template);
         self::$isRendered = true;
@@ -219,9 +219,9 @@ class Response
         ob_start();
         header('Content-type: text/html');
         self::loadHeader();
-        self::$renderer->view($template, $context);
-        if(DEBUG){
-            Debugbar::setResponse(Response::instance()->getStatus(),$context,Response::instance()->getContentType());
+        self::$template->render($template, $context);
+        if (DEBUG) {
+            Debugbar::setResponse(Response::instance()->getStatus(), $context, Response::instance()->getContentType());
             Debugbar::show();
         }
         $content = ob_get_contents();
@@ -232,23 +232,23 @@ class Response
         return $ins;
     }
 
-    public static function Download($filename, $headers = []) 
+    public static function Download($filename, $headers = [])
     {
-        if(file_exists($filename)) {
+        if (file_exists($filename)) {
             header('Content-Description: Download file');
             header('Content-Type: application/octet-stream');
             header("Cache-Control: no-cache, must-revalidate");
             header("Expires: 0");
-            header('Content-Disposition: attachment; filename="'.basename($filename).'"');
+            header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
             header('Content-Length: ' . filesize($filename));
             header('Pragma: public');
-            foreach($headers as $header){
+            foreach ($headers as $header) {
                 header($header);
             }
             flush();
             readfile($filename);
             die();
-        }else{
+        } else {
             throw new Exception("File does not exist.");
         }
     }

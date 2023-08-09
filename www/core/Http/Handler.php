@@ -60,11 +60,11 @@ class Handler
             $autheticator = new $Athenticator();
             $autheticator->authenticate();
         } else {
-            self::DoRouting();
+            self::DispatchRouting();
         }
     }
 
-    public static function DoRouting()
+    public static function DispatchRouting()
     {
         Boot::start();
         Router::$isFound = false;

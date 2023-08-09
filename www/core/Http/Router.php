@@ -316,7 +316,7 @@ class Router
                 if (trim($route->path, '/') == "*" || $ins->matches(trim($route->path, '/'))) {
                     $ins::$isFound = true;
                     $ins::$current = $route;
-                    return $ins->execute();
+                    return $ins->resolve();
                 }
             }
             if (defined('DEBUG') && DEBUG == false) {
@@ -333,11 +333,11 @@ class Router
     }
 
     /**
-     * invokeSuccess
+     * toSuccess
      *
      * @return Response
      */
-    public function invokeSuccess()
+    public function toSuccess()
     {
         if ($this->isFunction(self::$current->action)) {
             return $this->container->resolve(self::$current->action, null, $this->params, true);
@@ -355,7 +355,7 @@ class Router
      *
      * @return Response
      */
-    public function execute()
+    public function resolve()
     {
         foreach (self::$current->middlewares as $middleware) {
             if (!is_null($middleware)) {
@@ -371,7 +371,7 @@ class Router
                 }
             }
         }
-        return $this->invokeSuccess();
+        return $this->toSuccess();
     }
 
     public static function renderViewContent($content, $status = 200)

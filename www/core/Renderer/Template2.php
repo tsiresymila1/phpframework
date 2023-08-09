@@ -20,7 +20,7 @@ class Template2
         $this->cache_enabled = $cache_enabled;
     }
 
-    public function view($file, $data = array())
+    public function render($file, $data = array())
     {
         $cached_file = $this->cache($file);
         $data = array_merge($data, self::$functions);
@@ -73,20 +73,16 @@ class Template2
     protected function includeFiles($file)
     {
         $code = file_get_contents($this->ENV . $file);
-        return preg_replace_callback(
-            '/\B@(@?\w+(?:::\w+)?)([ \t]*)(\( ( (?>[^()]+) | (?3) )* \))?/x',
-            function ($match) {
-                return $this->compileStatement($match);
-            },
-            $code
-        );
-
+        preg_match_all('/\B@(@?\w+(?:::\w+)?)([ \t]*)(\( ( (?>[^()]+) | (?3) )* \))?/x', $code, $matches, PREG_SET_ORDER);
         // preg_match_all('/{% ?(extends|include) ?\'?(.*?)\'? ?%}/i', $code, $matches, PREG_SET_ORDER);
-        // foreach ($matches as $value) {
-        //     $code = str_replace($value[0], $this->includeFiles($value[2]), $code);
-        // }
-        // $code = preg_replace('/{% ?(extends|include) ?\'?(.*?)\'? ?%}/i', '', $code);
-        // return $code;
+        foreach ($matches as $value) {
+            if($value[1] === "extends"){
+                $file = rtrim($value[4], "'");
+            }
+            $code = str_replace($value[0], $this->includeFiles($value[2]), $code);
+        }
+        $code = preg_replace('/{% ?(extends|include) ?\'?(.*?)\'? ?%}/i', '', $code);
+        return $code;
     }
 
     protected function compilePhp($code)
@@ -171,9 +167,7 @@ class Template2
             $value
         );*/
         return preg_replace_callback('/(?<!@)@(.*?)(.*?)@end(.*?)/s', function ($matches) {
-            $this->verbatimBlocks[] = $matches[1];
-
-            return $this->verbatimPlaceholder;
+            return $matches[1];
         }, $value);
     }
     protected function callCustomDirective($name, $value)

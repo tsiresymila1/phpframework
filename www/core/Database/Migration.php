@@ -1,9 +1,9 @@
 <?php
-namespace Core\Database\Eloquent;
+namespace Core\Database;
 
 use Core\Database\DB;
 use \Illuminate\Database\Schema\Builder as SchemaBuilder;
-abstract class EloquentMigration
+abstract class Migration
 {
 
     protected SchemaBuilder $schema;

@@ -1,9 +1,9 @@
 <?php
 
-use Core\Database\Eloquent\EloquentMigration;
+use Core\Database\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class UserMigration1691402634 extends EloquentMigration
+class UserMigration1691402634 extends Migration
 {
     public function up()
     {

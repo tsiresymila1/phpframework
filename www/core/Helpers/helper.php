@@ -15,7 +15,7 @@ function env($key, $default = null)
 
 function view($template, $context = [])
 {
-    return Response::Render($template, $context);
+    return Response::View($template, $context);
 }
 
 function json($data = [], $status = 200)
@@ -28,7 +28,12 @@ function download($filename, $headers = [])
     return Response::Download($filename, $headers);
 }
 
-function redirect($name)
+function redirect($path)
+{
+    return Response::RedirectToRoute($path);
+}
+
+function redirectTo($name)
 {
     return Response::Redirect($name);
 }

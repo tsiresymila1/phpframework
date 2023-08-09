@@ -19,7 +19,7 @@ class Bootstrap
         define('__START_TIME', microtime(true));
         error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_PARSE & ~E_DEPRECATED);
         static::handleError();
-        (new DotEnv(DIR . '/.env'))->load();
+        DotEnv::load(DIR . '/.env');
         Session::Init();
         DB::Init();
         Handler::Init();
@@ -29,8 +29,7 @@ class Bootstrap
 
     public static function load()
     {
-        (new DotEnv(DIR . '/.env'))->load();
-
+        DotEnv::load(DIR . '/.env');
         DB::Init();
         Boot::start();
         CommandContainer::Init();
@@ -67,11 +66,6 @@ class Bootstrap
         }, E_ALL | E_STRICT | E_ERROR | E_WARNING | E_NOTICE | E_DEPRECATED | E_USER_ERROR | E_USER_WARNING);
 
         set_exception_handler(function ($e) {
-            $errors = array(
-                E_USER_ERROR => "User Error",
-                E_USER_WARNING => "User Warning",
-                E_USER_NOTICE => "User Notice",
-            );
             $message = $e->getMessage();
             Logger::error($message . ' in ' . $e->getFile() . ' on line ' . $e->getLine() . '==>' . $e->getCode());
             Logger::error($e->getTraceAsString());
