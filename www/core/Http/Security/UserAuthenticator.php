@@ -174,7 +174,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
                 $this->verifyPost(function ($user) {
                     $jwt = new JWT(SECRET);
                     $token = $jwt->generate($user->id, $user->getRoles());
-                    Response::AddHeader('token', $token);
+                    setHeader('token', $token);
                     Handler::renderViewContent($this->onApiAuthenticateSuccess($user, $token));
                 }, function () {
                     Handler::renderViewContent($this->onApiAuthenticateFail());

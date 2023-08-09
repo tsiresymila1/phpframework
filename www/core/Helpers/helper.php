@@ -33,6 +33,11 @@ function redirect($path)
     return Response::RedirectToRoute($path);
 }
 
+function setHeader($key,$value)
+{
+    return Response::AddHeader($key,$value);
+}
+
 function redirectTo($name)
 {
     return Response::Redirect($name);

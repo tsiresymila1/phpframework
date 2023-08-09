@@ -32,7 +32,7 @@ Route::Group('/api', function () use ($loginRequestBody, $response, $registerReq
 
     // render swagger 
     Route::Get('/docs', function (Response $response) {
-        $response->AddHeader('Content-type', 'text/html');
+        setHeader('Content-type', 'text/html');
         return $response->Send(SwaggerUI::renderer());
     })->name('swagger')->asApi(false);
 

@@ -24,12 +24,8 @@ class Controller
     }
     public function url404NotFound()
     {
-        Response::AddHeader('Content-type','text/html');
+        setHeader('Content-type','text/html');
         return Response::send(ErrorRender::showError(404, 'Page not found', true));
     }
 
-    public function addFunction($name, $callback)
-    {
-        Response::$renderer->addFunction($name, $callback);
-    }
 }
