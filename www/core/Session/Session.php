@@ -40,7 +40,7 @@ class Session
      * @param mixed $key
      * @param $default = null
      *
-     * @return void
+     * @return mixed 
      */
     public static function  Get($key, $default = null)
     {

@@ -354,6 +354,16 @@ class BaseModel extends ModelAbstract{
         }
     }
 
+     public function toArray(){
+        $class = new ReflectionObject($this);
+        $properties = $class->getProperties(ReflectionProperty::IS_PUBLIC);
+        $data = [];
+        foreach($properties as $property){
+            $data[$property->name] = $this->{$property->name};
+        }
+        return $data;
+     }
+
 }
 
 

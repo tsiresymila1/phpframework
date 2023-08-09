@@ -11,6 +11,8 @@ class Template
     protected $cache_enabled;
     protected $ENV;
     private static array $functions = [];
+    protected $extensions = [];
+    protected $customDirectives = [];
 
     public function __construct($template, $cache_enabled = !DEBUG)
     {
@@ -61,8 +63,10 @@ class Template
         $code = $this->compileBlock($code);
         $code = $this->compileYield($code);
         $code = $this->compileEscapedEcho($code);
+        $code = $this->compilePhpBlocks($code);
+        $code = $this->compileEcho($code);
         $code = $this->compileFilter($code);
-        $code = $this->compilePHP($code);
+        $code = $this->compilePhp($code);
         return $code;
     }
 
@@ -77,7 +81,7 @@ class Template
         return $code;
     }
 
-    protected function compilePHP($code)
+    protected function compilePhp($code)
     {
         return preg_replace('~\{%\s*(.+?)\s*\%}~is', '<?php $1 ?>', $code);
     }
@@ -113,7 +117,7 @@ class Template
 
     protected function compileEcho($code)
     {
-        return preg_replace('~\{{\s*(.+?)\s*\}}~is', '<?php echo $$1 ?>', $code);
+        return preg_replace('~\{{\s*(.+?)\s*\}}~is', '<?php echo $1 ?>', $code);
     }
 
     protected function compileEscapedEcho($code)
@@ -136,6 +140,50 @@ class Template
             $code = str_replace($value[0], '', $code);
         }
         return $code;
+    }
+
+    protected function compilePhpBlocks($value)
+    {
+        return preg_replace_callback('/(?<!@)@php(.*?)@endphp/s', function ($matches) {
+            return "<?php{$matches[1]}?>";
+        }, $value);
+    }
+
+
+
+    protected function compileStatements($value)
+    {
+        /*return preg_replace_callback(
+            '/\B@(@?\w+(?:::\w+)?)([ \t]*)(\( ( (?>[^()]+) | (?3) )* \))?/x',
+            function ($match) {
+                return $this->compileStatement($match);
+            },
+            $value
+        );*/
+        return preg_replace_callback('/(?<!@)@(.*?)(.*?)@end(.*?)/s', function ($matches) {
+            $this->verbatimBlocks[] = $matches[1];
+
+            return $this->verbatimPlaceholder;
+        }, $value);
+    }
+    protected function callCustomDirective($name, $value)
+    {
+        if (str_starts_with($value, '(') && str_ends_with($value, ')')) {
+            $value = substr($value, 1, -1);
+        }
+        return call_user_func($this->customDirectives[$name], trim($value));
+    }
+
+    protected function compileStatement($match)
+    {
+        if (method_exists($this, $method = 'compile' . ucfirst($match[1]))) {
+            $match[0] = $this->$method($match[3]);
+        } elseif (strpos($match[0], '@') > -1) {
+            $match[0] = isset($match[3]) ? $match[1] . $match[3] : $match[1];
+        } elseif (isset($this->customDirectives[$match[1]])) {
+            $match[0] = $this->callCustomDirective($match[1], $match[3]);
+        }
+        return isset($match[3]) ? $match[0] : $match[0] . $match[2];
     }
 
     protected function compileYield($code)

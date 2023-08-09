@@ -7,10 +7,10 @@ use Core\Container\Container;
 use Core\Http\CoreControllers\Controller as CoreController;
 use Core\Http\CoreMiddlewares\BaseAuthMiddleware;
 use Core\OpenAPI\OAIParameter;
+use Core\OpenAPI\OAIRequestBody;
 use Core\OpenAPI\OAIResponse;
+use Core\OpenAPI\OAISecurity;
 use Exception;
-use ReflectionClass;
-use ReflectionFunction;
 
 class Router
 {
@@ -88,7 +88,7 @@ class Router
     /**
      * Json
      *
-     * @return void
+     * @return array | null
      */
     public static function loadCache($isDebug=false){
         if($isDebug) return null;
@@ -101,6 +101,7 @@ class Router
                 return null;
             }
         }
+        return null;
     }
 
 
@@ -208,6 +209,45 @@ class Router
                         $route->responses[] = $r;
                     }
                     self::$routes[$method][$search_name] = $route;
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param string $search_name
+     * @param array | OAISecurity $r
+     */
+    public static function AddSecurity($search_name,  $r)
+    {
+        foreach (self::$routes as $method => $routes) {
+            foreach ($routes as $name => $route) {
+                if ($name == $search_name) {
+                    if (gettype($r) == "array") {
+                        $route->security = array_merge($r, $route->security);
+                    }
+                    else{
+                        $route->security[] = $r;
+                    }
+                    self::$routes[$method][$search_name] = $route;
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $oldname
+     * @param  OAIRequestBody $p
+     */
+    public static function AddRequestBody($oldname, $p)
+    {
+        foreach (self::$routes as $method => $routes) {
+            foreach ($routes as $name => $route) {
+                if ($name == $oldname) {
+                    $route->requestBody = $p;
+                    self::$routes[$method][$oldname] = $route;
                     break;
                 }
             }

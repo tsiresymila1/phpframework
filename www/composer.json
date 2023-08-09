@@ -8,6 +8,8 @@
         "ext-http": "*",
         "ext-json": "*",
         "ext-pdo": "*",
-        "workerman/phpsocket.io": "^1.1"
+        "workerman/phpsocket.io": "^1.1",
+        "illuminate/database": "^8.83",
+        "illuminate/events": "^8.83"
     }
 }

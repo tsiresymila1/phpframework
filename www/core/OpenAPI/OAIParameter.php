@@ -48,7 +48,7 @@ class OAIParameter
             $data['format'] = $this->format;
         }
         if(!is_null($this->type)){
-            $data['type'] = $this->type;
+           $data['schema'] = ["type" =>   $this->type];
         }
         return $data;
     }

@@ -6,6 +6,6 @@ interface UserAuthenticatorInterface
 {
     public function  onAuthenticateSuccess($data);
     public function  onAuthenticateFail();
-    public function  onApiAuthenticateSuccess($data);
+    public function  onApiAuthenticateSuccess($data,$token);
     public function  onApiAuthenticateFail();
 }

@@ -2,10 +2,11 @@
 
 namespace Core\Command;
 
+use Core\Command\Provide\CreateMigrationCommand;
 use Core\Command\Provide\ControllerCommand;
+use Core\Command\Provide\MigrateCommand;
 use Core\Command\Provide\ServerCommand;
 use Core\Container\Container;
-use Exception;
 use RuntimeException;
 
 class CommandContainer
@@ -20,7 +21,7 @@ class CommandContainer
         }
         return static::$instance;
     }
-    public  function register($classname)
+    public function register($classname)
     {
         $ioc = Container::instance();
         if (property_exists($classname, 'name')) {
@@ -28,10 +29,11 @@ class CommandContainer
             $name = $ins->{'name'};
             $this->command[$name] = $ins;
         } else {
-            throw new Exception('Command attribute name not found');
+            echo ($classname . ' attribute name not found');
+            exit();
         }
     }
-    public static  function Init()
+    public static function Init()
     {
         if (!file_exists(APP_PATH . 'config/command.php')) {
             throw new RuntimeException('File not found');
@@ -40,9 +42,11 @@ class CommandContainer
         $command = require APP_PATH . 'config/command.php';
         $default = [
             ControllerCommand::class,
-            ServerCommand::class, 
+            ServerCommand::class,
+            CreateMigrationCommand::class,
+            MigrateCommand::class
         ];
-        foreach (array_merge($default,$command) as $c) {
+        foreach (array_merge($default, $command) as $c) {
             $ins->register($c);
         }
     }

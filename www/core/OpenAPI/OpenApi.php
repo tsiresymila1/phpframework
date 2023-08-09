@@ -3,33 +3,24 @@
 namespace Core\OpenAPI;
 
 use Core\Http\Router;
+use Core\OpenAPI\OAISecurity;
 
 class OpenApi
 {
 
-    public $swagger = "2.0";
+    public $openapi = "3.0.3";
+
+    public $swagger = "2.0.0";
     public $host = "";
     public $schemes = array(
         "http",
         "https"
     );
+    public $schema = [];
     public array $paths = array();
     public OAIInfos $info;
-    public array $securityDefinition = [
-        // "ApiKeyAuth" => [
-        //     "type" => "apiKey",
-        //     "name" => "X-API-KEY",
-        //     "in" => "header"
-        // ],
-        "bearerAuth" => [
-            "name" => "Authorization",
-            "type" => "apiKey",
-            "in" => "header",
-            "scheme" => "bearer",
-            "bearerFormat" => "JWT"
-        ]
-    ];
     public array $tags = array();
+    public $bearerSecurity;
 
     protected static $instance;
 
@@ -45,6 +36,8 @@ class OpenApi
         }
         return static::$instance;
     }
+
+    public $securitySchema = [];
 
     public function loadRoute()
     {
@@ -81,12 +74,27 @@ class OpenApi
                 $path->addParameters($r->parameters);
                 $path->addResponses($r->responses);
                 $path->setMethod($meth);
+                $path->addSecurity($r->security);
+                if ($r->requestBody) {
+                    $path->setRequestBody($r->requestBody);
+                }
+                $this->securitySchema = array_unique(array_merge($this->securitySchema, $r->security), SORT_REGULAR);
                 $path = $path->toJson();
                 $oaiPath[strtolower($meth)] = $path;
             }
             if (sizeof($oaiPath) > 0) {
                 $this->paths[str_replace('?', '', $p)] = $oaiPath;
             }
+        }
+    }
+
+    public static function addSchema($schema)
+    {
+        $ins = self::instance();
+        if (is_array($schema)) {
+            $ins->schema = array_merge($ins->schema, $schema);
+        } else {
+            $ins->schema[] = $schema;
         }
     }
 
@@ -97,29 +105,27 @@ class OpenApi
     {
         $ins = self::instance();
         $ins->loadRoute();
-        return array(
-            'swagger' => $ins->swagger,
+        $security = array_map(function ($sec) {
+            return $sec->toJson();
+        }, $ins->securitySchema);
+
+        $schema = array_reduce($ins->schema, function ($prevArray, $sc) {
+            return array_merge($prevArray, $sc->toJson());
+        }, []);
+        $data = array(
+            'openapi' => $ins->openapi,
             'info' => $ins->info->toJSon(),
             'host' => $_SERVER['HTTP_HOST'],
             'tags' => array_values($ins->tags),
             'schemes' => $ins->schemes,
             'paths' => $ins->paths,
-            'securityDefinitions' => $ins->securityDefinition,
+            'securityDefinitions' => sizeof($security) > 0 ? $security[0] : [],
             'components' => [
-                'schema' => [],
-                'securitySchemes' => [
-                    "ApiKeyAuth" => [
-                        "type" => "apiKey",
-                        "name" => "api_key",
-                        "in" => "header"
-                    ],
-                    "bearerAuth" => [
-                        "type" => "http",
-                        "scheme" => "bearer",
-                        "bearerFormat" => "JWT"
-                    ]
-                ]
+                'schemas' => $schema,
+                'securitySchemes' => sizeof($security) > 0 ? $security[0] : []
             ],
         );
+
+        return $data;
     }
 }

@@ -2,14 +2,15 @@
 
 namespace Core\Http;
 
-use Core\OpenAPI\OpenApi;
+use App\Boot;
 use Exception;
 
 class Handler
 {
 
     private static $_instance = null;
-    private string $path;
+
+    public $path;
 
     public static function instance()
     {
@@ -38,11 +39,12 @@ class Handler
         $ins = self::instance();
         Router::Config($ins->path);
         $cache = Router::loadCache(DEBUG);
-        if(is_null($cache)){
-            if (!file_exists(APP_PATH . 'config/routes.php')) {
+        if (is_null($cache)) {
+            $routePath = APP_PATH . 'config/routes.php';
+            if (!file_exists($routePath)) {
                 throw new Exception('routes.php file not found');
             }
-            require APP_PATH . 'config/routes.php';
+            require $routePath;
             Router::dumpCache();
         }
         $ins->auth();
@@ -50,8 +52,9 @@ class Handler
 
     public function auth()
     {
-        if (file_exists(APP_PATH . 'config/security.php')) {
-            $security = require APP_PATH . 'config/security.php';
+        $authConfigPath = APP_PATH . 'config/auth.php';
+        if (file_exists($authConfigPath)) {
+            $security = require $authConfigPath;
             define('SECRET', in_array('secret', $security) ? $security['secret'] : '7c32d31dbdd39f2111da0b1dea59e94f3ed715fd8cdf0ca3ecf354ca1a2e3e30');
             $Athenticator = $security['authenticator'];
             $autheticator = new $Athenticator();
@@ -63,6 +66,7 @@ class Handler
 
     public static function DoRouting()
     {
+        Boot::start();
         Router::$isFound = false;
         $response = Router::find();
         self::renderViewContent($response);

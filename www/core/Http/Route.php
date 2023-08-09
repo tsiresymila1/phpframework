@@ -3,6 +3,7 @@
 namespace Core\Http;
 
 use Core\OpenAPI\OAIParameter;
+use Core\OpenAPI\OAIRequestBody;
 use Core\OpenAPI\OAIResponse;
 
 class Route
@@ -15,7 +16,10 @@ class Route
     public $isAPI = null;
     public $isGroup = false;
     public array $parameters = [];
+
+    public ?OAIRequestBody $requestBody = null;
     public array $responses = [];
+    public array $security = [];
     public array $middlewares = [];
     protected static $prefix = [];
     protected static $_instance = null;
@@ -40,6 +44,7 @@ class Route
         $new->middlewares = $this->middlewares;
         $new->parameters = $this->parameters;
         $new->responses = $this->responses;
+        $new->security = $this->security;
         $new->isAPI = $this->isAPI;
         $new->group_names = $this->group_names;
         $new->isGroup = $this->isGroup;
@@ -286,7 +291,7 @@ class Route
 
     /**
      * @param array|OAIResponse $r
-     * @return $this
+     * @return Route
      */
     public function addOAIResponse($r)
     {
@@ -297,6 +302,42 @@ class Route
         } else {
             foreach ($this->group_names as $name) {
                 Router::AddResponse($name, $r);
+            }
+        }
+        return $this;
+    }
+
+     /**
+     * @param (array  | OAIResponse) $r
+     * @return $this
+     */
+    public function addOAISecurity($r)
+    {
+        if (!$this->isGroup) {
+            foreach ($this->names as $n) {
+                Router::AddSecurity($n, $r);
+            }
+        } else {
+            foreach ($this->group_names as $name) {
+                Router::AddSecurity($name, $r);
+            }
+        }
+        return $this;
+    }
+
+     /**
+     * @param array|OAIRequestBody $p
+     * @return $this
+     */
+    public function addOAIRequestBody($b)
+    {
+        if (!$this->isGroup) {
+            foreach ($this->names as $n) {
+                Router::AddRequestBody($n, $b);
+            }
+        } else {
+            foreach ($this->group_names as $name) {
+                Router::AddRequestBody($name, $b);
             }
         }
         return $this;

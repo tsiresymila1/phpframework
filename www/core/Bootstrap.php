@@ -2,12 +2,13 @@
 
 namespace Core;
 
+use App\Boot;
 use Core\Command\CommandContainer;
 use Core\Database\DBAdapter;
+use Core\Database\Eloquent\EloquentDB;
 use Core\Http\Exception\ErrorRender;
 use Core\Http\Handler;
 use Core\Http\Request;
-use Core\Http\Response;
 use Core\Session\Session;
 use Core\Utils\Logger;
 use Core\Utils\Dotenv;
@@ -21,16 +22,21 @@ class Bootstrap
         static::handleError();
         (new DotEnv(DIR . '/.env'))->load();
         Session::Init();
-        Handler::Init();
         DBAdapter::Init();
+        EloquentDB::Init();
+        Handler::Init();
+        Boot::start();
         Handler::handle();
     }
 
     public static function load()
     {
         (new DotEnv(DIR . '/.env'))->load();
-        CommandContainer::Init();
+
         DBAdapter::Init();
+        EloquentDB::Init();
+        Boot::start();
+        CommandContainer::Init();
     }
 
     public static function handleError()
@@ -42,28 +48,32 @@ class Bootstrap
             Logger::error($errline);
             if (!defined('DEBUG') || DEBUG == true) {
                 $strace = debug_backtrace();
+                Logger::addException($errstr . ' in ' . $errfile . ' on line ' . $errline);
                 $withCode = array_key_exists(strval($errno), ErrorRender::$code);
                 if (Request::isAPI()) {
                     header('Content-type:application/json;charset=utf-8');
-                    echo json_encode(array(
-                        "code" => $errno,
-                        "error" => $errstr,
-                        "file" => $errfile,
-                        "line" => $errline
-                    ));
+                    ob_end_clean();
+                    echo json_encode(
+                        array(
+                            "code" => $errno,
+                            "error" => $errstr,
+                            "file" => $errfile,
+                            "line" => $errline
+                        )
+                    );
                 } else {
                     ob_end_clean();
                     echo ErrorRender::showErrorDetails($errstr . ' in ' . $errfile . ' on line ' . $errline, $strace, $withCode ? $errno : '500');
                 }
             }
-            exit();
+            exit(200);
         }, E_ALL | E_STRICT | E_ERROR | E_WARNING | E_NOTICE | E_DEPRECATED | E_USER_ERROR | E_USER_WARNING);
 
         set_exception_handler(function ($e) {
             $errors = array(
-                E_USER_ERROR        => "User Error",
-                E_USER_WARNING      => "User Warning",
-                E_USER_NOTICE       => "User Notice",
+                E_USER_ERROR => "User Error",
+                E_USER_WARNING => "User Warning",
+                E_USER_NOTICE => "User Notice",
             );
             $message = $e->getMessage();
             Logger::error($message . ' in ' . $e->getFile() . ' on line ' . $e->getLine() . '==>' . $e->getCode());
@@ -90,12 +100,14 @@ class Bootstrap
                 if (Request::isAPI()) {
                     header('Content-type:application/json;charset=utf-8');
                     ob_start();
-                    echo json_encode(array(
-                        "code" => $e->getCode(),
-                        "error" => $message,
-                        "file" => $e->getFile(),
-                        "line" => $e->getLine(),
-                    ));
+                    echo json_encode(
+                        array(
+                            "code" => $e->getCode(),
+                            "error" => $message,
+                            "file" => $e->getFile(),
+                            "line" => $e->getLine(),
+                        )
+                    );
                     ob_flush();
                 } else {
                     ob_end_clean();

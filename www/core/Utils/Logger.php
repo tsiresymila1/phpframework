@@ -31,7 +31,7 @@ class Logger
             return str_replace(':'.$key,is_numeric($value) ? $value : "'$value'",$text);
         },$query);
         $ins = self::instance();
-        $ins->logs['queries'][] = $log;
+        $ins->logs['queries'][] = $log.' => ('.implode(',',$params).')';
         $date = new DateTime();
         $datestring = $date->format('Y-m-d H:i:s');
         file_put_contents(self::$path, $datestring . "::" . $flag . ":: " . json_encode($log) . PHP_EOL, FILE_APPEND | LOCK_EX);

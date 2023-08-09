@@ -50,7 +50,7 @@ class Request
         }
         $this->post = $_POST;
         $this->params = [];
-        $this->request_data = $_REQUEST;
+        $this->request_data = array_merge($_REQUEST,$_POST,$_GET);
         $this->headers = $this->getAllHeaders();
         foreach ($_FILES as $key => $file) {
             $this->files[$key] = new File($file);
@@ -118,7 +118,7 @@ class Request
      * @param mixed $key =null
      * @param mixed $default =null
      *
-     * @return void
+     * @return mixed
      */
     public static function Get($key = null)
     {
@@ -138,7 +138,7 @@ class Request
      *
      * @param $key = null
      *
-     * @return void
+     * @return mixed
      */
     public static function Post($key = null)
     {
@@ -158,7 +158,7 @@ class Request
      *
      * @param $key = null
      *
-     * @return File[] |File | null
+     * @return File[] | File | null
      */
     public static function File($key = null)
     {
@@ -178,18 +178,18 @@ class Request
      *
      * @param $key = null
      *
-     * @return void
+     * @return array | null
      */
     public function files($key = null)
     {
         if (!is_null($key)) {
-            if (array_key_exists($key, $this->file)) {
-                return $this->file[$key];
+            if (array_key_exists($key, $this->files)) {
+                return $this->files[$key];
             } else {
                 return null;
             }
         }
-        return $this->file;
+        return $this->files;
     }
 
     /**
@@ -197,7 +197,7 @@ class Request
      *
      * @param $key = null
      *
-     * @return array
+     * @return array | null
      */
     public function input($key = null)
     {
@@ -230,7 +230,7 @@ class Request
      *
      * @param $key = null
      *
-     * @return array
+     * @return array | null
      */
     public static function Headers($key = null)
     {
@@ -278,7 +278,7 @@ class Request
     }
 
     /**
-     * @return Boolean
+     * @return bool
      */
     public static function isGet()
     {
@@ -287,7 +287,7 @@ class Request
     }
 
     /**
-     * @return Boolean
+     * @return bool
      */
     public static function isAjax()
     {
@@ -295,7 +295,7 @@ class Request
     }
 
     /**
-     * @return Boolean
+     * @return bool
      */
     public static function isPost()
     {
@@ -304,7 +304,7 @@ class Request
     }
 
     /**
-     * @return Boolean
+     * @return bool
      */
     public static function isAuth()
     {
@@ -313,7 +313,7 @@ class Request
     }
 
     /**
-     * @return Boolean
+     * @return bool
      */
     public static function isAPI()
     {
@@ -322,7 +322,7 @@ class Request
     }
 
     /**
-     * @return String
+     * @return string
      */
     public static function getMethod()
     {
@@ -331,7 +331,7 @@ class Request
     }
 
     /**
-     * @return String
+     * @return string
      */
     public static function getPath()
     {

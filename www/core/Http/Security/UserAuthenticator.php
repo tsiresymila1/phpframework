@@ -8,6 +8,7 @@ use Core\Http\Handler;
 use Core\Session\Session;
 use Core\Utils\Encryption;
 use Core\Utils\JWT;
+use Core\Http\Security\Auth;
 
 class UserAuthenticator implements UserAuthenticatorInterface
 {
@@ -26,11 +27,11 @@ class UserAuthenticator implements UserAuthenticatorInterface
 
     public function __construct()
     {
-        $security = require APP_PATH . 'config/security.php';
+        $security = require APP_PATH . 'config/auth.php';
         $this->authenticator = $security['authenticator'];
         $this->username = $security['config']['username'];
         $this->password = $security['config']['password'];
-        $this->model = new $security['model']();
+        $this->model = new $security['model'];
         if (gettype($security['url']) !== "array") {
             $this->urls = [$security['url']];
         } else {
@@ -56,8 +57,9 @@ class UserAuthenticator implements UserAuthenticatorInterface
         $encryption = new Encryption();
         $passwordcrypted = $encryption->encode($password);
         $params = array($this->username => $username, $this->password => $passwordcrypted);
-        $user = $this->model->findOneBy($params);
+        $user = $this->model::where($params)->first();
         if ($user && count(array_intersect($this->roles, $user->getRoles())) > 0) {
+            Auth::attemp($user);
             if ($this->rememberme) {
                 Session::set($this->username, $username);
                 Session::set($this->password, $passwordcrypted);
@@ -71,8 +73,9 @@ class UserAuthenticator implements UserAuthenticatorInterface
     protected function isAuthSessionUser($username, $password)
     {
         $params = array($this->username => $username, $this->password => $password);
-        $user = $this->model->findOneBy($params);
+        $user = $this->model->where($params)->get()->first();
         if ($user && count(array_intersect($this->roles, $user->getRoles())) > 0) {
+            Auth::attemp($user);
             if ($this->rememberme) {
                 Session::set($this->username, $username);
                 Session::set($this->password, $password);
@@ -106,7 +109,16 @@ class UserAuthenticator implements UserAuthenticatorInterface
     {
         $jwt = new JWT(SECRET);
         $token = Request::GetToken();
-        return $jwt->verify($token);
+        $verification = $jwt->verify($token);
+        if ($verification['verified']) {
+            $user_id = (int) $verification['payload']->user_id;
+            $user = $this->model->where('id', $user_id)->get()->first();
+            if ($user) {
+                Auth::attemp($user);
+                return $verification['verified'];
+            }
+        }
+        return false;
     }
 
     public function pass()
@@ -136,7 +148,8 @@ class UserAuthenticator implements UserAuthenticatorInterface
 
     public function authenticate()
     {
-        $path = rtrim(Request::getPath(), '/') . '/';
+        $request_path = Request::getPath();
+        $path = rtrim($request_path, '/') . '/';
         //test excludes
         foreach ($this->excludes as $exclude) {
             if (preg_match("#^" . $exclude . '/$#', $path)) {
@@ -147,7 +160,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
             //verify if logout
             if (preg_match("#^" . $this->logout . '/$#', $path)) {
                 $this->eraseCredentials();
-                $this->content = $this->onAuthenticateFail();
+                Handler::renderViewContent($this->onAuthenticateFail());
             } // verify if login
             else if (preg_match("#^" . $this->login . '/$#', $path)) {
                 $this->eraseCredentials();
@@ -162,7 +175,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
                     $jwt = new JWT(SECRET);
                     $token = $jwt->generate($user->id, $user->getRoles());
                     Response::AddHeader('token', $token);
-                    Handler::renderViewContent($this->onApiAuthenticateSuccess($user));
+                    Handler::renderViewContent($this->onApiAuthenticateSuccess($user, $token));
                 }, function () {
                     Handler::renderViewContent($this->onApiAuthenticateFail());
                 });
@@ -220,9 +233,9 @@ class UserAuthenticator implements UserAuthenticatorInterface
     }
 
 
-    public function onApiAuthenticateSuccess($data)
+    public function onApiAuthenticateSuccess($data, $token)
     {
-        return Response::Json(['data' => (array)$data]);
+        return Response::Json(['data' => (array) $data]);
     }
 
     public function onApiAuthenticateFail()

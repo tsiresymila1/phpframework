@@ -8,6 +8,9 @@ use Core\Http\Response;
 
 class Controller
 {
+    protected $request;
+
+    protected $response;
 
     public function __construct()
     {

@@ -25,7 +25,7 @@ class JWT
         );
     }
 
-    public function generate($id = null, $roles = ['ROLE_ADMIN'])
+    public function generate($id = null, $roles = null)
     {
         $header = json_encode([
             'typ' => 'JWT',
@@ -38,7 +38,7 @@ class JWT
 
         $payload = json_encode([
             'user_id' => $id,
-            'role' => $roles,
+            'role' => $roles ?? ['ROLE_ADMIN'],
             'exp' => $expired
         ]);
 
@@ -63,9 +63,15 @@ class JWT
             $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $this->secret, true);
             $base64UrlSignature = $this->base64UrlEncode($signature);
             $signatureValid = ($base64UrlSignature === $signatureProvided);
-            return $signatureValid && !$isExpired;
+            return [
+                "verified" => $signatureValid && !$isExpired,
+                "payload" =>json_decode($payload)
+            ];
         } else {
-            return false;
+            return [
+                "verified" => false,
+                "payload" => null
+            ];
         }
     }
 }

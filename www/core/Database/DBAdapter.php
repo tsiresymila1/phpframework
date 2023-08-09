@@ -6,7 +6,7 @@ use PDO;
 use PDOException;
 
 class DBAdapter {
-    private static $_instance;
+    private static  $_instance;
     protected $config;
     public PDO $pdo;
 
@@ -14,7 +14,7 @@ class DBAdapter {
     {
 
         $this->config = [
-            "DB_CONNECTION" => env('DB_CONNECTION','mysql'),
+            "DB_CONNECTION" => env('DB_DRIVER','mysql'),
             "HOST"=> env('DB_HOST','localhost'),
             "DATABASE" => env('DB_DATABASE'),
             "USER"=> env('DB_USERNAME'),

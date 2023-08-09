@@ -2,23 +2,28 @@
 
 namespace App\Security;
 
-use Core\Http\Response;
 use Core\Http\Security\UserAuthenticator;
-use Core\Utils\JWT;
 
 class LoginAuthenticator extends UserAuthenticator
 {
 
+    public $login = '/login';
+    public $logout = "/logout";
+
     public function onAuthenticateFail()
     {
-        return Response::Redirect("app_login");
+        return redirect("app_login");
     }
     public function onAuthenticateSuccess($user)
     {
-        return Response::Redirect('admin');
+        return redirect('admin');
     }
     public function  onApiAuthenticateFail()
     {
-        return Response::Json(['error' => 'Not authenticated', 'auth'=>false]);
+        return json(['error' => 'Not authenticated', 'auth'=>false]);
+    }
+    public function  onApiAuthenticateSuccess($user,$token)
+    {
+        return json(array_merge(['user'=>$user->toArray()],['error'=>null, 'auth' => true, 'token' => $token])); 
     }
 }

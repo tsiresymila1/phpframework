@@ -4,7 +4,7 @@
 use Core\Bootstrap;
 use Core\Command\CommandHandler;
 
-require __DIR__ . '/Core/Autoloader.php';
+require __DIR__ . '/core/Autoloader.php';
 Bootstrap::load();
 $cmd = CommandHandler::resolve($argv);
 $cmd->terminate();

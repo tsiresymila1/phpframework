@@ -3,7 +3,7 @@
 namespace Core\Http;
 
 use Core\Container\Container;
-use Core\Renderer\Template;
+use Core\Renderer\Template2;
 use Core\Debugbar\Debugbar;
 use Core\Utils\Vite;
 use Exception;
@@ -24,7 +24,7 @@ class Response
 
     public function __construct()
     {
-        self::$renderer = new Template(APP_PATH . "templates" . DIRECTORY_SEPARATOR);
+        self::$renderer = new Template2(APP_PATH . "templates" . DIRECTORY_SEPARATOR);
         self::$renderer->addFunction("uppercase", function ($data) {
             return strtolower($data);
         });
