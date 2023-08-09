@@ -15,9 +15,11 @@ class OAISecurity
     public $scheme;
 
     public $bearerFormat;
+
+    public $description;
     
 
-    public function __construct($tag, $type, $name, $key = null, $in = null, $scheme = null)
+    public function __construct($tag, $type, $name, $key = null, $in = null, $scheme = null,$description=null, $bearerFormat= null)
     {
         $this->tag = $tag;
         $this->type = $type;
@@ -25,6 +27,8 @@ class OAISecurity
         $this->key = $key;
         $this->in = $in;
         $this->scheme = $scheme;
+        $this->description = $description;
+        $this->bearerFormat = $bearerFormat;
     }
 
     /**

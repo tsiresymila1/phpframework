@@ -69,7 +69,7 @@ class OpenApi
                         $this->tags[$tag] = array('name' => $tag, 'description' => '');
                     }
                     $path->addTag($tag);
-                    $path->setOperationId($array[1]);
+                    $path->setOperationId($r->action);
                 }
                 $path->addParameters($r->parameters);
                 $path->addResponses($r->responses);

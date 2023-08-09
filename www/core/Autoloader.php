@@ -34,6 +34,7 @@ class Autoloader
 define('DIR', dirname(dirname(__FILE__)) . '/');
 define('APP_PATH', dirname(dirname(__FILE__)) . '/src' . '/');
 
+
 // load helper
 include dirname(__FILE__) . '/Helpers/loader.php';
 
@@ -42,6 +43,17 @@ if (!file_exists(APP_PATH . 'config/config.php')) {
     throw new Exception('config.php file not found');
 }
 require APP_PATH . 'config/config.php';
+
+
+// Register illuminate database
+$illuminate = require dirname(__FILE__) . '/Illimunate/autoload.php';
+$type = gettype($illuminate);
+if ($type  == "object") {
+    $illuminate->register();
+}
+
+// end register
+
 //load autoload 
 if (file_exists(APP_PATH . 'config/autoload.php')) {
     $vendor = require APP_PATH . 'config/autoload.php';

@@ -362,7 +362,8 @@ class Router
                 if ($this->isFunction($middleware)) {
                     $this->container->resolve($middleware, null, $this->params, true);
                 } else {
-                    $MiddlewareClass = "App\Middleware\\{$middleware}";
+                    $contain = str_contains($middleware,"App\Middleware");
+                    $MiddlewareClass = $contain ? $middleware : "App\Middleware\\{$middleware}";
                     $middleIns = $this->container->make($MiddlewareClass, [], $this->params);
                     if ($middleIns instanceof BaseAuthMiddleware) {
                         $middleIns->handle();

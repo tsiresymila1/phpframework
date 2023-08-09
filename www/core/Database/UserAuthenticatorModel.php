@@ -2,11 +2,11 @@
 
 namespace Core\Database;
 
-use Core\Database\Eloquent\EloquentModel;
+use Core\Database\Model;
 use Core\Http\Policies\HasPermission;
 use Core\Http\Policies\HasRole;
 
-abstract class UserAuthenticatorModel extends EloquentModel
+abstract class UserAuthenticatorModel extends Model
 {
 
     public $roles = [];

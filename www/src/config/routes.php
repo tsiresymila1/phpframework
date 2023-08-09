@@ -8,36 +8,17 @@ use Core\OpenAPI\OAIParameter;
 use Core\OpenAPI\OAIRequestBody;
 use Core\OpenAPI\OAIRequestBodyContent;
 use Core\OpenAPI\OAIResponse;
-use Core\OpenAPI\OAISchema;
 use Core\OpenAPI\OAISecurity;
-use Core\OpenAPI\OpenApi;
 use Core\OpenAPI\SwaggerUI;
 
 //OPENAPI
 $response = new OAIResponse();
-$secParameter = new OAIParameter('authorization', 'header', 'Authorization key', true);
-$userParameter = new OAIParameter('username', 'formData', 'Username', true);
-$passParameter = new OAIParameter('password', 'formData', 'Password', true);
-$fileParameter = new OAIParameter('file', 'formData', 'File UPload', true, 'file', 'binary');
-
-$userCreateParameter = [
-    new OAIParameter('email', 'formData', 'Email', true),
-    new OAIParameter('name', 'formData', 'Username', true),
-    new OAIParameter('userimage', 'formData', 'Image', true, 'file', 'binary'),
-    new OAIParameter('password', 'formData', 'Password', true)
-];
-$bearerSecurity = new OAISecurity("Bearer", "http", null, null, null, "bearer");
-$bearerSecurity->bearerFormat = 'JWT';
-
+$bearerSecurity = new OAISecurity("Bearer", "http", null, null, "header", "bearer", "Enter JWT token", "JWT");
 $loginRequestBody = new OAIRequestBody(new OAIRequestBodyContent('application/json', "AuthDto"), true);
+$registerRequestBody = new OAIRequestBody(new OAIRequestBodyContent('multipart/form-data', "RegisterDto"), true);
+$fileUploadRequestBody = new OAIRequestBody(new OAIRequestBodyContent('multipart/form-data', "FileUploadDto"), true);
 
-OpenApi::addSchema(new OAISchema("AuthDto", "object", [
-    "username" => ["type" => "string"],
-    "password" => ["type" => "string"]
-], ["username", "password"]), );
-
-
-// NED OPENAPI
+// END OPENAPI
 
 Route::Get('/test', 'DefaultController@index')->name('test');
 
@@ -45,10 +26,11 @@ Route::Get(['/function/{id}/get/{path?}', '/get/{id?}'], function (Request $requ
     return $response::Json(array('data' => $id . '::test function ->' . $path . '->' . $request->input('key')));
 })->addOAIResponse($response)->middleware(function (Request $request, $id) {
     $request->setRequestData('key', 'hello' . $id);
-})->middleware(AuthMiddleware::class);
+})->middleware(AuthMiddleware::class)->asApi();
 
-Route::Group('/api', function () use ($loginRequestBody, $response, $userCreateParameter, $bearerSecurity) {
+Route::Group('/api', function () use ($loginRequestBody, $response, $registerRequestBody, $bearerSecurity) {
 
+    // render swagger 
     Route::Get('/docs', function (Response $response) {
         $response->AddHeader('Content-type', 'text/html');
         return $response->Send(SwaggerUI::renderer());
@@ -60,11 +42,11 @@ Route::Group('/api', function () use ($loginRequestBody, $response, $userCreateP
     })->name('admin')->asApi()->addOAISecurity([$bearerSecurity]);
     //Route::Get('/login', "LoginController@login")->name('login_get');
     Route::Post('/login', "AuthController@login")->addOAIRequestBody($loginRequestBody)->addOAIResponse($response)->name('login_post');
-    Route::Post('/register', "AuthController@register")->addOAIParameter($userCreateParameter)->addOAIResponse($response)->name('register_post');
+    Route::Post('/register', "AuthController@register")->addOAIRequestBody($registerRequestBody)->addOAIResponse($response)->name('register_post');
 
 })->name('api')->asApi()->addOAIResponse($response);
 
 Route::Get('/test', "DefaultController@index");
 
-Route::Post("/api/upload", "ApiController@index")->addOAIParameter($fileParameter)->name("api")->asApi();
+Route::Post("/api/upload", "ApiController@index")->addOAIRequestBody($fileUploadRequestBody)->name("api")->asApi();
 Route::Get("/*", "ReactController@index")->name("react_route");

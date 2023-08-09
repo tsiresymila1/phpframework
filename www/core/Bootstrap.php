@@ -4,8 +4,7 @@ namespace Core;
 
 use App\Boot;
 use Core\Command\CommandContainer;
-use Core\Database\DBAdapter;
-use Core\Database\Eloquent\EloquentDB;
+use Core\Database\DB;
 use Core\Http\Exception\ErrorRender;
 use Core\Http\Handler;
 use Core\Http\Request;
@@ -22,8 +21,7 @@ class Bootstrap
         static::handleError();
         (new DotEnv(DIR . '/.env'))->load();
         Session::Init();
-        DBAdapter::Init();
-        EloquentDB::Init();
+        DB::Init();
         Handler::Init();
         Boot::start();
         Handler::handle();
@@ -33,8 +31,7 @@ class Bootstrap
     {
         (new DotEnv(DIR . '/.env'))->load();
 
-        DBAdapter::Init();
-        EloquentDB::Init();
+        DB::Init();
         Boot::start();
         CommandContainer::Init();
     }

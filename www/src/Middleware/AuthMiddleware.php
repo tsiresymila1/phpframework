@@ -11,7 +11,7 @@ class AuthMiddleware extends BaseAuthMiddleware
 
     public function handle()
     {
-        // $key = Session::get("key");
+        $key = Session::get("key");
         // if(!isset($key)){
         //     Response::redirect("/login");
         // }

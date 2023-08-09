@@ -52,15 +52,16 @@ class File
 
     public function upload($path = null, $issecure = false)
     {
-        if(!file_exists(UPLOADED_FOLDER)){
+        if (!file_exists(UPLOADED_FOLDER)) {
             @mkdir(UPLOADED_FOLDER);
         }
+        $directory = $path ? $path . DIRECTORY_SEPARATOR : "";
         $this->securename = basename($this->name);
-        $this->fullpath =  UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $this->securename;
+        $this->fullpath = UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $directory . $this->securename;
         $type = strtolower(pathinfo($this->fullpath, PATHINFO_EXTENSION));
         if ($issecure) {
-            $this->securename = uniqid('file_', true) .'.'. $type;
-            $this->fullpath =  UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $this->securename;
+            $this->securename = uniqid('file_', true) . '.' . $type;
+            $this->fullpath = UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $directory . $this->securename;
         }
         move_uploaded_file($this->tmp_name, $this->fullpath);
         return $this->fullpath;
