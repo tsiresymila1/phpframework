@@ -1,2 +1,6 @@
 *
 !.gitignore
+!public/.gitkeep
+!public/.gitignore
+!private/.gitkeep
+!private/.gitignore

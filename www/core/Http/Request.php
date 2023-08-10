@@ -199,13 +199,13 @@ class Request
      *
      * @return array | null
      */
-    public function input($key = null)
+    public function input($key = null,$default = null)
     {
         if (!is_null($key)) {
             if (array_key_exists($key, $this->request_data)) {
                 return $this->request_data[$key];
             } else {
-                return null;
+                return $default;
             }
         }
         return $this->request_data;

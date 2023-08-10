@@ -192,14 +192,14 @@ class Response
      *
      * @return Response
      */
-    public static function Send(string $data = "", $status = 200)
+    public static function Send(string $data = "", $status = 200,$showdeBug= true)
     {
         Response::instance()->setContentType('text/plain;charset=utf-8');
         ob_start();
         header('Content-type:text/plain;charset=utf-8');
         self::loadHeader();
         echo $data;
-        if (DEBUG) {
+        if (DEBUG && $showdeBug) {
             Debugbar::setResponse(Response::instance()->getStatus(), $data, Response::instance()->getContentType());
             Debugbar::show();
         }
@@ -232,22 +232,36 @@ class Response
         return $ins;
     }
 
-    public static function Download($filename, $headers = [])
+    public static function Download($filename, $asAttachment, $headers = [])
     {
         if (file_exists($filename)) {
             header('Content-Description: Download file');
-            header('Content-Type: application/octet-stream');
-            header("Cache-Control: no-cache, must-revalidate");
             header("Expires: 0");
-            header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
-            header('Content-Length: ' . filesize($filename));
             header('Pragma: public');
+            if ($asAttachment) {
+                header('Content-Type: application/octet-stream');
+                header("Cache-Control: no-cache, must-revalidate");
+                header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
+            } else {
+
+                $mime = mime_content_type($filename);
+                if ($mime) {
+                    header("Content-Type: {$mime}");
+                } else {
+                    header('Content-Type: application/octet-stream');
+                }
+                header('Content-Disposition: inline; filename="' . basename($filename) . '"');
+                header('Content-Transfer-Encoding: binary');
+                header('Cache-Control: must-revalidate');
+            }
+            header('Content-Length: ' . filesize($filename));
             foreach ($headers as $header) {
                 header($header);
             }
+            ob_clean();
             flush();
             readfile($filename);
-            die();
+            exit();
         } else {
             throw new Exception("File does not exist.");
         }

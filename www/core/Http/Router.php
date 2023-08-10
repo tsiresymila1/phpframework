@@ -21,10 +21,10 @@ class Router
     public static $isFound;
     public static $path;
     public static $current;
-    private static $cache_dir = DIR.DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.'routes.cache';
+    private static $cache_dir = DIR . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'routes.cache';
     public $name;
     public $namespace = "App\Controller\\";
-    public $container;
+    public Container $container;
     private static $routes = [
         "GET" => [],
         "POST" => []
@@ -40,7 +40,7 @@ class Router
         if (is_null(self::$_instance)) {
             self::$_instance = new Router();
         }
-        self::$_instance = new  Router();
+        self::$_instance = new Router();
         return self::$_instance;
     }
 
@@ -62,27 +62,28 @@ class Router
     {
         return self::$routes;
     }
-    
+
     /**
      * Json
      *
      * @return void
      */
-    public static function dumpCache(){
+    public static function dumpCache()
+    {
         $json_route = [];
-        foreach(self::$routes as $method=>$routes){
-             $method_routes= [];
-            foreach($routes as $name=>$route){
+        foreach (self::$routes as $method => $routes) {
+            $method_routes = [];
+            foreach ($routes as $name => $route) {
                 $act = $route->action;
-                if($act instanceof Closure){
+                if ($act instanceof Closure) {
                     continue;
-                }else{
+                } else {
                     $method_routes[$name] = $route;
                 }
             }
             $json_route[$method] = $method_routes;
         }
-        file_put_contents(self::$cache_dir,serialize($json_route));
+        file_put_contents(self::$cache_dir, serialize($json_route));
     }
 
     /**
@@ -90,14 +91,16 @@ class Router
      *
      * @return array | null
      */
-    public static function loadCache($isDebug=false){
-        if($isDebug) return null;
-        if(file_exists(self::$cache_dir)){
-            try{
-                $caches = unserialize(file_get_contents(self::$cache_dir)); 
-                self::$routes = $caches ;
-                return $caches ;
-            }catch(Exception $e){
+    public static function loadCache($isDebug = false)
+    {
+        if ($isDebug)
+            return null;
+        if (file_exists(self::$cache_dir)) {
+            try {
+                $caches = unserialize(file_get_contents(self::$cache_dir));
+                self::$routes = $caches;
+                return $caches;
+            } catch (Exception $e) {
                 return null;
             }
         }
@@ -152,8 +155,7 @@ class Router
                 if ($name == $oldname) {
                     if (gettype($p) == "array") {
                         $route->parameters = array_merge($p, $route->parameters);
-                    }
-                    else{
+                    } else {
                         $route->parameters[] = $p;
                     }
                     self::$routes[$method][$oldname] = $route;
@@ -163,11 +165,12 @@ class Router
         }
     }
 
-    public static function asAPI($oldname, $isAs){
+    public static function asAPI($oldname, $isAs)
+    {
         foreach (self::$routes as $method => $routes) {
             foreach ($routes as $name => $route) {
                 if ($name == $oldname) {
-                    if(is_null($route->isAPI)){
+                    if (is_null($route->isAPI)) {
                         $route->isAPI = $isAs;
                     }
                     self::$routes[$method][$oldname] = $route;
@@ -176,14 +179,14 @@ class Router
             }
         }
     }
-    public static function AddMiddleware($oldname, $middleware){
+    public static function AddMiddleware($oldname, $middleware)
+    {
         foreach (self::$routes as $method => $routes) {
             foreach ($routes as $name => $route) {
                 if ($name == $oldname) {
                     if (gettype($middleware) == "array") {
                         $route->middlewares = array_merge($middleware, $route->response);
-                    }
-                    else{
+                    } else {
                         $route->middlewares[] = $middleware;
                     }
                     self::$routes[$method][$oldname] = $route;
@@ -197,15 +200,14 @@ class Router
      * @param $search_name
      * @param array | OAIResponse $r
      */
-    public static function AddResponse($search_name,  $r)
+    public static function AddResponse($search_name, $r)
     {
         foreach (self::$routes as $method => $routes) {
             foreach ($routes as $name => $route) {
                 if ($name == $search_name) {
                     if (gettype($r) == "array") {
                         $route->responses = array_merge($r, $route->response);
-                    }
-                    else{
+                    } else {
                         $route->responses[] = $r;
                     }
                     self::$routes[$method][$search_name] = $route;
@@ -219,15 +221,14 @@ class Router
      * @param string $search_name
      * @param array | OAISecurity $r
      */
-    public static function AddSecurity($search_name,  $r)
+    public static function AddSecurity($search_name, $r)
     {
         foreach (self::$routes as $method => $routes) {
             foreach ($routes as $name => $route) {
                 if ($name == $search_name) {
                     if (gettype($r) == "array") {
                         $route->security = array_merge($r, $route->security);
-                    }
-                    else{
+                    } else {
                         $route->security[] = $r;
                     }
                     self::$routes[$method][$search_name] = $route;
@@ -271,9 +272,9 @@ class Router
     {
         $this->variables = [];
         $pathReplaced = preg_replace_callback('/\/\\\\{([^}]*)\}+/', function ($match) {
-            $exp = '/([a-zA-Z0-9\-\_]+)';
+            $exp = '/([a-zA-Z0-9\-\_\.]+)';
             if (strpos($match[1], '?') !== false) {
-                $exp = '([/\\\\]{1,1}[a-zA-Z0-9\-\_]+)?';
+                $exp = '([/\\\\]{1,1}[a-zA-Z0-9\-\_\.]+)?';
             }
             $this->variables[] = str_replace(['\\', '?'], '', $match[1]);
             return $exp;
@@ -310,7 +311,7 @@ class Router
         $method = Request::getMethod();
         $ins = self::instance();
         $ins->container = Container::instance();
-        if(key_exists($method,self::$routes)){
+        if (key_exists($method, self::$routes)) {
             $routes = self::$routes[$method];
             foreach ($routes as $route) {
                 if (trim($route->path, '/') == "*" || $ins->matches(trim($route->path, '/'))) {
@@ -325,11 +326,17 @@ class Router
             } else {
                 throw new Exception('Route /' . self::$path . ' not found', 404);
             }
-        }
-        else{
+        } else {
             throw new Exception('Method not allowed for /' . self::$path . ' ', 404);
         }
 
+    }
+
+    // render storage static 
+    public static function registerStaticRoute()
+    {
+        Route::Get(STATIC_URL . '/public/{path}', 'Core\\Http\\CoreControllers\\StaticController@public')->name('public_static');
+        Route::Get(STATIC_URL . '/private/{path}', 'Core\\Http\\CoreControllers\\StaticController@private')->name('private_static');
     }
 
     /**
@@ -343,7 +350,12 @@ class Router
             return $this->container->resolve(self::$current->action, null, $this->params, true);
         } else {
             $cParams = explode("@", self::$current->action);
-            $ControllerClass = $this->namespace . $cParams[0];
+            try {
+                (new \ReflectionClass($cParams[0]))->getNamespaceName();
+                $ControllerClass = $cParams[0];
+            } catch (Exception $e) {
+                $ControllerClass = $this->namespace . $cParams[0];
+            }
             $method = $cParams[1];
             return $this->container->resolve($ControllerClass, $method, $this->params);
         }
@@ -362,11 +374,13 @@ class Router
                 if ($this->isFunction($middleware)) {
                     $this->container->resolve($middleware, null, $this->params, true);
                 } else {
-                    $contain = str_contains($middleware,"App\Middleware");
+                    $contain = str_contains($middleware, "App\Middleware");
                     $MiddlewareClass = $contain ? $middleware : "App\Middleware\\{$middleware}";
                     $middleIns = $this->container->make($MiddlewareClass, [], $this->params);
                     if ($middleIns instanceof BaseAuthMiddleware) {
                         $middleIns->handle();
+                    }else{
+                        throw new Exception("Middleware class not instance of BaseAuthMiddleware");
                     }
                 }
             }

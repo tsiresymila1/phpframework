@@ -44,6 +44,7 @@ class Handler
             if (!file_exists($routePath)) {
                 throw new Exception('routes.php file not found');
             }
+            Router::registerStaticRoute();
             require $routePath;
             Router::dumpCache();
         }
@@ -60,11 +61,11 @@ class Handler
             $autheticator = new $Athenticator();
             $autheticator->authenticate();
         } else {
-            self::DispatchRouting();
+            self::PerformRouting();
         }
     }
 
-    public static function DispatchRouting()
+    public static function PerformRouting()
     {
         Boot::start();
         Router::$isFound = false;

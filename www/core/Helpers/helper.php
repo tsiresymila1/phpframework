@@ -23,9 +23,9 @@ function json($data = [], $status = 200)
     return Response::Json($data, $status);
 }
 
-function download($filename, $headers = [])
+function download($filename, $asAttachment = true, $headers = [])
 {
-    return Response::Download($filename, $headers);
+    return Response::Download($filename, $asAttachment, $headers);
 }
 
 function redirect($path)

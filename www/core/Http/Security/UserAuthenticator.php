@@ -123,7 +123,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
 
     public function next()
     {
-        Handler::DispatchRouting();
+        Handler::PerformRouting();
     }
 
     /**
@@ -152,7 +152,7 @@ class UserAuthenticator implements UserAuthenticatorInterface
         $path = rtrim($request_path, '/') . '/';
         //test excludes
         foreach ($this->excludes as $exclude) {
-            if (preg_match("#^" . $exclude . '/$#', $path)) {
+            if (preg_match("#^" . $exclude . '/$#', $path) || startsWith($path, STATIC_URL)) {
                 return $this->next();
             }
         }
