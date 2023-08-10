@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Form,Image,Row,Col,Card,Container,Spinner,Alert, InputGroup } from "react-bootstrap";
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import { Button, Form,Image,Row,Col,Card,Container,Spinner,Alert } from "react-bootstrap";
+import {Link, Navigate} from "react-router-dom";
 import logo from '../images/logo.jpg';
 import validator from 'validator';
 import {AuthUserInput} from "../types/auth";
@@ -26,7 +26,7 @@ export const Login = () => {
         setEmail(value);
     }
     const setPasswordInput = (value) => {
-        if(value.length < 8){
+        if(value.length < 4){
             setMessagePassword('Mot de passe trop court')
         }
         else{
@@ -37,7 +37,7 @@ export const Login = () => {
 
     const signUp = () => {
         const data : AuthUserInput = { 
-            email,
+            username: email,
             password
         }
         dispatch(postLoginAsync(data))

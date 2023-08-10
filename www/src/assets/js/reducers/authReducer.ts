@@ -7,7 +7,7 @@ export interface AuthState {
     value: Record<string, any>;
     status: 'idle' | 'loading' | 'failed';
 }
-const userDataLocal = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+const userDataLocal = localStorage.getItem('user') ? JSON.parse(localStorage?.getItem('user') ?? '{}') : null
 const initialState: AuthState = {
     value: userDataLocal ?? {
         error: null,

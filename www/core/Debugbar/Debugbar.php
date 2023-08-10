@@ -16,10 +16,10 @@ class Debugbar
         $js = file_get_contents($file . '.js');
         $css = file_get_contents($file . '.css');
 
-        echo '<div id="debugbar"></div>';
+        echo '<div id="__debugbar"></div>';
         echo '<script type="text/javascript">
             var debugbarJSON = JSON.stringify(' . $logs . ');
-            document.getElementById("debugbar").setAttribute("data",debugbarJSON);
+            document.getElementById("__debugbar").setAttribute("data",debugbarJSON);
             </script>';
         echo '<script type="module" crossorigin>' . $js . '</script>';
         echo '<style>' . $css . '</style>';

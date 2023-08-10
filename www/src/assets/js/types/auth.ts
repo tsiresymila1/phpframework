@@ -1,5 +1,5 @@
 export type AuthContextType = Record<string, any>
 export type AuthUserInput = {
-    email:string;
+    username:string;
     password:string;
 }

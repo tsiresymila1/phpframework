@@ -5,9 +5,11 @@ namespace Core;
 use App\Boot;
 use Core\Command\CommandContainer;
 use Core\Database\DB;
+use Core\Debugbar\Debugbar;
 use Core\Http\Exception\ErrorRender;
 use Core\Http\Handler;
 use Core\Http\Request;
+use Core\Http\Response;
 use Core\Session\Session;
 use Core\Utils\Logger;
 use Core\Utils\Dotenv;
@@ -44,19 +46,27 @@ class Bootstrap
             Logger::error($errline);
             if (!defined('DEBUG') || DEBUG == true) {
                 $strace = debug_backtrace();
-                Logger::addException($errstr . ' in ' . $errfile . ' on line ' . $errline);
+                Logger::addException(["type" => "error", "message" => $errstr . ' in ' . $errfile . ' on line ' . $errline]);
                 $withCode = array_key_exists(strval($errno), ErrorRender::$code);
                 if (Request::isAPI()) {
+                    $debugBar = Request::Headers('With-Debugbar');
+                    $data = array(
+                        "code" => $errno,
+                        "error" => $errstr,
+                        "file" => $errfile,
+                        "line" => $errline
+                    );
                     header('Content-type:application/json;charset=utf-8');
                     ob_end_clean();
-                    echo json_encode(
-                        array(
-                            "code" => $errno,
-                            "error" => $errstr,
-                            "file" => $errfile,
-                            "line" => $errline
-                        )
-                    );
+                    ob_start();
+                    if (DEBUG && !is_null($debugBar)) {
+                        $ins = Debugbar::load();
+                        $rep = ['debugbar' => $ins->logs, 'response' => $data];
+                        echo json_encode($rep);
+                    } else {
+                        echo json_encode($data);
+                    }
+                    ob_flush();
                 } else {
                     ob_end_clean();
                     echo ErrorRender::showErrorDetails($errstr . ' in ' . $errfile . ' on line ' . $errline, $strace, $withCode ? $errno : '500');
@@ -89,16 +99,23 @@ class Bootstrap
             if (!defined('DEBUG') || DEBUG == true) {
                 $withCode = array_key_exists(strval($e->getCode()), ErrorRender::$code);
                 if (Request::isAPI()) {
+                    $debugBar = Request::Headers('With-Debugbar');
+                    $data = array(
+                        "code" => $e->getCode(),
+                        "error" => $message,
+                        "file" => $e->getFile(),
+                        "line" => $e->getLine(),
+                    );
                     header('Content-type:application/json;charset=utf-8');
                     ob_start();
-                    echo json_encode(
-                        array(
-                            "code" => $e->getCode(),
-                            "error" => $message,
-                            "file" => $e->getFile(),
-                            "line" => $e->getLine(),
-                        )
-                    );
+                    if (DEBUG && !is_null($debugBar)) {
+                        Logger::addException($data);
+                        $ins = Debugbar::load();
+                        $rep = ['debugbar' => $ins->logs, 'response' => $data];
+                        echo json_encode($rep);
+                    } else {
+                        echo json_encode($data);
+                    }
                     ob_flush();
                 } else {
                     ob_end_clean();
