@@ -3,14 +3,14 @@
 namespace Core\Command\Provide;
 
 use Core\Command\Command;
+use Core\Database\DB;
 
 class CreateMigrationCommand extends Command
 {
-    public $name = "migration:create";
+    public string $name = "migration:create";
 
-    public $description = "Create migration file ";
+    public $description = "Create migration file";
 
-    public $migrationPath = APP_PATH . 'database' . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR;
 
     /**
      * @param $args
@@ -19,15 +19,11 @@ class CreateMigrationCommand extends Command
     {
         if (sizeof($args) > 0) {
             $migname = $args[0];
-            $sub = substr(strtolower($migname), -9, 9);
-            if ($sub === 'migration') {
-                $prefix = strtolower(substr_replace($migname, '', -9, 9));
-            } else {
-                $prefix = strtolower($migname);
-            }
-            $timestamp = (new \DateTime())->getTimestamp();
-            $migname = ucfirst($prefix) . 'Migration' . $timestamp . '';
-            $migfilename = $timestamp . '_' . ucfirst($prefix) . 'Migration';
+            consoleSucess(json_encode($args));
+            $re = '/(?<=[a-z])(?=[A-Z])/x';
+            $a = preg_split($re, $migname);
+            $timestamp = (new \DateTime())->format("Y_m_d_his");
+            $migfilename = strtolower($timestamp . '_' . join('_',$a));
             $tableIndice = array_search('--table', $args);
             if (sizeof($args) >= $tableIndice + 2) {
                 $tablename = $args[$tableIndice + 1];
@@ -35,31 +31,34 @@ class CreateMigrationCommand extends Command
             } else {
                 $content = $this->getContent($migname, null);
             }
-            file_put_contents($this->migrationPath . $migfilename . ".php", $content);
-            consoleSucess($migname . " created successfully ");
+            file_put_contents(DB::$migrationPath . $migfilename . ".php", $content);
+            consoleSucess(" Migration ".$migname . " created successfully ");
 
         } else {
             consoleError("\nMigration name not provided");
         }
         echo "\n";
     }
-    public function getContent($name, $tablename)
+    public function getContent($name, $tablename): string
     {
         $cap = ucfirst($name);
 
         $up = $tablename ? <<<PHP
-        \$this->schema->create("{$tablename}", function (Blueprint \$table) {
-                    
-                });
+        \$this->schema->create("{$tablename}", function (Blueprint \$table) {});
         PHP : "";
+
+        $down = $tablename ? <<<PHP
+        \$this->schema->drop("{$tablename}");
+        PHP : "";
+
 
         return <<<PHP
         <?php
 
-        use Core\Database\Eloquent\EloquentMigration;
+        use Core\Database\Migration;
         use Illuminate\Database\Schema\Blueprint;
 
-        class {$cap} extends EloquentMigration
+        class {$cap} extends Migration
         {
             public function up()
             {
@@ -67,7 +66,7 @@ class CreateMigrationCommand extends Command
             }
             public function down()
             {
-     
+                {$down}
             }
         }
         PHP;

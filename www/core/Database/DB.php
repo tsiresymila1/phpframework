@@ -3,11 +3,12 @@
 namespace Core\Database;
 
 use Core\Utils\Logger;
-use Illuminate\Container\Container;
-use Illuminate\Database\Events\QueryExecuted;
-use Illuminate\Events\Dispatcher;
-use Illuminate\Database\Capsule\Manager as Capsule;
+use \Illuminate\Container\Container;
+use \Illuminate\Database\Events\QueryExecuted;
+use \Illuminate\Events\Dispatcher;
+use \Illuminate\Database\Capsule\Manager as Capsule;
 use \Illuminate\Database\Schema\Builder as SchemaBuilder;
+
 
 
 class DB
@@ -15,6 +16,8 @@ class DB
 
     private static $_instance;
     public static SchemaBuilder $schema;
+
+    public static $migrationPath =  APP_PATH . 'database' . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR;
 
     public static function Init()
     {
@@ -25,16 +28,17 @@ class DB
             "username" => env("DB_USERNAME", "root"),
             "password" => env("DB_PASSWORD", ""),
             "port" => env("DB_PORT", 3306),
-            // "charset" => "utf8",
-            // "collation" => "utf8_unicode_ci",
-            // "prefix" => "",
+//             "charset" => "utf8",
+//             "collation" => "utf8_unicode_ci",
+//             "prefix" => "",
         ];
         $capsule = static::instance();
         $capsule->addConnection($config);
-        $capsule->getConnection()->enableQueryLog();
         $capsule->setAsGlobal();
-        $capsule->getConnection()->setEventDispatcher(new Dispatcher(new Container()));
-        $capsule->getConnection()->listen(function (QueryExecuted $query) {
+        $connection = $capsule->getConnection();
+        $connection->enableQueryLog();
+        $connection->setEventDispatcher(new Dispatcher(new Container()));
+        $connection->listen(function (QueryExecuted $query) {
             Logger::addQuery($query->sql, $query->bindings);
         });
 
@@ -43,6 +47,7 @@ class DB
         self::$schema = $capsule->schema();
 
     }
+
 
     /**
      * @return Capsule 
