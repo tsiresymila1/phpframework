@@ -52,12 +52,12 @@ class ControllerCommand extends Command
                 }
                 file_put_contents($filename, $content);
 
-                echo $ctrname . ' was created successfully' . "\n";
+                consoleSucess($ctrname . ' was created successfully' . "\n");
             } else {
-                echo $ctrname . ' alread exist';
+                consoleWarning($ctrname . ' alread exist');
             }
         } else {
-            echo 'Controller name not provided';
+             consoleSucess('Controller name not provided');
         }
     }
 

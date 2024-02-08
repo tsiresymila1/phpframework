@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 
 class UserMigrationCreate  extends Migration
 {
-    public function up()
+    public function up(): void
     {
         $this->schema->create("users", function (Blueprint $table) {
             $table->increments('id');
@@ -18,7 +18,7 @@ class UserMigrationCreate  extends Migration
             $table->timestamps();
         });
     }
-    public function down()
+    public function down(): void
     {
         $this->schema->drop("users");
     }

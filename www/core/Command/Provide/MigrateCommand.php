@@ -19,16 +19,18 @@ class MigrateCommand extends Command
     /**
      * @param $args
      */
-    public function handle($args)
+    public function handle($args): void
     {
         try {
-        $capsule = DB::instance();
-        // create repository
-        $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
-        $repository->createRepository();
-        $migrator = new Migrator($repository, $capsule->getDatabaseManager(), new Filesystem());
-        $migrator->run(DB::$migrationPath);
-        consoleSucess( "Migration successfully !!\n");
+            $capsule = DB::instance();
+            // create repository
+            $repository = new DatabaseMigrationRepository($capsule->getDatabaseManager(), 'migrations');
+           if(!$repository->repositoryExists()){
+               $repository->createRepository();
+           }
+            $migrator = new Migrator($repository, $capsule->getDatabaseManager(), new Filesystem());
+            $migrator->run(DB::$migrationPath);
+            consoleSucess( "Migration successfully !!\n");
         } catch (\Exception $e) {
             consoleError($e->getMessage() . "\n");
         }

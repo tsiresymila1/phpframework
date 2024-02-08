@@ -1,6 +1,6 @@
 import fs from "fs";
 import { join, resolve } from "path";
-import { PluginOption, ResolvedConfig } from "vite";
+import {  ResolvedConfig } from "vite";
 import FullReload from "vite-plugin-full-reload";
 
 export default function VitePhpPlugin(config?: {
@@ -12,7 +12,7 @@ export default function VitePhpPlugin(config?: {
   host?: string;
   apiServer?: string;
   isHttps?: boolean;
-}): PluginOption {
+}) {
   var pluginConfig = {
     root: config?.root ?? "src/assets/js",
     public: config?.public ?? "public",

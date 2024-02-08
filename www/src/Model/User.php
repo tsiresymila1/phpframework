@@ -13,6 +13,6 @@ class User extends UserAuthenticatorModel
 
     public function getRoles()
     {
-        return implode(',', $this->roles);
+        return implode(',', $this->roles ?? []);
     }
 }

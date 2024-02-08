@@ -2,6 +2,13 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/www" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/www/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/www/core/Illimunate/brick/math/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/www/core/Illimunate/carbonphp/carbon-doctrine-types/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/www/core/Illimunate/doctrine/inflector/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/www/core/Illimunate/nesbot/carbon/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/www/core/Illimunate/voku/portable-ascii/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/www/vendor/clue/stdio-react" />
       <excludeFolder url="file://$MODULE_DIR$/www/vendor/clue/term-react" />
       <excludeFolder url="file://$MODULE_DIR$/www/vendor/clue/utf8-react" />

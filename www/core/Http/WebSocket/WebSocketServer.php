@@ -145,7 +145,7 @@ class WebSocketServer
                     $ip = stream_socket_get_name($changed_socket, true);
                     $buffer = stream_get_contents($changed_socket);
                     $client = new WebSocketClientInstance($changed_socket, $this->clients);
-                    if ($buffer == false) {
+                    if (!$buffer) {
                         $this->echoError("Client Disconnected from $ip");
                         $this->onDisconnect($client);
                         @fclose($changed_socket);

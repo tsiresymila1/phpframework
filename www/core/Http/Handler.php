@@ -34,6 +34,9 @@ class Handler
         Response::Init();
     }
 
+    /**
+     * @throws Exception
+     */
     public static function handle()
     {
         $ins = self::instance();
@@ -65,12 +68,22 @@ class Handler
         }
     }
 
-    public static function PerformRouting()
+    public static function PerformRouting(): void
     {
         Boot::start();
+        self::resolveStaticFile();
         Router::$isFound = false;
         $response = Router::find();
         self::renderViewContent($response);
+    }
+
+    public static function resolveStaticFile(): void
+    {
+        $path = Request::getPath();
+        $filePath = DIR . $path;
+        if (file_exists($filePath) && is_file($filePath)) {
+             download($filePath, false);
+        }
     }
 
     public static function renderViewContent(Response $response)

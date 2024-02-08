@@ -60,9 +60,9 @@ function consoleSucess($str)
 
 function consoleWarning($str)
 {
-    echo "\033[33m\xE2\x9A\xA0$str \033[0m\n";
+    echo "\033[33m\xE2\x9A\xA0 $str \033[0m\n";
 }
 function consoleInfo($str)
 {
-    echo "\033[36m\xE2\x84\xB9$str \033[0m\n";
+    echo "\033[36m\xE2\x84\xB9 $str \033[0m\n";
 }

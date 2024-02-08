@@ -15,7 +15,7 @@ class CreateMigrationCommand extends Command
     /**
      * @param $args
      */
-    public function handle($args)
+    public function handle($args): void
     {
         if (sizeof($args) > 0) {
             $migname = $args[0];

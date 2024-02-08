@@ -45,6 +45,7 @@ class Response
     {
         return $this->status;
     }
+
     private function setContent($content)
     {
         $this->content = $content;
@@ -54,6 +55,7 @@ class Response
     {
         return $this->content;
     }
+
     public function getHeader()
     {
         return self::$HEADER;
@@ -68,8 +70,6 @@ class Response
     {
         return $this->type;
     }
-
-
 
 
     public static function instance()
@@ -105,6 +105,7 @@ class Response
     {
         self::$HEADER[$key] = $value;
     }
+
     public static function loadHeader()
     {
         if (self::$HEADER) {
@@ -112,6 +113,7 @@ class Response
                 header($key . ': ' . $header);
         }
     }
+
     public function setHeader($key, $value)
     {
         self::$HEADER[$key] = $value;
@@ -192,7 +194,7 @@ class Response
      *
      * @return Response
      */
-    public static function Send(string $data = "", $status = 200,$showdeBug= true)
+    public static function Send(string $data = "", $status = 200, $showdeBug = true)
     {
         Response::instance()->setContentType('text/plain;charset=utf-8');
         ob_start();
@@ -232,7 +234,10 @@ class Response
         return $ins;
     }
 
-    public static function Download($filename, $asAttachment, $headers = [])
+    /**
+     * @throws Exception
+     */
+    public static function Download($filename, $asAttachment = false, $headers = [])
     {
         if (file_exists($filename)) {
             header('Content-Description: Download file');
@@ -243,7 +248,6 @@ class Response
                 header("Cache-Control: no-cache, must-revalidate");
                 header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
             } else {
-
                 $mime = mime_content_type($filename);
                 if ($mime) {
                     header("Content-Type: {$mime}");
